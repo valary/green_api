@@ -2,8 +2,8 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { describe, expect, it, vi } from 'vitest';
-import { server } from '@/mocks/node';
-import { renderWithProviders } from 'test-utils/renderWithProviders';
+import { server } from '../../mocks/node';
+import { renderWithProviders } from '../../../test-utils/renderWithProviders';
 import { LoginForm } from './LoginForm';
 
 const apiUrl = 'https://1101.api.green-api.com';

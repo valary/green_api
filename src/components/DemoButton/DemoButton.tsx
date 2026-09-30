@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useAppDispatch } from '@/hooks/redux';
-import { Alert } from '@/shared/ui/Alert/Alert';
-import { Button } from '@/shared/ui/Button/Button';
-import { demoScenarioHints, parseDemoScenario } from '@/shared/utils/demoScenario';
-import { openDemo } from '@/app/store/slices/session/thunks';
+import { useAppDispatch } from '../../hooks/redux';
+import { Alert } from '../../shared/ui/Alert/Alert';
+import { Button } from '../../shared/ui/Button/Button';
+import { demoScenarioHints, parseDemoScenario } from '../../shared/utils/demoScenario';
+import { openDemo } from '../../app/store/slices/session/thunks';
 import { DemoSection, OrDivider, DemoHint } from './DemoButton.styles';
 
 export const DemoButton = () => {

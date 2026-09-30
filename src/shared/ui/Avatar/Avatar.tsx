@@ -1,4 +1,4 @@
-import { avatarIndex, initials } from '@/shared/utils/avatar';
+import { avatarIndex, initials } from '../../utils/avatar';
 import { AvatarCircle } from './Avatar.styles';
 
 type Props = { chatId: string; title: string; small?: boolean };

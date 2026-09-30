@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Icon } from '@/shared/ui/Icon/Icon';
+import { Icon } from '../Icon/Icon';
 import { AlertBox } from './Alert.styles';
 
 type Props = { id?: string; children: ReactNode };

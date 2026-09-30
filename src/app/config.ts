@@ -1,4 +1,4 @@
-import type { DemoScenario } from '@/types/session';
+import type { DemoScenario } from '../types/session';
 
 // Сервер держит long polling до N секунд и отвечает сразу, как только есть уведомление.
 export const RECEIVE_TIMEOUT_SEC = 20;

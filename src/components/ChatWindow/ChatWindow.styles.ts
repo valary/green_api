@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ChatBackground } from '@/shared/ui/ChatBackground/ChatBackground';
+import { ChatBackground } from '../../shared/ui/ChatBackground/ChatBackground';
 
 export const ChatWindowPanel = styled(ChatBackground).attrs({ as: 'section' })`
     display: flex;

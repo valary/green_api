@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { server } from '@/mocks/node';
+import { server } from '../../mocks/node';
 import {
     deleteNotificationApi,
     getSettingsApi,

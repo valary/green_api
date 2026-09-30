@@ -1,7 +1,7 @@
-import { Avatar } from '@/shared/ui/Avatar/Avatar';
-import type { Chat } from '@/types/chat';
-import type { Message } from '@/types/message';
-import { formatListTime } from '@/shared/utils/date';
+import { Avatar } from '../../shared/ui/Avatar/Avatar';
+import type { Chat } from '../../types/chat';
+import type { Message } from '../../types/message';
+import { formatListTime } from '../../shared/utils/date';
 import {
     ChatListButton,
     ChatListBody,

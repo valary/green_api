@@ -1,4 +1,4 @@
-import type { Message } from '@/types/message';
+import type { Message } from '../../types/message';
 import { formatDayLabel, isSameDay } from './date';
 
 // Пузыри группируются подряд по направлению в пределах дня; хвост — у последнего в группе.

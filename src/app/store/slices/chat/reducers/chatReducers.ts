@@ -1,5 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { ChatState, PersistedChats } from '@/types/chat';
+import type { ChatState, PersistedChats } from '../../../../../types/chat';
 
 export const chatReducers = {
     chatCreated(

@@ -1,5 +1,5 @@
-import { useAppSelector } from '@/hooks/redux';
-import { selectIsDemo } from '@/app/store/selectors';
+import { useAppSelector } from '../../hooks/redux';
+import { selectIsDemo } from '../../app/store/selectors';
 import { DemoBadgeLabel } from './DemoBadge.styles';
 
 type Props = { className?: string };

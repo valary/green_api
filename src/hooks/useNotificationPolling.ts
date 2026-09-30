@@ -1,11 +1,11 @@
-import type { ReceivedEvent } from '@/types/chat';
+import type { ReceivedEvent } from '../types/chat';
 import { useEffect } from 'react';
-import { chatActions } from '@/app/store/slices/chat/chatSlice';
-import { connectionActions } from '@/app/store/slices/connection/connectionSlice';
+import { chatActions } from '../app/store/slices/chat/chatSlice';
+import { connectionActions } from '../app/store/slices/connection/connectionSlice';
 import { useAppDispatch } from './redux';
-import { runInSingleTab } from '@/shared/utils/tabLock';
+import { runInSingleTab } from '../shared/utils/tabLock';
 
-import { pollNotifications } from '@/app/api/pollNotifications';
+import { pollNotifications } from '../app/api/pollNotifications';
 
 const toAction = (event: ReceivedEvent) => {
     switch (event.kind) {

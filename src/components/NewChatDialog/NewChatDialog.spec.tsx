@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { setCredentials } from '@/app/api/httpClient';
-import { server } from '@/mocks/node';
-import { DEMO_CREDENTIALS } from '@/app/config';
-import { renderWithProviders } from 'test-utils/renderWithProviders';
+import { setCredentials } from '../../app/api/httpClient';
+import { server } from '../../mocks/node';
+import { DEMO_CREDENTIALS } from '../../app/config';
+import { renderWithProviders } from '../../../test-utils/renderWithProviders';
 import { NewChatDialog } from './NewChatDialog';
 
 const countCheckAccount = () => {

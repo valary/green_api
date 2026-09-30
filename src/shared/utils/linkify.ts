@@ -1,4 +1,4 @@
-import type { TextPart } from '@/types/message';
+import type { TextPart } from '../../types/message';
 
 const urlPattern = /https?:\/\/[^\s<>"]+/g;
 

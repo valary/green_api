@@ -1,4 +1,4 @@
-import type { ApiError, ApiErrorKind } from '@/types/greenApi';
+import type { ApiError, ApiErrorKind } from '../../types/greenApi';
 import axios from 'axios';
 
 export const ERROR_TEXT = {

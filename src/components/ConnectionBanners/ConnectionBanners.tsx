@@ -1,11 +1,11 @@
-import { selectConnection } from '@/app/store/selectors';
-import { connectionActions } from '@/app/store/slices/connection/connectionSlice';
-import { logout } from '@/app/store/slices/session/thunks';
-import { ERROR_TEXT } from '@/app/api/apiError';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { Button } from '@/shared/ui/Button/Button';
-import { Icon } from '@/shared/ui/Icon/Icon';
-import { Spinner } from '@/shared/ui/Spinner/Spinner';
+import { selectConnection } from '../../app/store/selectors';
+import { connectionActions } from '../../app/store/slices/connection/connectionSlice';
+import { logout } from '../../app/store/slices/session/thunks';
+import { ERROR_TEXT } from '../../app/api/apiError';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { Button } from '../../shared/ui/Button/Button';
+import { Icon } from '../../shared/ui/Icon/Icon';
+import { Spinner } from '../../shared/ui/Spinner/Spinner';
 import { BannerStack, ConnectionBanner, BannerText } from './ConnectionBanners.styles';
 
 export const ConnectionBanners = () => {

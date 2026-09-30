@@ -1,10 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from '@/app/App';
-import { persistChats } from '@/app/store/persistChats';
-import { store } from '@/app/store/store';
-import { loadStoredSession } from '@/shared/utils/sessionStorage';
-import { restoreSession, startDemo } from '@/app/store/slices/session/thunks';
+import { App } from './app/App';
+import { persistChats } from './app/store/persistChats';
+import { store } from './app/store/store';
+import { loadStoredSession } from './shared/utils/sessionStorage';
+import { restoreSession, startDemo } from './app/store/slices/session/thunks';
 
 const saved = loadStoredSession();
 if (saved) {

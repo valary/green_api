@@ -1,4 +1,4 @@
-import type { ConnectionState } from '@/types/session';
+import type { ConnectionState } from '../../../../types/session';
 
 export const initialConnection: ConnectionState = {
     online: true,

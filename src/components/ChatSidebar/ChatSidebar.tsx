@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { selectChatPreviews } from '@/app/store/selectors';
-import { DemoBadge } from '@/components/DemoBadge/DemoBadge';
-import { NewChatDialog } from '@/components/NewChatDialog/NewChatDialog';
-import { LogoutButton } from '@/components/LogoutButton/LogoutButton';
-import { useAppSelector } from '@/hooks/redux';
-import { Button } from '@/shared/ui/Button/Button';
-import { Icon } from '@/shared/ui/Icon/Icon';
-import { ChatListItem } from '@/components/ChatListItem/ChatListItem';
+import { selectChatPreviews } from '../../app/store/selectors';
+import { DemoBadge } from '../DemoBadge/DemoBadge';
+import { NewChatDialog } from '../NewChatDialog/NewChatDialog';
+import { LogoutButton } from '../LogoutButton/LogoutButton';
+import { useAppSelector } from '../../hooks/redux';
+import { Button } from '../../shared/ui/Button/Button';
+import { Icon } from '../../shared/ui/Icon/Icon';
+import { ChatListItem } from '../ChatListItem/ChatListItem';
 import {
     SidebarPanel,
     SidebarHeader,

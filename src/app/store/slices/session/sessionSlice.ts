@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { initialSession } from './initialSession';
-import type { SessionInfo } from '@/types/session';
+import type { SessionInfo } from '../../../../types/session';
 
 export const sessionSlice = createSlice({
     name: 'session',

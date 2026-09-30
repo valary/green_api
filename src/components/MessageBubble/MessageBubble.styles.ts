@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { mobile } from '@/theme/theme';
+import { mobile } from '../../theme/theme';
 
 // Хвост пузыря — своя форма 11×20, накладывается маской цветом пузыря.
 const tailOut = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 20'%3E%3Cpath d='M0 0C0 9 3 16 11 20H0Z'/%3E%3C/svg%3E")`;

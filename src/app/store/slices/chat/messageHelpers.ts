@@ -1,6 +1,6 @@
-import type { Message } from '@/types/message';
+import type { Message } from '../../../../types/message';
 import { applyDelivery, raiseStatus } from './deliveryStatus';
-import type { ChatState } from '@/types/chat';
+import type { ChatState } from '../../../../types/chat';
 
 const MAX_PENDING_STATUSES = 100;
 

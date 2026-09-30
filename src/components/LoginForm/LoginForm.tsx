@@ -1,20 +1,20 @@
-import type { ApiError } from '@/types/greenApi';
+import type { ApiError } from '../../types/greenApi';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch } from '@/hooks/redux';
-import { Alert } from '@/shared/ui/Alert/Alert';
-import { Button } from '@/shared/ui/Button/Button';
-import { Checkbox } from '@/shared/ui/Checkbox/Checkbox';
-import { Icon } from '@/shared/ui/Icon/Icon';
-import { IconButton } from '@/shared/ui/Button/Button.styles';
-import { TextField } from '@/shared/ui/TextField/TextField';
-import { deriveApiUrl } from '@/shared/utils/deriveApiUrl';
+import { useAppDispatch } from '../../hooks/redux';
+import { Alert } from '../../shared/ui/Alert/Alert';
+import { Button } from '../../shared/ui/Button/Button';
+import { Checkbox } from '../../shared/ui/Checkbox/Checkbox';
+import { Icon } from '../../shared/ui/Icon/Icon';
+import { IconButton } from '../../shared/ui/Button/Button.styles';
+import { TextField } from '../../shared/ui/TextField/TextField';
+import { deriveApiUrl } from '../../shared/utils/deriveApiUrl';
 import { loginSchema } from './loginSchema';
 import type { LoginValues } from './loginSchema';
-import { signIn } from '@/app/store/slices/session/thunks';
+import { signIn } from '../../app/store/slices/session/thunks';
 import { LoginFormBody } from './LoginForm.styles';
 
 const defaultValues: LoginValues = { idInstance: '', apiTokenInstance: '', apiUrl: '', remember: false };

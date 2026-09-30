@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { applyDelivery } from '@/app/store/slices/chat/deliveryStatus';
-import { addMessage, attachIdMessage, rememberStatus } from '@/app/store/slices/chat/messageHelpers';
-import type { ChatState, DeliveryUpdate, IncomingMessage, OutgoingEcho } from '@/types/chat';
+import { applyDelivery } from '../deliveryStatus';
+import { addMessage, attachIdMessage, rememberStatus } from '../messageHelpers';
+import type { ChatState, DeliveryUpdate, IncomingMessage, OutgoingEcho } from '../../../../../types/chat';
 
 const hasMessage = (state: ChatState, chatId: string, idMessage: string) =>
     state.messages[chatId]?.some((message) => message.idMessage === idMessage) ?? false;

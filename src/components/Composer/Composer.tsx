@@ -1,11 +1,11 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { FormEvent, KeyboardEvent } from 'react';
-import { MAX_MESSAGE_LENGTH } from '@/app/config';
-import { useAppDispatch } from '@/hooks/redux';
-import { Icon } from '@/shared/ui/Icon/Icon';
-import { ServicePill } from '@/shared/ui/ChatBackground/ChatBackground';
-import { VisuallyHidden } from '@/shared/ui/VisuallyHidden/VisuallyHidden';
-import { sendMessage } from '@/app/store/slices/chat/thunks';
+import { MAX_MESSAGE_LENGTH } from '../../app/config';
+import { useAppDispatch } from '../../hooks/redux';
+import { Icon } from '../../shared/ui/Icon/Icon';
+import { ServicePill } from '../../shared/ui/ChatBackground/ChatBackground';
+import { VisuallyHidden } from '../../shared/ui/VisuallyHidden/VisuallyHidden';
+import { sendMessage } from '../../app/store/slices/chat/thunks';
 import {
     ComposerForm,
     TooLongNote,

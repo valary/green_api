@@ -1,5 +1,5 @@
-import type { DemoScenario } from '@/types/session';
-import type { QueuedNotification } from '@/types/greenApi';
+import type { DemoScenario } from '../types/session';
+import type { QueuedNotification } from '../types/greenApi';
 import {
     demoReplies,
     incomingMessage,

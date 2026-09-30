@@ -1,5 +1,5 @@
-import type { DemoScenario } from '@/types/session';
-import { DEMO_SCENARIOS } from '@/app/config';
+import type { DemoScenario } from '../../types/session';
+import { DEMO_SCENARIOS } from '../../app/config';
 
 export const demoScenarioHints: Record<DemoScenario, string> = {
     default: 'Всё работает на имитации: сообщения никуда не уходят',

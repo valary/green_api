@@ -1,12 +1,12 @@
-import type { ApiError } from '@/types/greenApi';
+import type { ApiError } from '../../../../types/greenApi';
 import { chatActions } from './chatSlice';
-import { selectChatByPhone, selectMessage } from '@/app/store/selectors';
-import { connectionActions } from '@/app/store/slices/connection/connectionSlice';
-import { checkAccountApi, sendMessageApi } from '@/app/api/requests';
-import { isFatal, toApiError } from '@/app/api/apiError';
-import { formatPhone } from '@/shared/utils/phone';
-import { createAppAsyncThunk } from '@/app/store/createAppAsyncThunk';
-import type { AppDispatch } from '@/app/store/store';
+import { selectChatByPhone, selectMessage } from '../../selectors';
+import { connectionActions } from '../connection/connectionSlice';
+import { checkAccountApi, sendMessageApi } from '../../../api/requests';
+import { isFatal, toApiError } from '../../../api/apiError';
+import { formatPhone } from '../../../../shared/utils/phone';
+import { createAppAsyncThunk } from '../../createAppAsyncThunk';
+import type { AppDispatch } from '../../store';
 
 const NOT_FOUND =
     'Номер не найден в Telegram или скрыт настройками приватности. Попросите получателя добавить ваш номер в контакты';

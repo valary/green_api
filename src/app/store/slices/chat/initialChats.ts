@@ -1,4 +1,4 @@
-import type { ChatState } from '@/types/chat';
+import type { ChatState } from '../../../../types/chat';
 
 export const initialChats: ChatState = {
     chats: {},

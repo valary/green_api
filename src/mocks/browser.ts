@@ -1,4 +1,4 @@
-import type { DemoScenario } from '@/types/session';
+import type { DemoScenario } from '../types/session';
 import { setupWorker } from 'msw/browser';
 
 import { handlers } from './handlers';

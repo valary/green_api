@@ -1,11 +1,11 @@
-import type { ReceivedEvent } from '@/types/chat';
+import type { ReceivedEvent } from '../../types/chat';
 import { delay, http, HttpResponse } from 'msw';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { setCredentials } from './httpClient';
-import { incomingMessage, outgoingStatus } from '@/mocks/fixtures';
-import { mockInstance } from '@/mocks/mockInstance';
-import { server } from '@/mocks/node';
-import { DEMO_CREDENTIALS } from '@/app/config';
+import { incomingMessage, outgoingStatus } from '../../mocks/fixtures';
+import { mockInstance } from '../../mocks/mockInstance';
+import { server } from '../../mocks/node';
+import { DEMO_CREDENTIALS } from '../config';
 
 import { pollNotifications } from './pollNotifications';
 

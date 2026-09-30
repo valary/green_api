@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { addMessage, attachIdMessage, findByLocalId } from '@/app/store/slices/chat/messageHelpers';
-import type { ChatState } from '@/types/chat';
+import { addMessage, attachIdMessage, findByLocalId } from '../messageHelpers';
+import type { ChatState } from '../../../../../types/chat';
 
 type MessageRef = { chatId: string; localId: string };
 

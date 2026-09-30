@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
-import { mobile } from '@/theme/theme';
-import { IconButton } from '@/shared/ui/Button/Button.styles';
+import { mobile } from '../../theme/theme';
+import { IconButton } from '../../shared/ui/Button/Button.styles';
 
 export const ChatHeaderBar = styled.header`
     position: relative;

@@ -2,11 +2,11 @@ import { renderHook } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import { beforeEach, expect, it, vi } from 'vitest';
-import { createStore } from '@/app/store/store';
-import { setCredentials } from '@/app/api/httpClient';
-import { incomingMessage } from '@/mocks/fixtures';
-import { mockInstance } from '@/mocks/mockInstance';
-import { DEMO_CREDENTIALS } from '@/app/config';
+import { createStore } from '../app/store/store';
+import { setCredentials } from '../app/api/httpClient';
+import { incomingMessage } from '../mocks/fixtures';
+import { mockInstance } from '../mocks/mockInstance';
+import { DEMO_CREDENTIALS } from '../app/config';
 import { useNotificationPolling } from './useNotificationPolling';
 
 beforeEach(() => setCredentials(DEMO_CREDENTIALS));

@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { chatActions } from '@/app/store/slices/chat/chatSlice';
-import { selectChat, selectSession } from '@/app/store/selectors';
-import { useLogoutFromOtherTabs } from '@/hooks/useLogoutFromOtherTabs';
-import { useNotificationPolling } from '@/hooks/useNotificationPolling';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { ChatSidebar } from '@/components/ChatSidebar/ChatSidebar';
-import { ChatWindow } from '@/components/ChatWindow/ChatWindow';
-import { ConnectionBanners } from '@/components/ConnectionBanners/ConnectionBanners';
+import { chatActions } from '../../app/store/slices/chat/chatSlice';
+import { selectChat, selectSession } from '../../app/store/selectors';
+import { useLogoutFromOtherTabs } from '../../hooks/useLogoutFromOtherTabs';
+import { useNotificationPolling } from '../../hooks/useNotificationPolling';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { ChatSidebar } from '../../components/ChatSidebar/ChatSidebar';
+import { ChatWindow } from '../../components/ChatWindow/ChatWindow';
+import { ConnectionBanners } from '../../components/ConnectionBanners/ConnectionBanners';
 import { ChatLayout } from './ChatPage.styles';
 
 export const ChatPage = () => {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { toApiError } from './apiError';
-import type { Credentials } from '@/types/greenApi';
+import type { Credentials } from '../../types/greenApi';
 
 let credentials: Credentials | null = null;
 

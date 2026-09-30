@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { mobile } from '@/theme/theme';
+import { mobile } from '../../theme/theme';
 
 export const ChatLayout = styled.div<{ $chatOpen: boolean }>`
     display: grid;

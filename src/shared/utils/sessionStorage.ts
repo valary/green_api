@@ -1,5 +1,5 @@
 import { clearAppStorage, readJson, removeItem, storageKey, writeJson } from './storage';
-import type { StoredSession } from '@/types/session';
+import type { StoredSession } from '../../types/session';
 
 const KEY = 'session';
 export const SESSION_STORAGE_KEY = storageKey(KEY);

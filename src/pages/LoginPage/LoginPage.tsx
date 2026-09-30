@@ -1,6 +1,6 @@
-import { DemoButton } from '@/components/DemoButton/DemoButton';
-import { LoginForm } from '@/components/LoginForm/LoginForm';
-import { Icon } from '@/shared/ui/Icon/Icon';
+import { DemoButton } from '../../components/DemoButton/DemoButton';
+import { LoginForm } from '../../components/LoginForm/LoginForm';
+import { Icon } from '../../shared/ui/Icon/Icon';
 import { LoginScreen, LoginCard, LoginMark, LoginTitle, LoginLead } from './LoginPage.styles';
 
 export const LoginPage = () => {

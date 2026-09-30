@@ -1,5 +1,5 @@
-import type { Message, MessageStatus } from '@/types/message';
-import type { DeliveryUpdate } from '@/types/chat';
+import type { Message, MessageStatus } from '../../../../types/message';
+import type { DeliveryUpdate } from '../../../../types/chat';
 
 const rank: Record<MessageStatus, number> = { error: -1, sending: 0, sent: 1, delivered: 2, read: 3 };
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { mobile } from '@/theme/theme';
-import { ChatBackground } from '@/shared/ui/ChatBackground/ChatBackground';
+import { mobile } from '../../theme/theme';
+import { ChatBackground } from '../../shared/ui/ChatBackground/ChatBackground';
 
 export const LoginScreen = styled(ChatBackground)`
     display: grid;

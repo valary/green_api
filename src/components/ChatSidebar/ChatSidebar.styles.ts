@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { mobile } from '@/theme/theme';
+import { mobile } from '../../theme/theme';
 
 export const SidebarPanel = styled.aside`
     position: relative;

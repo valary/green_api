@@ -1,6 +1,6 @@
-import { Icon } from '@/shared/ui/Icon/Icon';
-import type { IconName } from '@/shared/ui/Icon/Icon';
-import type { MessageStatus } from '@/types/message';
+import { Icon } from '../../shared/ui/Icon/Icon';
+import type { IconName } from '../../shared/ui/Icon/Icon';
+import type { MessageStatus } from '../../types/message';
 
 const marks: Record<MessageStatus, { icon: IconName; label: string }> = {
     sending: { icon: 'clock', label: 'Отправляется' },

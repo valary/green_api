@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { SESSION_STORAGE_KEY } from '@/shared/utils/sessionStorage';
+import { SESSION_STORAGE_KEY } from '../shared/utils/sessionStorage';
 import { useAppDispatch } from './redux';
-import { logout } from '@/app/store/slices/session/thunks';
+import { logout } from '../app/store/slices/session/thunks';
 
 // С «Запомнить» сессия общая для вкладок — выход в одной должен разлогинить все.
 export const useLogoutFromOtherTabs = () => {

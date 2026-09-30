@@ -1,5 +1,4 @@
 import { copyFileSync } from 'node:fs';
-import { fileURLToPath, URL } from 'node:url';
 import react from '@vitejs/plugin-react';
 import type { Plugin } from 'vite';
 import { defineConfig } from 'vitest/config';
@@ -40,12 +39,6 @@ function githubPages(): Plugin {
 export default defineConfig({
     base: process.env.VITE_BASE ?? '/',
     plugins: [react(), githubPages()],
-    resolve: {
-        alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url)),
-            'test-utils': fileURLToPath(new URL('./test-utils', import.meta.url)),
-        },
-    },
     test: {
         environment: 'jsdom',
         setupFiles: ['./test-utils/setupTests.ts'],

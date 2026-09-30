@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { RootState } from './store';
-import type { Message } from '@/types/message';
+import type { Message } from '../../types/message';
 
 const noMessages: Message[] = [];
 

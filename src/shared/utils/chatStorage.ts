@@ -1,5 +1,5 @@
 import { readJson, writeJson } from './storage';
-import type { ChatState, PersistedChats } from '@/types/chat';
+import type { ChatState, PersistedChats } from '../../types/chat';
 
 const key = (idInstance: string) => `chats:${idInstance}`;
 

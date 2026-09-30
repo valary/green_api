@@ -1,10 +1,10 @@
-import { selectChat, selectMessages } from '@/app/store/selectors';
-import { Composer } from '@/components/Composer/Composer';
-import { retryMessage } from '@/app/store/slices/chat/thunks';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { ServicePill } from '@/shared/ui/ChatBackground/ChatBackground';
-import { ChatHeader } from '@/components/ChatHeader/ChatHeader';
-import { MessageFeed } from '@/components/MessageFeed/MessageFeed';
+import { selectChat, selectMessages } from '../../app/store/selectors';
+import { Composer } from '../Composer/Composer';
+import { retryMessage } from '../../app/store/slices/chat/thunks';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { ServicePill } from '../../shared/ui/ChatBackground/ChatBackground';
+import { ChatHeader } from '../ChatHeader/ChatHeader';
+import { MessageFeed } from '../MessageFeed/MessageFeed';
 import { ChatWindowPanel, NoChatPlaceholder } from './ChatWindow.styles';
 
 type Props = { chatId?: string };

@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { expect, it, vi } from 'vitest';
-import { mockInstance } from '@/mocks/mockInstance';
+import { mockInstance } from '../mocks/mockInstance';
 import { DEMO_CREDENTIALS } from './config';
-import { lightTheme } from '@/theme/theme';
+import { lightTheme } from '../theme/theme';
 import { routes } from './router';
-import { createStore } from '@/app/store/store';
+import { createStore } from './store/store';
 
 const renderApp = () => {
     const router = createMemoryRouter(routes);

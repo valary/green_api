@@ -1,9 +1,9 @@
-import type { RootState } from '@/app/store/store';
+import type { RootState } from '../../store';
 import { describe, expect, it } from 'vitest';
-import { selectChatPreviews } from '@/app/store/selectors';
+import { selectChatPreviews } from '../../selectors';
 import { chatActions, chatReducer } from './chatSlice';
 import { initialChats } from './initialChats';
-import type { ChatState } from '@/types/chat';
+import type { ChatState } from '../../../../types/chat';
 
 const reduce = (...actions: Parameters<typeof chatReducer>[1][]) =>
     actions.reduce<ChatState>(chatReducer, initialChats);

@@ -1,9 +1,9 @@
-import type { ApiError } from '@/types/greenApi';
-import type { ReceivedEvent } from '@/types/chat';
+import type { ApiError } from '../../types/greenApi';
+import type { ReceivedEvent } from '../../types/chat';
 import { deleteNotificationApi, receiveNotificationApi } from './requests';
 import { isFatal, isTransient, toApiError } from './apiError';
-import { wait } from '@/shared/utils/wait';
-import { parseNotification } from '@/shared/utils/parseNotification';
+import { wait } from '../../shared/utils/wait';
+import { parseNotification } from '../../shared/utils/parseNotification';
 
 export const BACKOFF_MS = [1_000, 2_000, 4_000, 8_000, 16_000, 30_000];
 

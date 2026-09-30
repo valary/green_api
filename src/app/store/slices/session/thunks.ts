@@ -1,16 +1,16 @@
-import type { DemoScenario, StoredSession } from '@/types/session';
-import { connectionActions } from '@/app/store/slices/connection/connectionSlice';
-import { getSettingsApi, getStateInstanceApi } from '@/app/api/requests';
-import { isFatal, notAuthorizedText, toApiError } from '@/app/api/apiError';
-import { createAppAsyncThunk } from '@/app/store/createAppAsyncThunk';
-import { settingsWarning } from '@/shared/utils/settingsWarning';
-import { chatActions } from '@/app/store/slices/chat/chatSlice';
-import { loadChats } from '@/shared/utils/chatStorage';
+import type { DemoScenario, StoredSession } from '../../../../types/session';
+import { connectionActions } from '../connection/connectionSlice';
+import { getSettingsApi, getStateInstanceApi } from '../../../api/requests';
+import { isFatal, notAuthorizedText, toApiError } from '../../../api/apiError';
+import { createAppAsyncThunk } from '../../createAppAsyncThunk';
+import { settingsWarning } from '../../../../shared/utils/settingsWarning';
+import { chatActions } from '../chat/chatSlice';
+import { loadChats } from '../../../../shared/utils/chatStorage';
 import { sessionActions } from './sessionSlice';
-import { forgetSession, storeSession } from '@/shared/utils/sessionStorage';
-import { clearCredentials, setCredentials } from '@/app/api/httpClient';
-import type { AppDispatch } from '@/app/store/store';
-import { DEMO_CREDENTIALS } from '@/app/config';
+import { forgetSession, storeSession } from '../../../../shared/utils/sessionStorage';
+import { clearCredentials, setCredentials } from '../../../api/httpClient';
+import type { AppDispatch } from '../../store';
+import { DEMO_CREDENTIALS } from '../../../config';
 
 // Только подсказываем: SetSettings перезапускает инстанс на несколько минут, трогать его сами не будем.
 export const checkSettings = createAppAsyncThunk('auth/checkSettings', async (_, { dispatch }) => {
@@ -57,7 +57,7 @@ export const signIn = createAppAsyncThunk(
 
 // MSW нужен только в демо, поэтому воркер и хендлеры приезжают отдельным чанком.
 export async function startDemo(scenario: DemoScenario) {
-    const mocks = await import('@/mocks/browser');
+    const mocks = await import('../../../../mocks/browser');
     await mocks.startDemo(scenario);
 }
 

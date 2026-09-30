@@ -1,11 +1,11 @@
 import type { AxiosPromise } from 'axios';
-import { RECEIVE_TIMEOUT_SEC } from '@/app/config';
+import { RECEIVE_TIMEOUT_SEC } from '../config';
 import type {
     CheckAccountResponse,
     InstanceSettings,
     QueuedNotification,
     StateInstance,
-} from '@/types/greenApi';
+} from '../../types/greenApi';
 import { httpClient } from './httpClient';
 
 export const getStateInstanceApi = async (): AxiosPromise<{ stateInstance: StateInstance }> =>

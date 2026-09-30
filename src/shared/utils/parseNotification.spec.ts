@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { incomingMessage, outgoingApiMessage, outgoingStatus } from '@/mocks/fixtures';
+import { incomingMessage, outgoingApiMessage, outgoingStatus } from '../../mocks/fixtures';
 import { parseNotification } from './parseNotification';
 
 describe('parseNotification', () => {

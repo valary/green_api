@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { selectSession } from '@/app/store/selectors';
-import { useAppSelector } from '@/hooks/redux';
+import { selectSession } from '../../app/store/selectors';
+import { useAppSelector } from '../../hooks/redux';
 
 type Props = { children: ReactNode };
 

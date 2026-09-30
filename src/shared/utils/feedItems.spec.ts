@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest';
-import type { Message } from '@/types/message';
+import type { Message } from '../../types/message';
 import { toFeedItems } from './feedItems';
 
 const day = new Date(2026, 8, 30, 12).getTime();

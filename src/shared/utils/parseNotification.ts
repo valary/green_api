@@ -1,5 +1,5 @@
-import type { ReceivedEvent } from '@/types/chat';
-import type { MessageWebhook, StatusWebhook } from '@/types/greenApi';
+import type { ReceivedEvent } from '../../types/chat';
+import type { MessageWebhook, StatusWebhook } from '../../types/greenApi';
 
 const isObject = (value: unknown): value is Record<string, unknown> =>
     typeof value === 'object' && value !== null;

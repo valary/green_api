@@ -1,8 +1,8 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import type { RouteObject } from 'react-router-dom';
-import { LoginPage } from '@/pages/LoginPage/LoginPage';
-import { GuestOnly, RequireSession } from '@/components/RouteGuards/RouteGuards';
-import { LazyChatPage } from '@/pages/ChatPage/LazyChatPage';
+import { LoginPage } from '../pages/LoginPage/LoginPage';
+import { GuestOnly, RequireSession } from '../components/RouteGuards/RouteGuards';
+import { LazyChatPage } from '../pages/ChatPage/LazyChatPage';
 
 // В адресе только chatId: токен в URL приложения не попадает никогда.
 export const routes: RouteObject[] = [

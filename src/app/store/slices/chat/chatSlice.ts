@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { chatReducers } from '@/app/store/slices/chat/reducers/chatReducers';
+import { chatReducers } from './reducers/chatReducers';
 import { initialChats } from './initialChats';
-import { notificationReducers } from '@/app/store/slices/chat/reducers/notificationReducers';
-import { sendReducers } from '@/app/store/slices/chat/reducers/sendReducers';
+import { notificationReducers } from './reducers/notificationReducers';
+import { sendReducers } from './reducers/sendReducers';
 
 export const chatSlice = createSlice({
     name: 'chat',

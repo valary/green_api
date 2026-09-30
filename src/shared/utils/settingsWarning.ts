@@ -1,4 +1,4 @@
-import type { InstanceSettings } from '@/types/greenApi';
+import type { InstanceSettings } from '../../types/greenApi';
 
 export const settingsWarning = ({ webhookUrl, incomingWebhook, outgoingWebhook }: InstanceSettings) => {
     const fixes = [

@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { mobile } from '@/theme/theme';
+import { mobile } from '../../../theme/theme';
 
 const fade = keyframes`
   from { opacity: 0; }

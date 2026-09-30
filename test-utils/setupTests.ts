@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
 import { afterAll, afterEach, beforeAll, beforeEach } from 'vitest';
-import { mockInstance } from '@/mocks/mockInstance';
-import { server } from '@/mocks/node';
+import { mockInstance } from '../src/mocks/mockInstance';
+import { server } from '../src/mocks/node';
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 beforeEach(() => {

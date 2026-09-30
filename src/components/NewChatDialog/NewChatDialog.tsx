@@ -1,15 +1,15 @@
-import type { ApiError } from '@/types/greenApi';
+import type { ApiError } from '../../types/greenApi';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { normalizePhone } from '@/shared/utils/phone';
-import { useAppDispatch } from '@/hooks/redux';
-import { Alert } from '@/shared/ui/Alert/Alert';
-import { Button } from '@/shared/ui/Button/Button';
-import { Modal } from '@/shared/ui/Modal/Modal';
-import { TextField } from '@/shared/ui/TextField/TextField';
-import { createChatByPhone } from '@/app/store/slices/chat/thunks';
+import { normalizePhone } from '../../shared/utils/phone';
+import { useAppDispatch } from '../../hooks/redux';
+import { Alert } from '../../shared/ui/Alert/Alert';
+import { Button } from '../../shared/ui/Button/Button';
+import { Modal } from '../../shared/ui/Modal/Modal';
+import { TextField } from '../../shared/ui/TextField/TextField';
+import { createChatByPhone } from '../../app/store/slices/chat/thunks';
 import { phoneSchema } from './phoneSchema';
 import type { PhoneValues } from './phoneSchema';
 import { PhoneForm, DialogActions } from './NewChatDialog.styles';

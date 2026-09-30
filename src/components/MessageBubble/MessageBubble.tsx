@@ -1,7 +1,7 @@
-import { formatTime } from '@/shared/utils/date';
-import { splitLinks } from '@/shared/utils/linkify';
-import type { Message } from '@/types/message';
-import { DeliveryMark } from '@/components/DeliveryMark/DeliveryMark';
+import { formatTime } from '../../shared/utils/date';
+import { splitLinks } from '../../shared/utils/linkify';
+import type { Message } from '../../types/message';
+import { DeliveryMark } from '../DeliveryMark/DeliveryMark';
 import {
     MessageRow,
     RetryDot,

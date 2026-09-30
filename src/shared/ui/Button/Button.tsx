@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes } from 'react';
-import { Spinner } from '@/shared/ui/Spinner/Spinner';
+import { Spinner } from '../Spinner/Spinner';
 import { ButtonControl } from './Button.styles';
 import type { ButtonVariant } from './Button.styles';
 

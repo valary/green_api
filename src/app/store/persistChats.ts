@@ -1,4 +1,4 @@
-import { saveChats } from '@/shared/utils/chatStorage';
+import { saveChats } from '../../shared/utils/chatStorage';
 import type { AppStore } from './store';
 
 // Чаты лежат там же, где сессия: без «Запомнить» — только до закрытия вкладки.

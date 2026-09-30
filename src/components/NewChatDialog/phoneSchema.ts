@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { normalizePhone } from '@/shared/utils/phone';
+import { normalizePhone } from '../../shared/utils/phone';
 
 export const PHONE_FORMAT_ERROR = 'Введите номер в международном формате, например +7 900 123-45-67';
 

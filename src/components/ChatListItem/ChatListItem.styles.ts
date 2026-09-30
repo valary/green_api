@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { DeliveryMark } from '@/components/DeliveryMark/DeliveryMark';
+import { DeliveryMark } from '../DeliveryMark/DeliveryMark';
 
 export const ChatListButton = styled.button<{ $current: boolean }>`
     display: flex;

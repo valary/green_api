@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import type { KeyboardEvent, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { Icon } from '@/shared/ui/Icon/Icon';
-import { IconButton } from '@/shared/ui/Button/Button.styles';
+import { Icon } from '../Icon/Icon';
+import { IconButton } from '../Button/Button.styles';
 import { ModalScrim, ModalCard, ModalHead, ModalTitle } from './Modal.styles';
 
 type Props = {
