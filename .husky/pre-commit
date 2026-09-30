@@ -1,0 +1,8 @@
+npx lint-staged
+npm run check:secrets
+
+# Локальный сканер секретов живёт в .git/hooks, а husky переключил core.hooksPath — зовём его сами.
+scanner="$(git rev-parse --git-dir)/hooks/pre-commit"
+if [ -x "$scanner" ]; then
+  "$scanner"
+fi
