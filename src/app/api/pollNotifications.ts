@@ -1,6 +1,6 @@
 import type { ApiError } from '@/types/greenApi';
 import type { ReceivedEvent } from '@/types/chat';
-import { greenApi } from './requests';
+import { deleteNotificationApi, receiveNotificationApi } from './requests';
 import { isFatal, isTransient, toApiError } from './apiError';
 import { wait } from '@/shared/utils/wait';
 import { parseNotification } from '@/shared/utils/parseNotification';
@@ -64,7 +64,7 @@ export async function pollNotifications({
     const remove = async (receiptId: number) => {
         while (!signal.aborted) {
             try {
-                await greenApi.deleteNotification(receiptId);
+                await deleteNotificationApi(receiptId);
                 succeeded();
                 return;
             } catch (e) {
@@ -79,7 +79,7 @@ export async function pollNotifications({
     while (!signal.aborted) {
         let notification;
         try {
-            notification = await greenApi.receiveNotification(signal);
+            notification = (await receiveNotificationApi(signal)).data;
             succeeded();
         } catch (e) {
             if (await backOff(toApiError(e))) continue;

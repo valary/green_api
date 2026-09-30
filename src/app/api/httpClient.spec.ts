@@ -1,7 +1,13 @@
 import { http, HttpResponse } from 'msw';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { server } from '@/mocks/node';
-import { greenApi } from './requests';
+import {
+    deleteNotificationApi,
+    getSettingsApi,
+    getStateInstanceApi,
+    receiveNotificationApi,
+    sendMessageApi,
+} from './requests';
 import { setCredentials } from './httpClient';
 
 const apiUrl = 'https://1101.api.green-api.com';
@@ -19,8 +25,8 @@ describe('httpClient', () => {
             }),
         );
 
-        await greenApi.getStateInstance();
-        await greenApi.deleteNotification(42);
+        await getStateInstanceApi();
+        await deleteNotificationApi(42);
 
         expect(urls).toEqual([
             `${apiUrl}/waInstance1101000001/getStateInstance/${token}`,
@@ -44,13 +50,13 @@ describe('httpClient', () => {
     ])('HTTP %i → %s', async (status, body, kind, message) => {
         server.use(http.get(`${apiUrl}/*`, () => new HttpResponse(body, { status })));
 
-        await expect(greenApi.getStateInstance()).rejects.toEqual({ kind, message, status });
+        await expect(getStateInstanceApi()).rejects.toEqual({ kind, message, status });
     });
 
     it('обрыв сети превращает в понятную ошибку', async () => {
         server.use(http.get(`${apiUrl}/*`, () => HttpResponse.error()));
 
-        await expect(greenApi.getSettings()).rejects.toMatchObject({ kind: 'network' });
+        await expect(getSettingsApi()).rejects.toMatchObject({ kind: 'network' });
     });
 
     it('вычищает токен из текста ошибки', async () => {
@@ -60,13 +66,14 @@ describe('httpClient', () => {
             ),
         );
 
-        const error = await greenApi.sendMessage('10000000', 'hi').catch((e: unknown) => e);
+        const error = await sendMessageApi('10000000', 'hi').catch((e: unknown) => e);
         expect(JSON.stringify(error)).not.toContain(token);
     });
 
     it('пустая очередь — null', async () => {
         server.use(http.get(`${apiUrl}/*`, () => new HttpResponse('null')));
 
-        await expect(greenApi.receiveNotification()).resolves.toBeNull();
+        const { data } = await receiveNotificationApi();
+        expect(data).toBeNull();
     });
 });

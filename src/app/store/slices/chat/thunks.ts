@@ -2,7 +2,7 @@ import type { ApiError } from '@/types/greenApi';
 import { chatActions } from './chatSlice';
 import { selectChatByPhone, selectMessage } from '@/app/store/selectors';
 import { connectionActions } from '@/app/store/slices/connection/connectionSlice';
-import { greenApi } from '@/app/api/requests';
+import { checkAccountApi, sendMessageApi } from '@/app/api/requests';
 import { isFatal, toApiError } from '@/app/api/apiError';
 import { formatPhone } from '@/shared/utils/phone';
 import { createAppAsyncThunk } from '@/app/store/createAppAsyncThunk';
@@ -19,7 +19,8 @@ export const createChatByPhone = createAppAsyncThunk(
         if (known) return known.chatId;
 
         try {
-            const { exist, chatId } = await greenApi.checkAccount(Number(phone));
+            const { data } = await checkAccountApi(Number(phone));
+            const { exist, chatId } = data;
             if (!exist || !chatId) return rejectWithValue({ kind: 'validation', message: NOT_FOUND });
 
             dispatch(
@@ -53,7 +54,8 @@ const failureReason = (error: ApiError) => {
 
 async function deliver({ chatId, localId, text }: Outgoing, dispatch: AppDispatch) {
     try {
-        const { idMessage } = await greenApi.sendMessage(chatId, text);
+        const { data } = await sendMessageApi(chatId, text);
+        const { idMessage } = data;
         dispatch(chatActions.messageSent({ chatId, localId, idMessage }));
         return null;
     } catch (e) {

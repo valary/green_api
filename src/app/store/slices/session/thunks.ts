@@ -1,6 +1,6 @@
 import type { DemoScenario, StoredSession } from '@/types/session';
 import { connectionActions } from '@/app/store/slices/connection/connectionSlice';
-import { greenApi } from '@/app/api/requests';
+import { getSettingsApi, getStateInstanceApi } from '@/app/api/requests';
 import { isFatal, notAuthorizedText, toApiError } from '@/app/api/apiError';
 import { createAppAsyncThunk } from '@/app/store/createAppAsyncThunk';
 import { settingsWarning } from '@/shared/utils/settingsWarning';
@@ -15,7 +15,8 @@ import { DEMO_CREDENTIALS } from '@/app/config';
 // Только подсказываем: SetSettings перезапускает инстанс на несколько минут, трогать его сами не будем.
 export const checkSettings = createAppAsyncThunk('auth/checkSettings', async (_, { dispatch }) => {
     try {
-        dispatch(connectionActions.settingsChecked(settingsWarning(await greenApi.getSettings())));
+        const { data } = await getSettingsApi();
+        dispatch(connectionActions.settingsChecked(settingsWarning(data)));
     } catch (e) {
         const error = toApiError(e);
         if (isFatal(error)) dispatch(connectionActions.fatalErrorOccurred(error.message));
@@ -37,7 +38,8 @@ export const signIn = createAppAsyncThunk(
     async (session: StoredSession, { dispatch, rejectWithValue }) => {
         setCredentials(session.credentials);
         try {
-            const state = await greenApi.getStateInstance();
+            const { data } = await getStateInstanceApi();
+            const state = data.stateInstance;
             if (state !== 'authorized') {
                 clearCredentials();
                 return rejectWithValue({ kind: 'notAuthorized', message: notAuthorizedText(state) });
