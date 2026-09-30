@@ -35,21 +35,23 @@ export const ChatListItem = ({ chat, lastMessage, current, onOpen }: Props) => {
                 <ChatListLine>
                     <ChatName>{chat.title}</ChatName>
                     {lastMessage && (
-                        <ChatTime>
+                        <ChatTime $current={current}>
                             {outgoing && lastMessage.status && (
-                                <LastMessageMark status={lastMessage.status} />
+                                <LastMessageMark status={lastMessage.status} $current={current} />
                             )}
                             {formatListTime(lastMessage.timestamp)}
                         </ChatTime>
                     )}
                 </ChatListLine>
                 <ChatListLine>
-                    <ChatPreview>
+                    <ChatPreview $current={current}>
                         {outgoing && <em>Вы: </em>}
                         {lastMessage?.text ?? 'Сообщений пока нет'}
                     </ChatPreview>
                     {chat.unread > 0 && (
-                        <UnreadBadge aria-label={`Непрочитанных: ${chat.unread}`}>{chat.unread}</UnreadBadge>
+                        <UnreadBadge $current={current} aria-label={`Непрочитанных: ${chat.unread}`}>
+                            {chat.unread}
+                        </UnreadBadge>
                     )}
                 </ChatListLine>
             </ChatListBody>

@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const FieldGroup = styled.div`
     display: grid;
@@ -13,7 +13,9 @@ export const FieldControl = styled.div<{ $invalid: boolean; $withAction: boolean
         height: ${({ theme }) => theme.size.field};
         padding: 0 ${({ theme }) => theme.space[4]};
         padding-right: ${({ theme, $withAction }) => ($withAction ? `calc(${theme.size.target} + ${theme.space[2]})` : undefined)};
-        border: 1px solid ${({ theme }) => theme.colors.borderInput};
+        border: 1px solid
+            ${({ theme, $invalid }) => ($invalid ? theme.colors.danger : theme.colors.borderInput)};
+        box-shadow: ${({ theme, $invalid }) => ($invalid ? `inset 0 0 0 1px ${theme.colors.danger}` : 'none')};
         border-radius: ${({ theme }) => theme.radius.md};
         background: ${({ theme }) => theme.colors.surface};
         font-size: ${({ theme }) => theme.fontSize.md};
@@ -21,11 +23,12 @@ export const FieldControl = styled.div<{ $invalid: boolean; $withAction: boolean
 
         &:hover,
         &:focus-visible {
-            border-color: ${({ theme }) => theme.colors.primary};
+            border-color: ${({ theme, $invalid }) => ($invalid ? theme.colors.danger : theme.colors.primary)};
         }
 
         &:focus-visible {
-            box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.primary};
+            box-shadow: inset 0 0 0 1px
+                ${({ theme, $invalid }) => ($invalid ? theme.colors.danger : theme.colors.primary)};
         }
 
         &::placeholder {
@@ -48,7 +51,7 @@ export const FieldControl = styled.div<{ $invalid: boolean; $withAction: boolean
         padding: 0 ${({ theme }) => theme.space[1]};
         transform: translateY(-50%);
         background: ${({ theme }) => theme.colors.surface};
-        color: ${({ theme }) => theme.colors.textMuted};
+        color: ${({ theme, $invalid }) => ($invalid ? theme.colors.dangerText : theme.colors.textMuted)};
         pointer-events: none;
         transition: all ${({ theme }) => `${theme.duration.base} ${theme.easing.standard}`};
     }
@@ -60,21 +63,8 @@ export const FieldControl = styled.div<{ $invalid: boolean; $withAction: boolean
     }
 
     input:focus + label {
-        color: ${({ theme }) => theme.colors.primaryText};
+        color: ${({ theme, $invalid }) => ($invalid ? theme.colors.dangerText : theme.colors.primaryText)};
     }
-
-    ${({ $invalid, theme }) =>
-        $invalid &&
-        css`
-            && input {
-                border-color: ${theme.colors.danger};
-                box-shadow: inset 0 0 0 1px ${theme.colors.danger};
-            }
-
-            && label {
-                color: ${theme.colors.dangerText};
-            }
-        `}
 `;
 
 export const FieldAction = styled.div`
