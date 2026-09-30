@@ -31,3 +31,4 @@ export type {
   PersistedChats,
 } from './model/types'
 export { loadChats, saveChats } from './lib/chatStorage'
+export { Avatar } from './ui/Avatar/Avatar'
