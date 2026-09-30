@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from '@/app/App'
-import { store } from '@/app/store'
+import { persistChats, store } from '@/app/store'
 import { loadStoredSession } from '@/entities/session'
 import { restoreSession, startDemo } from '@/features/auth'
 
@@ -11,6 +11,8 @@ if (saved) {
   if (saved.mode === 'demo') await startDemo(saved.scenario ?? 'default')
   restoreSession(store.dispatch, saved)
 }
+
+persistChats(store)
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
