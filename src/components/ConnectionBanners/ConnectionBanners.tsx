@@ -1,5 +1,5 @@
 import { selectConnection } from '@/app/store/selectors';
-import { settingsWarningDismissed } from '@/app/store/slices/connection/connectionSlice';
+import { connectionActions } from '@/app/store/slices/connection/connectionSlice';
 import { logout } from '@/app/store/slices/session/thunks';
 import { ERROR_TEXT } from '@/app/api/apiError';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
@@ -49,7 +49,9 @@ export function ConnectionBanners() {
                 <S.Banner $tone="warning" role="status">
                     <Icon name="warn" />
                     <S.Text>{settingsWarning}</S.Text>
-                    <Button onClick={() => dispatch(settingsWarningDismissed())}>Скрыть</Button>
+                    <Button onClick={() => dispatch(connectionActions.settingsWarningDismissed())}>
+                        Скрыть
+                    </Button>
                 </S.Banner>
             )}
         </S.Banners>

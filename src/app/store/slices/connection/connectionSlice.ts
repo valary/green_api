@@ -27,11 +27,5 @@ export const connectionSlice = createSlice({
     },
 });
 
-export const {
-    networkChanged,
-    problemChanged,
-    fatalErrorOccurred,
-    settingsChecked,
-    settingsWarningDismissed,
-    receivingElsewhereChanged,
-} = connectionSlice.actions;
+export const connectionActions = connectionSlice.actions;
+export const connectionReducer = connectionSlice.reducer;

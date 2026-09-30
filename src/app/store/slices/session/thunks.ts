@@ -1,12 +1,12 @@
 import type { DemoScenario, StoredSession } from '@/types/session';
-import { fatalErrorOccurred, settingsChecked } from '@/app/store/slices/connection/connectionSlice';
+import { connectionActions } from '@/app/store/slices/connection/connectionSlice';
 import { greenApi } from '@/app/api/requests';
 import { isFatal, notAuthorizedText, toApiError } from '@/app/api/apiError';
 import { createAppAsyncThunk } from '@/app/store/createAppAsyncThunk';
 import { settingsWarning } from '@/shared/utils/settingsWarning';
-import { chatsRestored } from '@/app/store/slices/chat/chatSlice';
+import { chatActions } from '@/app/store/slices/chat/chatSlice';
 import { loadChats } from '@/shared/utils/chatStorage';
-import { loggedOut, sessionStarted } from './sessionSlice';
+import { sessionActions } from './sessionSlice';
 import { forgetSession, storeSession } from '@/shared/utils/sessionStorage';
 import { clearCredentials, setCredentials } from '@/app/api/httpClient';
 import type { AppDispatch } from '@/app/store/store';
@@ -15,10 +15,10 @@ import { DEMO_CREDENTIALS } from '@/app/config';
 // Только подсказываем: SetSettings перезапускает инстанс на несколько минут, трогать его сами не будем.
 export const checkSettings = createAppAsyncThunk('auth/checkSettings', async (_, { dispatch }) => {
     try {
-        dispatch(settingsChecked(settingsWarning(await greenApi.getSettings())));
+        dispatch(connectionActions.settingsChecked(settingsWarning(await greenApi.getSettings())));
     } catch (e) {
         const error = toApiError(e);
-        if (isFatal(error)) dispatch(fatalErrorOccurred(error.message));
+        if (isFatal(error)) dispatch(connectionActions.fatalErrorOccurred(error.message));
     }
 });
 
@@ -27,9 +27,9 @@ export function restoreSession(
     { credentials, mode, remember, scenario }: StoredSession,
 ) {
     setCredentials(credentials);
-    dispatch(sessionStarted({ idInstance: credentials.idInstance, mode, remember, scenario }));
+    dispatch(sessionActions.sessionStarted({ idInstance: credentials.idInstance, mode, remember, scenario }));
     const saved = loadChats(credentials.idInstance, remember);
-    if (saved) dispatch(chatsRestored(saved));
+    if (saved) dispatch(chatActions.chatsRestored(saved));
 }
 
 export const signIn = createAppAsyncThunk(
@@ -69,5 +69,5 @@ export const openDemo = createAppAsyncThunk('auth/openDemo', async (scenario: De
 export const logout = () => (dispatch: AppDispatch) => {
     clearCredentials();
     forgetSession();
-    dispatch(loggedOut());
+    dispatch(sessionActions.loggedOut());
 };

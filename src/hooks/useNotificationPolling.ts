@@ -1,16 +1,7 @@
 import type { ReceivedEvent } from '@/types/chat';
 import { useEffect } from 'react';
-import {
-    deliveryStatusReceived,
-    incomingMessageReceived,
-    outgoingEchoReceived,
-} from '@/app/store/slices/chat/chatSlice';
-import {
-    fatalErrorOccurred,
-    networkChanged,
-    problemChanged,
-    receivingElsewhereChanged,
-} from '@/app/store/slices/connection/connectionSlice';
+import { chatActions } from '@/app/store/slices/chat/chatSlice';
+import { connectionActions } from '@/app/store/slices/connection/connectionSlice';
 import { useAppDispatch } from './redux';
 import { runInSingleTab } from '@/shared/utils/tabLock';
 
@@ -19,11 +10,11 @@ import { pollNotifications } from '@/app/api/pollNotifications';
 function toAction(event: ReceivedEvent) {
     switch (event.kind) {
         case 'incoming':
-            return incomingMessageReceived(event.message);
+            return chatActions.incomingMessageReceived(event.message);
         case 'echo':
-            return outgoingEchoReceived(event.message);
+            return chatActions.outgoingEchoReceived(event.message);
         case 'status':
-            return deliveryStatusReceived(event.update);
+            return chatActions.deliveryStatusReceived(event.update);
         case 'ignored':
             return null;
     }
@@ -40,7 +31,7 @@ export function useNotificationPolling(idInstance: string | undefined) {
         void runInSingleTab(
             `green-api-chat:poller:${idInstance}`,
             controller.signal,
-            (waiting) => dispatch(receivingElsewhereChanged(waiting)),
+            (waiting) => dispatch(connectionActions.receivingElsewhereChanged(waiting)),
             () =>
                 pollNotifications({
                     signal: controller.signal,
@@ -48,9 +39,9 @@ export function useNotificationPolling(idInstance: string | undefined) {
                         const action = toAction(event);
                         if (action) dispatch(action);
                     },
-                    onNetworkChange: (online) => dispatch(networkChanged(online)),
-                    onFatal: (message) => dispatch(fatalErrorOccurred(message)),
-                    onProblem: (message) => dispatch(problemChanged(message)),
+                    onNetworkChange: (online) => dispatch(connectionActions.networkChanged(online)),
+                    onFatal: (message) => dispatch(connectionActions.fatalErrorOccurred(message)),
+                    onProblem: (message) => dispatch(connectionActions.problemChanged(message)),
                 }),
         );
 

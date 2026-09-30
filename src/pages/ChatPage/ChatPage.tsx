@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { chatClosed, chatOpened } from '@/app/store/slices/chat/chatSlice';
+import { chatActions } from '@/app/store/slices/chat/chatSlice';
 import { selectChat, selectSession } from '@/app/store/selectors';
 import { useLogoutFromOtherTabs } from '@/hooks/useLogoutFromOtherTabs';
 import { useNotificationPolling } from '@/hooks/useNotificationPolling';
@@ -21,9 +21,9 @@ export function ChatPage() {
 
     useEffect(() => {
         if (!chatId || !chatExists) return;
-        dispatch(chatOpened(chatId));
+        dispatch(chatActions.chatOpened(chatId));
         return () => {
-            dispatch(chatClosed());
+            dispatch(chatActions.chatClosed());
         };
     }, [chatId, chatExists, dispatch]);
 

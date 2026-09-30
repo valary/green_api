@@ -1,7 +1,7 @@
 import type { ApiError } from '@/types/greenApi';
-import { chatCreated, messageFailed, messageQueued, messageRetried, messageSent } from './chatSlice';
+import { chatActions } from './chatSlice';
 import { selectChatByPhone, selectMessage } from '@/app/store/selectors';
-import { fatalErrorOccurred } from '@/app/store/slices/connection/connectionSlice';
+import { connectionActions } from '@/app/store/slices/connection/connectionSlice';
 import { greenApi } from '@/app/api/requests';
 import { isFatal, toApiError } from '@/app/api/apiError';
 import { formatPhone } from '@/shared/utils/phone';
@@ -23,7 +23,7 @@ export const createChatByPhone = createAppAsyncThunk(
             if (!exist || !chatId) return rejectWithValue({ kind: 'validation', message: NOT_FOUND });
 
             dispatch(
-                chatCreated({
+                chatActions.chatCreated({
                     chatId: String(chatId),
                     title: formatPhone(phone),
                     phone,
@@ -33,7 +33,7 @@ export const createChatByPhone = createAppAsyncThunk(
             return String(chatId);
         } catch (e) {
             const error = toApiError(e);
-            if (isFatal(error)) dispatch(fatalErrorOccurred(error.message));
+            if (isFatal(error)) dispatch(connectionActions.fatalErrorOccurred(error.message));
             return rejectWithValue(error);
         }
     },
@@ -54,13 +54,13 @@ const failureReason = (error: ApiError) => {
 async function deliver({ chatId, localId, text }: Outgoing, dispatch: AppDispatch) {
     try {
         const { idMessage } = await greenApi.sendMessage(chatId, text);
-        dispatch(messageSent({ chatId, localId, idMessage }));
+        dispatch(chatActions.messageSent({ chatId, localId, idMessage }));
         return null;
     } catch (e) {
         const error = toApiError(e);
         if (error.kind === 'aborted') return null;
-        dispatch(messageFailed({ chatId, localId, reason: failureReason(error) }));
-        if (isFatal(error)) dispatch(fatalErrorOccurred(error.message));
+        dispatch(chatActions.messageFailed({ chatId, localId, reason: failureReason(error) }));
+        if (isFatal(error)) dispatch(connectionActions.fatalErrorOccurred(error.message));
         return error;
     }
 }
@@ -70,7 +70,7 @@ export const sendMessage = createAppAsyncThunk(
     'sendMessage/send',
     async ({ chatId, text }: { chatId: string; text: string }, { dispatch, rejectWithValue }) => {
         const localId = `local-${crypto.randomUUID()}`;
-        dispatch(messageQueued({ chatId, localId, text, timestamp: Date.now() }));
+        dispatch(chatActions.messageQueued({ chatId, localId, text, timestamp: Date.now() }));
         const error = await deliver({ chatId, localId, text }, dispatch);
         if (error) return rejectWithValue(error);
     },
@@ -84,7 +84,7 @@ export const retryMessage = createAppAsyncThunk(
     ) => {
         const message = selectMessage(getState(), chatId, localId);
         if (message?.status !== 'error') return;
-        dispatch(messageRetried({ chatId, localId }));
+        dispatch(chatActions.messageRetried({ chatId, localId }));
         const error = await deliver({ chatId, localId, text: message.text }, dispatch);
         if (error) return rejectWithValue(error);
     },

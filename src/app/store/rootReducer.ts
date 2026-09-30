@@ -1,14 +1,14 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { chatSlice } from './slices/chat/chatSlice';
-import { connectionSlice } from './slices/connection/connectionSlice';
-import { loggedOut, sessionSlice } from './slices/session/sessionSlice';
+import { chatReducer } from './slices/chat/chatSlice';
+import { connectionReducer } from './slices/connection/connectionSlice';
+import { sessionActions, sessionReducer } from './slices/session/sessionSlice';
 
 const appReducer = combineReducers({
-    session: sessionSlice.reducer,
-    connection: connectionSlice.reducer,
-    chat: chatSlice.reducer,
+    session: sessionReducer,
+    connection: connectionReducer,
+    chat: chatReducer,
 });
 
 // Выход обнуляет всё разом: чаты, баннеры, сессию.
 export const rootReducer: typeof appReducer = (state, action) =>
-    appReducer(loggedOut.match(action) ? undefined : state, action);
+    appReducer(sessionActions.loggedOut.match(action) ? undefined : state, action);

@@ -10,16 +10,5 @@ export const chatSlice = createSlice({
     reducers: { ...chatReducers, ...sendReducers, ...notificationReducers },
 });
 
-export const {
-    chatCreated,
-    chatOpened,
-    chatClosed,
-    chatsRestored,
-    messageQueued,
-    messageRetried,
-    messageSent,
-    messageFailed,
-    incomingMessageReceived,
-    outgoingEchoReceived,
-    deliveryStatusReceived,
-} = chatSlice.actions;
+export const chatActions = chatSlice.actions;
+export const chatReducer = chatSlice.reducer;
