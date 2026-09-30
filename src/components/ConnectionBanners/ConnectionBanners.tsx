@@ -1,17 +1,13 @@
-import { selectConnection } from '../../app/store/selectors';
-import { connectionActions } from '../../app/store/slices/connection/connectionSlice';
-import { logout } from '../../app/store/slices/session/thunks';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useConnectionBanners } from '../../hooks/useConnectionBanners';
+import { BANNER_TEXTS, ERROR_TEXTS } from '../../shared/constants/texts';
 import { Button } from '../../shared/ui/Button/Button';
 import { Icon } from '../../shared/ui/Icon/Icon';
 import { Spinner } from '../../shared/ui/Spinner/Spinner';
-import { BannerStack, ConnectionBanner, BannerText } from './ConnectionBanners.styles';
-import { BANNER_TEXTS, ERROR_TEXTS } from '../../shared/constants/texts';
+import { BannerStack, BannerText, ConnectionBanner } from './ConnectionBanners.styles';
 
 export const ConnectionBanners = () => {
-    const dispatch = useAppDispatch();
-    const { fatalError, online, problem, receivingElsewhere, settingsWarning } =
-        useAppSelector(selectConnection);
+    const { fatalError, online, problem, receivingElsewhere, settingsWarning, relogin, dismissSettings } =
+        useConnectionBanners();
 
     return (
         <BannerStack>
@@ -19,7 +15,7 @@ export const ConnectionBanners = () => {
                 <ConnectionBanner $tone="danger" role="alert">
                     <Icon name="alert" />
                     <BannerText>{fatalError}</BannerText>
-                    <Button variant="primary" onClick={() => dispatch(logout())}>
+                    <Button variant="primary" onClick={relogin}>
                         {BANNER_TEXTS.relogin}
                     </Button>
                 </ConnectionBanner>
@@ -46,9 +42,7 @@ export const ConnectionBanners = () => {
                 <ConnectionBanner $tone="warning" role="status">
                     <Icon name="warn" />
                     <BannerText>{settingsWarning}</BannerText>
-                    <Button onClick={() => dispatch(connectionActions.settingsWarningDismissed())}>
-                        {BANNER_TEXTS.dismiss}
-                    </Button>
+                    <Button onClick={dismissSettings}>{BANNER_TEXTS.dismiss}</Button>
                 </ConnectionBanner>
             )}
         </BannerStack>

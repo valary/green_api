@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
+import { useFocusTrap } from '../../../hooks/useFocusTrap';
 import { Icon } from '../Icon/Icon';
 import { IconButton } from '../Button/Button.styles';
 import { ModalScrim, ModalCard, ModalHead, ModalTitle } from './Modal.styles';
-import { NEW_CHAT_TEXTS } from '../../constants/texts';
+import { COMMON_TEXTS } from '../../constants/texts';
 
 type Props = {
     title: string;
@@ -12,42 +12,18 @@ type Props = {
     children: ReactNode;
 };
 
-const focusable = 'button:not(:disabled), input:not(:disabled), textarea:not(:disabled), [href]';
-
 export const Modal = ({ title, onClose, children }: Props) => {
-    const cardRef = useRef<HTMLElement>(null);
-
-    // Когда модалка закроется, фокус вернётся туда, откуда её открыли.
-    useEffect(() => {
-        const opener = document.activeElement as HTMLElement | null;
-        return () => opener?.focus();
-    }, []);
-
-    const onKeyDown = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') return onClose();
-        if (event.key !== 'Tab' || !cardRef.current) return;
-
-        const items = [...cardRef.current.querySelectorAll<HTMLElement>(focusable)];
-        const first = items[0];
-        const last = items.at(-1);
-        if (event.shiftKey && document.activeElement === first) {
-            event.preventDefault();
-            last?.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-            event.preventDefault();
-            first?.focus();
-        }
-    };
+    const { containerRef, onKeyDown } = useFocusTrap(onClose);
 
     return createPortal(
         <ModalScrim
             onKeyDown={onKeyDown}
             onMouseDown={(event) => event.target === event.currentTarget && onClose()}
         >
-            <ModalCard ref={cardRef} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <ModalCard ref={containerRef} role="dialog" aria-modal="true" aria-labelledby="modal-title">
                 <ModalHead>
                     <ModalTitle id="modal-title">{title}</ModalTitle>
-                    <IconButton aria-label={NEW_CHAT_TEXTS.close} onClick={onClose}>
+                    <IconButton aria-label={COMMON_TEXTS.close} onClick={onClose}>
                         <Icon name="close" />
                     </IconButton>
                 </ModalHead>

@@ -1,37 +1,26 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { selectChatPreviews } from '../../app/store/selectors';
-import { DemoBadge } from '../DemoBadge/DemoBadge';
-import { NewChatDialog } from '../NewChatDialog/NewChatDialog';
-import { LogoutButton } from '../LogoutButton/LogoutButton';
-import { useAppSelector } from '../../hooks/redux';
+import { useChatList } from '../../hooks/useChatList';
+import { CHAT_LIST_TEXTS } from '../../shared/constants/texts';
 import { Button } from '../../shared/ui/Button/Button';
 import { Icon } from '../../shared/ui/Icon/Icon';
 import { ChatListItem } from '../ChatListItem/ChatListItem';
+import { DemoBadge } from '../DemoBadge/DemoBadge';
+import { LogoutButton } from '../LogoutButton/LogoutButton';
+import { NewChatDialog } from '../NewChatDialog/NewChatDialog';
 import {
-    SidebarPanel,
-    SidebarHeader,
-    SidebarTitle,
-    HeaderSpacer,
     ChatList,
-    NewChatFab,
     EmptyChats,
     EmptyChatsArt,
+    HeaderSpacer,
+    NewChatFab,
+    SidebarHeader,
+    SidebarPanel,
+    SidebarTitle,
 } from './ChatSidebar.styles';
-import { CHAT_LIST_TEXTS } from '../../shared/constants/texts';
 
 type Props = { activeChatId?: string };
 
 export const ChatSidebar = ({ activeChatId }: Props) => {
-    const navigate = useNavigate();
-    const previews = useAppSelector(selectChatPreviews);
-    const [dialogOpen, setDialogOpen] = useState(false);
-
-    const openChat = (chatId: string) => navigate(`/chat/${chatId}`);
-    const onCreated = (chatId: string) => {
-        setDialogOpen(false);
-        openChat(chatId);
-    };
+    const { previews, openChat, dialogOpen, openDialog, closeDialog, onChatCreated } = useChatList();
 
     return (
         <SidebarPanel aria-label={CHAT_LIST_TEXTS.title}>
@@ -59,7 +48,7 @@ export const ChatSidebar = ({ activeChatId }: Props) => {
                     <NewChatFab
                         aria-label={CHAT_LIST_TEXTS.newChat}
                         title={CHAT_LIST_TEXTS.newChat}
-                        onClick={() => setDialogOpen(true)}
+                        onClick={openDialog}
                     >
                         <Icon name="edit" />
                     </NewChatFab>
@@ -71,14 +60,14 @@ export const ChatSidebar = ({ activeChatId }: Props) => {
                     </EmptyChatsArt>
                     <h2>{CHAT_LIST_TEXTS.emptyTitle}</h2>
                     <p>{CHAT_LIST_TEXTS.emptyHint}</p>
-                    <Button variant="primary" onClick={() => setDialogOpen(true)}>
+                    <Button variant="primary" onClick={openDialog}>
                         <Icon name="edit" />
                         {CHAT_LIST_TEXTS.newChat}
                     </Button>
                 </EmptyChats>
             )}
 
-            {dialogOpen && <NewChatDialog onClose={() => setDialogOpen(false)} onCreated={onCreated} />}
+            {dialogOpen && <NewChatDialog onClose={closeDialog} onCreated={onChatCreated} />}
         </SidebarPanel>
     );
 };

@@ -1,33 +1,21 @@
-import { useEffect } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
-import { chatActions } from '../../app/store/slices/chat/chatSlice';
-import { selectChat, selectSession } from '../../app/store/selectors';
-import { useLogoutFromOtherTabs } from '../../hooks/useLogoutFromOtherTabs';
-import { useNotificationPolling } from '../../hooks/useNotificationPolling';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { Navigate } from 'react-router-dom';
+import { selectSession } from '../../app/store/selectors';
 import { ChatSidebar } from '../../components/ChatSidebar/ChatSidebar';
 import { ChatWindow } from '../../components/ChatWindow/ChatWindow';
 import { ConnectionBanners } from '../../components/ConnectionBanners/ConnectionBanners';
+import { useAppSelector } from '../../hooks/redux';
+import { useActiveChat } from '../../hooks/useActiveChat';
+import { useLogoutFromOtherTabs } from '../../hooks/useLogoutFromOtherTabs';
+import { useNotificationPolling } from '../../hooks/useNotificationPolling';
 import { ChatLayout } from './ChatPage.styles';
 
 export const ChatPage = () => {
-    const { chatId } = useParams();
-    const dispatch = useAppDispatch();
-    const chatExists = useAppSelector((state) => Boolean(selectChat(state, chatId)));
     const session = useAppSelector(selectSession);
-
+    const { chatId, unknownChat } = useActiveChat();
     useNotificationPolling(session?.idInstance);
     useLogoutFromOtherTabs();
 
-    useEffect(() => {
-        if (!chatId || !chatExists) return;
-        dispatch(chatActions.chatOpened(chatId));
-        return () => {
-            dispatch(chatActions.chatClosed());
-        };
-    }, [chatId, chatExists, dispatch]);
-
-    if (chatId && !chatExists) return <Navigate to="/chat" replace />;
+    if (unknownChat) return <Navigate to="/chat" replace />;
 
     return (
         <ChatLayout $chatOpen={Boolean(chatId)}>

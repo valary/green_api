@@ -1,4 +1,5 @@
-import { Fragment, useLayoutEffect, useRef } from 'react';
+import { Fragment } from 'react';
+import { useScrollToBottom } from '../../hooks/useScrollToBottom';
 import { MessageBubble } from '../MessageBubble/MessageBubble';
 import type { Message } from '../../types/message';
 import { ServicePill } from '../../shared/ui/ChatBackground/ChatBackground';
@@ -12,12 +13,7 @@ type Props = {
 };
 
 export const MessageFeed = ({ messages, onRetry }: Props) => {
-    const feedRef = useRef<HTMLDivElement>(null);
-
-    useLayoutEffect(() => {
-        const feed = feedRef.current;
-        if (feed) feed.scrollTop = feed.scrollHeight;
-    }, [messages.length]);
+    const feedRef = useScrollToBottom(messages.length);
 
     return (
         <FeedScroller ref={feedRef} role="log" aria-live="polite" aria-label={CHAT_TEXTS.feed}>

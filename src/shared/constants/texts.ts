@@ -1,5 +1,9 @@
 import type { DemoScenario } from '../../types/session';
 
+export const COMMON_TEXTS = {
+    close: 'Закрыть',
+};
+
 export const LOGIN_TEXTS = {
     title: 'Вход по данным GREEN-API',
     lead: 'idInstance и apiTokenInstance — на странице инстанса в личном кабинете GREEN-API',
@@ -63,7 +67,6 @@ export const NEW_CHAT_TEXTS = {
         'Номер не найден в Telegram или скрыт настройками приватности. Попросите получателя добавить ваш номер в контакты',
     networkError: 'Нет связи с GREEN-API. Проверьте интернет и попробуйте ещё раз',
     cancel: 'Отмена',
-    close: 'Закрыть',
     submit: 'Открыть чат',
     submitting: 'Ищем в Telegram…',
 };

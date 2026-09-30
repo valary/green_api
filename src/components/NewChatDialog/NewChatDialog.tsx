@@ -1,17 +1,10 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-
-import { useAppDispatch } from '../../hooks/redux';
+import { useNewChatForm } from '../../hooks/useNewChatForm';
+import { NEW_CHAT_TEXTS } from '../../shared/constants/texts';
 import { Alert } from '../../shared/ui/Alert/Alert';
 import { Button } from '../../shared/ui/Button/Button';
 import { Modal } from '../../shared/ui/Modal/Modal';
 import { TextField } from '../../shared/ui/TextField/TextField';
-import { createChatByPhone } from '../../app/store/slices/chat/thunks';
-import { phoneSchema } from './phoneSchema';
-import type { PhoneValues } from './phoneSchema';
-import { PhoneForm, DialogActions } from './NewChatDialog.styles';
-import { NEW_CHAT_TEXTS } from '../../shared/constants/texts';
+import { DialogActions, PhoneForm } from './NewChatDialog.styles';
 
 type Props = {
     onClose: () => void;
@@ -19,32 +12,11 @@ type Props = {
 };
 
 export const NewChatDialog = ({ onClose, onCreated }: Props) => {
-    const dispatch = useAppDispatch();
-    const {
-        register,
-        handleSubmit,
-        setFocus,
-        setError,
-        clearErrors,
-        formState: { errors, isSubmitting },
-    } = useForm<PhoneValues>({
-        resolver: yupResolver(phoneSchema),
-        mode: 'onBlur',
-        defaultValues: { phone: '' },
-    });
-
-    useEffect(() => setFocus('phone'), [setFocus]);
-
-    const onSubmit = async ({ phone }: PhoneValues) => {
-        const result = await dispatch(createChatByPhone(phone));
-        if (createChatByPhone.fulfilled.match(result)) return onCreated(result.payload);
-        setError('root', { message: result.payload });
-        setFocus('phone');
-    };
+    const { phoneField, errors, isSubmitting, submit } = useNewChatForm(onCreated);
 
     return (
         <Modal title={NEW_CHAT_TEXTS.title} onClose={onClose}>
-            <PhoneForm onSubmit={handleSubmit(onSubmit)} noValidate>
+            <PhoneForm onSubmit={submit} noValidate>
                 <TextField
                     label={NEW_CHAT_TEXTS.phoneLabel}
                     placeholder={NEW_CHAT_TEXTS.phonePlaceholder}
@@ -54,7 +26,7 @@ export const NewChatDialog = ({ onClose, onCreated }: Props) => {
                     autoComplete="tel"
                     readOnly={isSubmitting}
                     error={errors.phone?.message}
-                    {...register('phone', { onChange: () => clearErrors('root') })}
+                    {...phoneField}
                 />
                 {errors.root && <Alert>{errors.root.message}</Alert>}
                 <DialogActions>
