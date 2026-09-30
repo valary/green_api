@@ -7,7 +7,7 @@ import * as S from './ConnectionBanners.styles'
 
 export function ConnectionBanners() {
   const dispatch = useAppDispatch()
-  const { fatalError, online, settingsWarning } = useAppSelector(selectConnection)
+  const { fatalError, online, problem, settingsWarning } = useAppSelector(selectConnection)
 
   return (
     <S.Banners>
@@ -24,6 +24,12 @@ export function ConnectionBanners() {
         <S.Banner $tone="neutral" role="status">
           <Spinner />
           <S.Text>{ERROR_TEXT.network}</S.Text>
+        </S.Banner>
+      )}
+      {problem && !fatalError && (
+        <S.Banner $tone="warning" role="alert">
+          <Icon name="warn" />
+          <S.Text>Приём сообщений не работает: {problem}</S.Text>
         </S.Banner>
       )}
       {settingsWarning && (

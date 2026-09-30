@@ -9,6 +9,7 @@ interface PollOptions {
   onEvent: (event: ReceivedEvent) => void
   onNetworkChange: (online: boolean) => void
   onFatal: (message: string) => void
+  onProblem: (message: string | null) => void
   sleep?: typeof wait
 }
 
@@ -19,16 +20,22 @@ export async function pollNotifications({
   onEvent,
   onNetworkChange,
   onFatal,
+  onProblem,
   sleep = wait,
 }: PollOptions) {
   let failures = 0
   let offline = false
+  let problem = false
 
   const succeeded = () => {
     failures = 0
     if (offline) {
       offline = false
       onNetworkChange(true)
+    }
+    if (problem) {
+      problem = false
+      onProblem(null)
     }
   }
 
@@ -38,10 +45,15 @@ export async function pollNotifications({
       onFatal(error.message)
       return false
     }
-    if (isTransient(error) && !offline) {
+    if (!isTransient(error)) {
+      // Инстанс разлогинен, стоит вебхук, кончилась квота — само не пройдёт, говорим пользователю.
+      problem = true
+      onProblem(error.message)
+    } else if (!offline) {
       offline = true
       onNetworkChange(false)
     }
+    if (error.kind === 'rateLimit') failures = BACKOFF_MS.length - 1
     await sleep(BACKOFF_MS[Math.min(failures++, BACKOFF_MS.length - 1)], signal)
     return !signal.aborted
   }
@@ -53,7 +65,10 @@ export async function pollNotifications({
         succeeded()
         return
       } catch (e) {
-        if (!(await backOff(toApiError(e)))) return
+        const error = toApiError(e)
+        if (!(await backOff(error))) return
+        // 4xx на delete повторять бесполезно: уведомление вернётся следующим receive, дубль отсечёт дедуп.
+        if (!isTransient(error)) return
       }
     }
   }

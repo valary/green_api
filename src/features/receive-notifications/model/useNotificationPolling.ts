@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { deliveryStatusReceived, incomingMessageReceived, outgoingEchoReceived } from '@/entities/chat'
-import { fatalErrorOccurred, networkChanged } from '@/entities/session'
+import { fatalErrorOccurred, networkChanged, problemChanged } from '@/entities/session'
 import { useAppDispatch } from '@/shared/lib/redux'
 import type { ReceivedEvent } from '../lib/parseNotification'
 import { pollNotifications } from './pollNotifications'
@@ -33,6 +33,7 @@ export function useNotificationPolling(idInstance: string | undefined) {
       },
       onNetworkChange: (online) => dispatch(networkChanged(online)),
       onFatal: (message) => dispatch(fatalErrorOccurred(message)),
+      onProblem: (message) => dispatch(problemChanged(message)),
     })
 
     return () => controller.abort()
