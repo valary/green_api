@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { chatClosed, chatOpened, selectChat } from '@/entities/chat'
 import { selectSession } from '@/entities/session'
+import { useLogoutFromOtherTabs } from '@/features/logout'
 import { useNotificationPolling } from '@/features/receive-notifications'
 import { useAppDispatch, useAppSelector } from '@/shared/lib/redux'
 import { ChatSidebar } from '@/widgets/chat-sidebar'
@@ -16,6 +17,7 @@ export function ChatPage() {
   const session = useAppSelector(selectSession)
 
   useNotificationPolling(session?.idInstance)
+  useLogoutFromOtherTabs()
 
   useEffect(() => {
     if (!chatId || !chatExists) return

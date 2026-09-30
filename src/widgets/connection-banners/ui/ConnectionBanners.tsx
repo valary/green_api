@@ -7,7 +7,8 @@ import * as S from './ConnectionBanners.styles'
 
 export function ConnectionBanners() {
   const dispatch = useAppDispatch()
-  const { fatalError, online, problem, settingsWarning } = useAppSelector(selectConnection)
+  const { fatalError, online, problem, receivingElsewhere, settingsWarning } =
+    useAppSelector(selectConnection)
 
   return (
     <S.Banners>
@@ -30,6 +31,14 @@ export function ConnectionBanners() {
         <S.Banner $tone="warning" role="alert">
           <Icon name="warn" />
           <S.Text>Приём сообщений не работает: {problem}</S.Text>
+        </S.Banner>
+      )}
+      {receivingElsewhere && (
+        <S.Banner $tone="neutral" role="status">
+          <Icon name="bubble" />
+          <S.Text>
+            Сообщения принимает другая вкладка с этим инстансом. Закройте её — приём продолжится здесь
+          </S.Text>
         </S.Banner>
       )}
       {settingsWarning && (
