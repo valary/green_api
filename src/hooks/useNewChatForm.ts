@@ -2,8 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { createChatByPhone } from '../app/store/slices/chat/thunks';
-import { phoneSchema } from '../components/NewChatDialog/phoneSchema';
-import type { PhoneValues } from '../components/NewChatDialog/phoneSchema';
+import { phoneSchema } from '../shared/validation/phoneSchema';
+import type { PhoneValues } from '../types/forms';
 import { useAppDispatch } from './redux';
 
 export const useNewChatForm = (onCreated: (chatId: string) => void) => {
