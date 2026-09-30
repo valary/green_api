@@ -18,3 +18,4 @@ export {
   storeSession,
   type StoredSession,
 } from './lib/sessionStorage'
+export { DemoBadge } from './ui/DemoBadge'
