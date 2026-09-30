@@ -13,7 +13,8 @@ export function MessageFeed({ messages, onRetry }: MessageFeedProps) {
   const feedRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
-    feedRef.current?.scrollTo({ top: feedRef.current.scrollHeight })
+    const feed = feedRef.current
+    if (feed) feed.scrollTop = feed.scrollHeight
   }, [messages.length])
 
   return (
