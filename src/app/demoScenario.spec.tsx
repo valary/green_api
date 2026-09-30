@@ -49,4 +49,4 @@ it('вход → новый чат → отправка → ответ прих�
   expect(await screen.findByRole('heading', { name: 'Вход по данным GREEN-API' })).toBeInTheDocument()
   expect(router.state.location.pathname).toBe('/')
   expect(sessionStorage.length + localStorage.length).toBe(0)
-})
+}, 15_000)

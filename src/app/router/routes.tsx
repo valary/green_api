@@ -1,7 +1,7 @@
 import { Navigate, type RouteObject } from 'react-router-dom'
-import { ChatPage } from '@/pages/chat'
 import { LoginPage } from '@/pages/login'
 import { GuestOnly, RequireSession } from './guards'
+import { LazyChatPage } from './LazyChatPage'
 
 // В адресе только chatId: токен в URL приложения не попадает никогда.
 export const routes: RouteObject[] = [
@@ -17,7 +17,7 @@ export const routes: RouteObject[] = [
     path: '/chat/:chatId?',
     element: (
       <RequireSession>
-        <ChatPage />
+        <LazyChatPage />
       </RequireSession>
     ),
   },
