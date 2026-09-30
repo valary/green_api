@@ -22,12 +22,16 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
     "@reduxjs/toolkit": "^2.13.0",
     "axios": "^1.20.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "react-hook-form": "^7.89.0",
     "react-redux": "^9.3.0",
-    "styled-components": "^6.5.3"
+    "react-router-dom": "^6.30.6",
+    "styled-components": "^6.5.3",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.3",

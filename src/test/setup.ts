@@ -12,5 +12,7 @@ afterEach(() => {
   cleanup()
   server.resetHandlers()
   mockInstance.reset()
+  sessionStorage.clear()
+  localStorage.clear()
 })
 afterAll(() => server.close())
