@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 import { Icon } from '../Icon/Icon';
 import { IconButton } from '../Button/Button.styles';
 import { ModalScrim, ModalCard, ModalHead, ModalTitle } from './Modal.styles';
+import { NEW_CHAT_TEXTS } from '../../constants/texts';
 
 type Props = {
     title: string;
@@ -46,7 +47,7 @@ export const Modal = ({ title, onClose, children }: Props) => {
             <ModalCard ref={cardRef} role="dialog" aria-modal="true" aria-labelledby="modal-title">
                 <ModalHead>
                     <ModalTitle id="modal-title">{title}</ModalTitle>
-                    <IconButton aria-label="Закрыть" onClick={onClose}>
+                    <IconButton aria-label={NEW_CHAT_TEXTS.close} onClick={onClose}>
                         <Icon name="close" />
                     </IconButton>
                 </ModalHead>

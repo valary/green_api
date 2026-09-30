@@ -13,6 +13,7 @@ import { createChatByPhone } from '../../app/store/slices/chat/thunks';
 import { phoneSchema } from './phoneSchema';
 import type { PhoneValues } from './phoneSchema';
 import { PhoneForm, DialogActions } from './NewChatDialog.styles';
+import { NEW_CHAT_TEXTS } from '../../shared/constants/texts';
 
 type Props = {
     onClose: () => void;
@@ -20,9 +21,7 @@ type Props = {
 };
 
 const errorText = (error: ApiError) =>
-    error.kind === 'network'
-        ? 'Нет связи с GREEN-API. Проверьте интернет и попробуйте ещё раз'
-        : error.message;
+    error.kind === 'network' ? NEW_CHAT_TEXTS.networkError : error.message;
 
 export const NewChatDialog = ({ onClose, onCreated }: Props) => {
     const dispatch = useAppDispatch();
@@ -51,12 +50,12 @@ export const NewChatDialog = ({ onClose, onCreated }: Props) => {
     };
 
     return (
-        <Modal title="Новый чат" onClose={onClose}>
+        <Modal title={NEW_CHAT_TEXTS.title} onClose={onClose}>
             <PhoneForm onSubmit={handleSubmit(onSubmit)} noValidate>
                 <TextField
-                    label="Номер телефона"
-                    placeholder="+7 900 123-45-67"
-                    hint="В международном формате, можно с пробелами и скобками"
+                    label={NEW_CHAT_TEXTS.phoneLabel}
+                    placeholder={NEW_CHAT_TEXTS.phonePlaceholder}
+                    hint={NEW_CHAT_TEXTS.phoneHint}
                     type="tel"
                     inputMode="tel"
                     autoComplete="tel"
@@ -67,10 +66,10 @@ export const NewChatDialog = ({ onClose, onCreated }: Props) => {
                 {errors.root && <Alert>{errors.root.message}</Alert>}
                 <DialogActions>
                     <Button variant="text" onClick={onClose}>
-                        Отмена
+                        {NEW_CHAT_TEXTS.cancel}
                     </Button>
                     <Button type="submit" variant="primary" loading={isSubmitting} disabled={isSubmitting}>
-                        {isSubmitting ? 'Ищем в Telegram…' : 'Открыть чат'}
+                        {isSubmitting ? NEW_CHAT_TEXTS.submitting : NEW_CHAT_TEXTS.submit}
                     </Button>
                 </DialogActions>
             </PhoneForm>

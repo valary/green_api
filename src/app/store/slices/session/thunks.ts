@@ -1,7 +1,8 @@
 import type { DemoScenario, StoredSession } from '../../../../types/session';
 import { connectionActions } from '../connection/connectionSlice';
 import { getSettingsApi, getStateInstanceApi } from '../../../api/requests';
-import { isFatal, notAuthorizedText, toApiError } from '../../../api/apiError';
+import { isFatal, toApiError } from '../../../api/apiError';
+import { ERROR_TEXTS } from '../../../../shared/constants/texts';
 import { createAppAsyncThunk } from '../../createAppAsyncThunk';
 import { settingsWarning } from '../../../../shared/utils/settingsWarning';
 import { chatActions } from '../chat/chatSlice';
@@ -42,7 +43,7 @@ export const signIn = createAppAsyncThunk(
             const state = data.stateInstance;
             if (state !== 'authorized') {
                 clearCredentials();
-                return rejectWithValue({ kind: 'notAuthorized', message: notAuthorizedText(state) });
+                return rejectWithValue({ kind: 'notAuthorized', message: ERROR_TEXTS.notAuthorized(state) });
             }
         } catch (e) {
             clearCredentials();

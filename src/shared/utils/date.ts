@@ -1,3 +1,4 @@
+import { CHAT_LIST_TEXTS, CHAT_TEXTS } from '../constants/texts';
 const time = new Intl.DateTimeFormat('ru-RU', { hour: '2-digit', minute: '2-digit' });
 const dayMonth = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit' });
 
@@ -9,10 +10,10 @@ const isYesterday = (ms: number, now: number) => isSameDay(ms, now - 24 * 60 * 6
 
 export const formatListTime = (ms: number, now = Date.now()) => {
     if (isSameDay(ms, now)) return formatTime(ms);
-    return isYesterday(ms, now) ? 'вчера' : dayMonth.format(ms);
+    return isYesterday(ms, now) ? CHAT_LIST_TEXTS.yesterday : dayMonth.format(ms);
 };
 
 export const formatDayLabel = (ms: number, now = Date.now()) => {
-    if (isSameDay(ms, now)) return 'Сегодня';
-    return isYesterday(ms, now) ? 'Вчера' : dayMonth.format(ms);
+    if (isSameDay(ms, now)) return CHAT_TEXTS.today;
+    return isYesterday(ms, now) ? CHAT_TEXTS.yesterday : dayMonth.format(ms);
 };

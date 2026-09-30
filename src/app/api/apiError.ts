@@ -1,19 +1,6 @@
 import type { ApiError, ApiErrorKind } from '../../types/greenApi';
 import axios from 'axios';
-
-export const ERROR_TEXT = {
-    unauthorized: 'Неверный apiTokenInstance. Проверьте токен в личном кабинете GREEN-API',
-    forbidden: 'Неверный idInstance или apiUrl',
-    quota: 'Исчерпан лимит чатов тарифа (Developer — 3 чата в месяц). Лимит обновится 1-го числа',
-    rateLimit: 'Слишком много запросов. Подождите минуту и повторите',
-    webhookSet:
-        'Входящие сообщения не будут приходить: в настройках инстанса очистите webhookUrl. Изменения применяются до 5 минут.',
-    server: 'Сервер GREEN-API временно недоступен. Повторяем…',
-    network: 'Нет связи с GREEN-API. Переподключаемся…',
-};
-
-export const notAuthorizedText = (state: string) =>
-    `Инстанс не авторизован в Telegram (статус: ${state}). Откройте личный кабинет GREEN-API и подключите аккаунт по QR-коду`;
+import { ERROR_TEXTS } from '../../shared/constants/texts';
 
 export const isApiError = (e: unknown): e is ApiError =>
     typeof e === 'object' && e !== null && 'kind' in e && 'message' in e;
@@ -24,7 +11,7 @@ export const isTransient = (e: ApiError) => e.kind === 'network' || e.kind === '
 const apiError = (
     kind: ApiErrorKind,
     status?: number,
-    message: string = ERROR_TEXT[kind as keyof typeof ERROR_TEXT],
+    message: string = ERROR_TEXTS[kind as keyof typeof ERROR_TEXTS] as string,
 ) => ({
     kind,
     message,
@@ -48,14 +35,14 @@ const fromResponse = (status: number, data: unknown): ApiError => {
         return apiError(
             'notAuthorized',
             status,
-            notAuthorizedText(lower.includes('starting') ? 'starting' : 'notAuthorized'),
+            ERROR_TEXTS.notAuthorized(lower.includes('starting') ? 'starting' : 'notAuthorized'),
         );
     }
     const details = typeof data === 'object' && data && 'message' in data ? String(data.message) : '';
     return apiError(
         'validation',
         status,
-        `Запрос отклонён GREEN-API${details ? `: ${details.slice(0, 200)}` : ` (код ${status})`}`,
+        ERROR_TEXTS.rejected(details ? `: ${details.slice(0, 200)}` : ` (код ${status})`),
     );
 };
 

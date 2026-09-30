@@ -1,5 +1,6 @@
 import { readJson, writeJson } from './storage';
 import type { ChatState, PersistedChats } from '../../types/chat';
+import { ERROR_TEXTS } from '../constants/texts';
 
 const key = (idInstance: string) => `chats:${idInstance}`;
 
@@ -12,7 +13,9 @@ export const saveChats = (idInstance: string, remember: boolean, { chats, messag
         Object.entries(messages).map(([chatId, list]) => [
             chatId,
             list.map((m) =>
-                m.status === 'sending' ? { ...m, status: 'error' as const, error: 'отправка прервана' } : m,
+                m.status === 'sending'
+                    ? { ...m, status: 'error' as const, error: ERROR_TEXTS.interrupted }
+                    : m,
             ),
         ]),
     );

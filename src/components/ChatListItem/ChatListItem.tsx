@@ -12,6 +12,7 @@ import {
     ChatPreview,
     UnreadBadge,
 } from './ChatListItem.styles';
+import { CHAT_LIST_TEXTS } from '../../shared/constants/texts';
 
 type Props = {
     chat: Chat;
@@ -45,11 +46,11 @@ export const ChatListItem = ({ chat, lastMessage, current, onOpen }: Props) => {
                 </ChatListLine>
                 <ChatListLine>
                     <ChatPreview $current={current}>
-                        {outgoing && <em>Вы: </em>}
-                        {lastMessage?.text ?? 'Сообщений пока нет'}
+                        {outgoing && <em>{CHAT_LIST_TEXTS.you}</em>}
+                        {lastMessage?.text ?? CHAT_LIST_TEXTS.noMessages}
                     </ChatPreview>
                     {chat.unread > 0 && (
-                        <UnreadBadge $current={current} aria-label={`Непрочитанных: ${chat.unread}`}>
+                        <UnreadBadge $current={current} aria-label={CHAT_LIST_TEXTS.unread(chat.unread)}>
                             {chat.unread}
                         </UnreadBadge>
                     )}

@@ -16,13 +16,11 @@ import { loginSchema } from './loginSchema';
 import type { LoginValues } from './loginSchema';
 import { signIn } from '../../app/store/slices/session/thunks';
 import { LoginFormBody } from './LoginForm.styles';
+import { LOGIN_TEXTS } from '../../shared/constants/texts';
 
 const defaultValues: LoginValues = { idInstance: '', apiTokenInstance: '', apiUrl: '', remember: false };
 
-const errorText = (error: ApiError) =>
-    error.kind === 'network'
-        ? 'Нет связи с GREEN-API. Проверьте интернет и нажмите «Войти» ещё раз'
-        : error.message;
+const errorText = (error: ApiError) => (error.kind === 'network' ? LOGIN_TEXTS.networkError : error.message);
 
 export const LoginForm = () => {
     const dispatch = useAppDispatch();
@@ -55,9 +53,9 @@ export const LoginForm = () => {
     return (
         <LoginFormBody onSubmit={handleSubmit(onSubmit)} noValidate>
             <TextField
-                label="idInstance"
-                placeholder="1101000001"
-                hint="Номер инстанса, только цифры"
+                label={LOGIN_TEXTS.idInstanceLabel}
+                placeholder={LOGIN_TEXTS.idInstancePlaceholder}
+                hint={LOGIN_TEXTS.idInstanceHint}
                 inputMode="numeric"
                 autoComplete="username"
                 error={errors.idInstance?.message}
@@ -70,8 +68,8 @@ export const LoginForm = () => {
                 })}
             />
             <TextField
-                label="apiTokenInstance"
-                placeholder="Токен"
+                label={LOGIN_TEXTS.tokenLabel}
+                placeholder={LOGIN_TEXTS.tokenPlaceholder}
                 type={tokenVisible ? 'text' : 'password'}
                 autoComplete="current-password"
                 spellCheck={false}
@@ -81,7 +79,7 @@ export const LoginForm = () => {
                 disabled={isSubmitting}
                 action={
                     <IconButton
-                        aria-label={tokenVisible ? 'Скрыть токен' : 'Показать токен'}
+                        aria-label={tokenVisible ? LOGIN_TEXTS.hideToken : LOGIN_TEXTS.showToken}
                         aria-pressed={tokenVisible}
                         onClick={() => setTokenVisible((visible) => !visible)}
                     >
@@ -91,9 +89,9 @@ export const LoginForm = () => {
                 {...register('apiTokenInstance')}
             />
             <TextField
-                label="apiUrl"
-                placeholder="https://1101.api.green-api.com"
-                hint="Подставляется по idInstance. Меняйте, только если в кабинете указан другой"
+                label={LOGIN_TEXTS.apiUrlLabel}
+                placeholder={LOGIN_TEXTS.apiUrlPlaceholder}
+                hint={LOGIN_TEXTS.apiUrlHint}
                 inputMode="url"
                 spellCheck={false}
                 autoCapitalize="off"
@@ -102,8 +100,8 @@ export const LoginForm = () => {
                 {...register('apiUrl')}
             />
             <Checkbox
-                label="Запомнить на этом устройстве"
-                hint="Токен останется в браузере после закрытия вкладки. Не включайте на чужом компьютере"
+                label={LOGIN_TEXTS.remember}
+                hint={LOGIN_TEXTS.rememberHint}
                 disabled={isSubmitting}
                 {...register('remember')}
             />
@@ -111,7 +109,7 @@ export const LoginForm = () => {
             {errors.root && <Alert>{errors.root.message}</Alert>}
 
             <Button type="submit" variant="primary" block loading={isSubmitting} disabled={isSubmitting}>
-                {isSubmitting ? 'Проверяем инстанс…' : 'Войти'}
+                {isSubmitting ? LOGIN_TEXTS.submitting : LOGIN_TEXTS.submit}
             </Button>
         </LoginFormBody>
     );

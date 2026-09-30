@@ -10,6 +10,7 @@ import {
     MessageMeta,
     SendFailure,
 } from './MessageBubble.styles';
+import { CHAT_TEXTS } from '../../shared/constants/texts';
 
 type Props = {
     message: Message;
@@ -26,7 +27,11 @@ export const MessageBubble = ({ message, first, last, onRetry }: Props) => {
         <>
             <MessageRow $outgoing={outgoing} $first={first}>
                 {failed && onRetry && (
-                    <RetryDot aria-label="Повторить отправку" title="Повторить отправку" onClick={onRetry}>
+                    <RetryDot
+                        aria-label={CHAT_TEXTS.retrySend}
+                        title={CHAT_TEXTS.retrySend}
+                        onClick={onRetry}
+                    >
                         !
                     </RetryDot>
                 )}
@@ -51,8 +56,8 @@ export const MessageBubble = ({ message, first, last, onRetry }: Props) => {
             </MessageRow>
             {failed && (
                 <SendFailure role="alert">
-                    Не отправлено: {message.error}
-                    {onRetry && <button onClick={onRetry}>Повторить</button>}
+                    {CHAT_TEXTS.notSent} {message.error}
+                    {onRetry && <button onClick={onRetry}>{CHAT_TEXTS.retry}</button>}
                 </SendFailure>
             )}
         </>

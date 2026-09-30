@@ -6,6 +6,7 @@ import { Button } from '../../shared/ui/Button/Button';
 import { demoScenarioHints, parseDemoScenario } from '../../shared/utils/demoScenario';
 import { openDemo } from '../../app/store/slices/session/thunks';
 import { DemoSection, OrDivider, DemoHint } from './DemoButton.styles';
+import { DEMO_TEXTS } from '../../shared/constants/texts';
 
 export const DemoButton = () => {
     const dispatch = useAppDispatch();
@@ -37,14 +38,12 @@ export const DemoButton = () => {
 
     return (
         <DemoSection>
-            <OrDivider>или</OrDivider>
+            <OrDivider>{DEMO_TEXTS.divider}</OrDivider>
             <Button variant="text" block loading={opening} disabled={opening} onClick={open}>
-                {opening ? 'Открываем демо…' : 'Открыть демо без данных'}
+                {opening ? DEMO_TEXTS.opening : DEMO_TEXTS.open}
             </Button>
             <DemoHint>{demoScenarioHints[scenario]}</DemoHint>
-            {failed && (
-                <Alert>Не получилось запустить демо: браузер не дал зарегистрировать service worker</Alert>
-            )}
+            {failed && <Alert>{DEMO_TEXTS.failed}</Alert>}
         </DemoSection>
     );
 };

@@ -12,11 +12,12 @@ import {
     ChatSubtitle,
     MobileDemoBadge,
 } from './ChatHeader.styles';
+import { CHAT_TEXTS } from '../../shared/constants/texts';
 
 const subtitle = (chat: Chat) => {
-    if (!chat.phone) return `chatId ${chat.chatId}`;
+    if (!chat.phone) return CHAT_TEXTS.chatId(chat.chatId);
     const phone = formatPhone(chat.phone);
-    return chat.title === phone ? 'в Telegram' : phone;
+    return chat.title === phone ? CHAT_TEXTS.inTelegram : phone;
 };
 
 type Props = { chat: Chat };
@@ -26,7 +27,7 @@ export const ChatHeader = ({ chat }: Props) => {
 
     return (
         <ChatHeaderBar>
-            <BackButton aria-label="Назад к чатам" onClick={() => navigate('/chat')}>
+            <BackButton aria-label={CHAT_TEXTS.back} onClick={() => navigate('/chat')}>
                 <Icon name="back" />
             </BackButton>
             <Avatar chatId={chat.chatId} title={chat.title} small />

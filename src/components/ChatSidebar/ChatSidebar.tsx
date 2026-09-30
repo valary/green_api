@@ -18,6 +18,7 @@ import {
     EmptyChats,
     EmptyChatsArt,
 } from './ChatSidebar.styles';
+import { CHAT_LIST_TEXTS } from '../../shared/constants/texts';
 
 type Props = { activeChatId?: string };
 
@@ -33,9 +34,9 @@ export const ChatSidebar = ({ activeChatId }: Props) => {
     };
 
     return (
-        <SidebarPanel aria-label="Чаты">
+        <SidebarPanel aria-label={CHAT_LIST_TEXTS.title}>
             <SidebarHeader>
-                <SidebarTitle>Чаты</SidebarTitle>
+                <SidebarTitle>{CHAT_LIST_TEXTS.title}</SidebarTitle>
                 <DemoBadge />
                 <HeaderSpacer />
                 <LogoutButton />
@@ -55,7 +56,11 @@ export const ChatSidebar = ({ activeChatId }: Props) => {
                             </li>
                         ))}
                     </ChatList>
-                    <NewChatFab aria-label="Новый чат" title="Новый чат" onClick={() => setDialogOpen(true)}>
+                    <NewChatFab
+                        aria-label={CHAT_LIST_TEXTS.newChat}
+                        title={CHAT_LIST_TEXTS.newChat}
+                        onClick={() => setDialogOpen(true)}
+                    >
                         <Icon name="edit" />
                     </NewChatFab>
                 </>
@@ -64,11 +69,11 @@ export const ChatSidebar = ({ activeChatId }: Props) => {
                     <EmptyChatsArt>
                         <Icon name="bubble" />
                     </EmptyChatsArt>
-                    <h2>Чатов пока нет</h2>
-                    <p>Нажмите «Новый чат» и введите номер получателя</p>
+                    <h2>{CHAT_LIST_TEXTS.emptyTitle}</h2>
+                    <p>{CHAT_LIST_TEXTS.emptyHint}</p>
                     <Button variant="primary" onClick={() => setDialogOpen(true)}>
                         <Icon name="edit" />
-                        Новый чат
+                        {CHAT_LIST_TEXTS.newChat}
                     </Button>
                 </EmptyChats>
             )}

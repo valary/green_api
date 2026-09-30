@@ -9,6 +9,7 @@ import {
     sendMessageApi,
 } from './requests';
 import { setCredentials } from './httpClient';
+import { ERROR_TEXTS } from '../../shared/constants/texts';
 
 const apiUrl = 'https://1101.api.green-api.com';
 const token = 'test-token-0123456789';
@@ -35,15 +36,10 @@ describe('httpClient', () => {
     });
 
     it.each([
-        [401, '', 'unauthorized', 'Неверный apiTokenInstance. Проверьте токен в личном кабинете GREEN-API'],
-        [403, '', 'forbidden', 'Неверный idInstance или apiUrl'],
-        [
-            466,
-            '',
-            'quota',
-            'Исчерпан лимит чатов тарифа (Developer — 3 чата в месяц). Лимит обновится 1-го числа',
-        ],
-        [469, '', 'rateLimit', 'Слишком много запросов. Подождите минуту и повторите'],
+        [401, '', 'unauthorized', ERROR_TEXTS.unauthorized],
+        [403, '', 'forbidden', ERROR_TEXTS.forbidden],
+        [466, '', 'quota', ERROR_TEXTS.quota],
+        [469, '', 'rateLimit', ERROR_TEXTS.rateLimit],
         [400, 'Instance not authorized', 'notAuthorized', expect.stringContaining('статус: notAuthorized')],
         [400, 'custom webhook url is set', 'webhookSet', expect.stringContaining('очистите webhookUrl')],
         [502, '', 'server', expect.any(String)],

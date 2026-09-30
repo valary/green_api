@@ -1,17 +1,18 @@
 import * as yup from 'yup';
+import { LOGIN_TEXTS } from '../../shared/constants/texts';
 
 export const loginSchema = yup.object({
     idInstance: yup
         .string()
         .trim()
-        .required('Введите idInstance')
-        .matches(/^\d{4,}$/, 'Только цифры, например 1101000001'),
-    apiTokenInstance: yup.string().trim().required('Введите apiTokenInstance'),
+        .required(LOGIN_TEXTS.idInstanceRequired)
+        .matches(/^\d{4,}$/, LOGIN_TEXTS.idInstanceFormat),
+    apiTokenInstance: yup.string().trim().required(LOGIN_TEXTS.tokenRequired),
     apiUrl: yup
         .string()
         .trim()
-        .required('Введите apiUrl')
-        .matches(/^https:\/\/\S+$/, 'Адрес вида https://1101.api.green-api.com'),
+        .required(LOGIN_TEXTS.apiUrlRequired)
+        .matches(/^https:\/\/\S+$/, LOGIN_TEXTS.apiUrlFormat),
     remember: yup.boolean().defined(),
 });
 

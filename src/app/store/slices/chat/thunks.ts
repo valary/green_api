@@ -7,9 +7,7 @@ import { isFatal, toApiError } from '../../../api/apiError';
 import { formatPhone } from '../../../../shared/utils/phone';
 import { createAppAsyncThunk } from '../../createAppAsyncThunk';
 import type { AppDispatch } from '../../store';
-
-const NOT_FOUND =
-    'Номер не найден в Telegram или скрыт настройками приватности. Попросите получателя добавить ваш номер в контакты';
+import { ERROR_TEXTS, NEW_CHAT_TEXTS } from '../../../../shared/constants/texts';
 
 // Telegram отвечает с числовым chatId, а не с номер@c.us — поэтому чат открываем только через checkAccount.
 export const createChatByPhone = createAppAsyncThunk(
@@ -21,7 +19,8 @@ export const createChatByPhone = createAppAsyncThunk(
         try {
             const { data } = await checkAccountApi(Number(phone));
             const { exist, chatId } = data;
-            if (!exist || !chatId) return rejectWithValue({ kind: 'validation', message: NOT_FOUND });
+            if (!exist || !chatId)
+                return rejectWithValue({ kind: 'validation', message: NEW_CHAT_TEXTS.notFound });
 
             dispatch(
                 chatActions.chatCreated({
@@ -47,8 +46,8 @@ interface Outgoing {
 }
 
 const failureReason = (error: ApiError) => {
-    if (error.kind === 'network') return 'нет связи';
-    if (error.kind === 'server') return 'сервер GREEN-API временно недоступен';
+    if (error.kind === 'network') return ERROR_TEXTS.sendOffline;
+    if (error.kind === 'server') return ERROR_TEXTS.sendServer;
     return error.message;
 };
 

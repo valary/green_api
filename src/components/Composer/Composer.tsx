@@ -14,6 +14,7 @@ import {
     LengthCounter,
     SendButton,
 } from './Composer.styles';
+import { COMPOSER_TEXTS } from '../../shared/constants/texts';
 
 const COUNTER_FROM = MAX_MESSAGE_LENGTH - 100;
 const MAX_HEIGHT = 192;
@@ -62,19 +63,19 @@ export const Composer = ({ chatId }: Props) => {
         <ComposerForm onSubmit={onSubmit}>
             {tooLong && (
                 <TooLongNote>
-                    <ServicePill role="status">Сообщение длиннее 4 096 символов — сократите его</ServicePill>
+                    <ServicePill role="status">{COMPOSER_TEXTS.tooLong}</ServicePill>
                 </TooLongNote>
             )}
             <ComposerRow>
                 <MessageFieldBox>
                     <VisuallyHidden as="label" htmlFor="composer-field">
-                        Сообщение
+                        {COMPOSER_TEXTS.placeholder}
                     </VisuallyHidden>
                     <textarea
                         id="composer-field"
                         ref={fieldRef}
                         rows={1}
-                        placeholder="Сообщение"
+                        placeholder={COMPOSER_TEXTS.placeholder}
                         value={text}
                         onChange={(event) => setText(event.target.value)}
                         onKeyDown={onKeyDown}
@@ -86,7 +87,12 @@ export const Composer = ({ chatId }: Props) => {
                         </LengthCounter>
                     )}
                 </MessageFieldBox>
-                <SendButton type="submit" aria-label="Отправить" aria-disabled={!canSend} $ready={canSend}>
+                <SendButton
+                    type="submit"
+                    aria-label={COMPOSER_TEXTS.send}
+                    aria-disabled={!canSend}
+                    $ready={canSend}
+                >
                     <Icon name="send" />
                 </SendButton>
             </ComposerRow>

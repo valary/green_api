@@ -2,6 +2,7 @@ import { DemoButton } from '../../components/DemoButton/DemoButton';
 import { LoginForm } from '../../components/LoginForm/LoginForm';
 import { Icon } from '../../shared/ui/Icon/Icon';
 import { LoginScreen, LoginCard, LoginMark, LoginTitle, LoginLead } from './LoginPage.styles';
+import { LOGIN_TEXTS } from '../../shared/constants/texts';
 
 export const LoginPage = () => {
     return (
@@ -10,10 +11,8 @@ export const LoginPage = () => {
                 <LoginMark>
                     <Icon name="bubble" />
                 </LoginMark>
-                <LoginTitle id="login-title">Вход по данным GREEN-API</LoginTitle>
-                <LoginLead>
-                    idInstance и apiTokenInstance — на странице инстанса в личном кабинете GREEN-API
-                </LoginLead>
+                <LoginTitle id="login-title">{LOGIN_TEXTS.title}</LoginTitle>
+                <LoginLead>{LOGIN_TEXTS.lead}</LoginLead>
                 <LoginForm />
                 <DemoButton />
             </LoginCard>

@@ -8,6 +8,7 @@ import { server } from '../../mocks/node';
 import { DEMO_CREDENTIALS } from '../config';
 
 import { pollNotifications } from './pollNotifications';
+import { ERROR_TEXTS } from '../../shared/constants/texts';
 
 const receiveUrl = `${DEMO_CREDENTIALS.apiUrl}/:instance/receiveNotification/:token`;
 
@@ -105,9 +106,7 @@ describe('pollNotifications', () => {
         const { options, done } = startPolling();
         await done;
 
-        expect(options.onFatal).toHaveBeenCalledWith(
-            'Неверный apiTokenInstance. Проверьте токен в личном кабинете GREEN-API',
-        );
+        expect(options.onFatal).toHaveBeenCalledWith(ERROR_TEXTS.unauthorized);
     });
 
     it('постоянная ошибка приёма видна баннером и уходит, когда инстанс ожил', async () => {
@@ -124,9 +123,7 @@ describe('pollNotifications', () => {
         const { options } = startPolling({ sleep: async () => {} });
 
         await vi.waitFor(() => expect(options.onProblem).toHaveBeenLastCalledWith(null));
-        expect(options.onProblem).toHaveBeenCalledWith(
-            expect.stringContaining('Инстанс не авторизован в Telegram'),
-        );
+        expect(options.onProblem).toHaveBeenCalledWith(ERROR_TEXTS.notAuthorized('notAuthorized'));
         expect(options.onNetworkChange).not.toHaveBeenCalled();
     });
 
@@ -161,6 +158,6 @@ describe('pollNotifications', () => {
         const { options } = startPolling({ sleep: async () => {} });
 
         await vi.waitFor(() => expect(receives).toBeGreaterThan(2));
-        expect(options.onProblem).toHaveBeenCalledWith(expect.stringContaining('Запрос отклонён GREEN-API'));
+        expect(options.onProblem).toHaveBeenCalledWith(expect.stringContaining(ERROR_TEXTS.rejected('')));
     });
 });

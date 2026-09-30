@@ -5,8 +5,9 @@ import { describe, expect, it, vi } from 'vitest';
 import { server } from '../../mocks/node';
 import { renderWithProviders } from '../../../test-utils/renderWithProviders';
 import { LoginForm } from './LoginForm';
+import { ERROR_TEXTS, LOGIN_TEXTS } from '../../shared/constants/texts';
 
-const apiUrl = 'https://1101.api.green-api.com';
+const apiUrl = LOGIN_TEXTS.apiUrlPlaceholder;
 
 const answerState = (response: () => Response) => {
     const methods: string[] = [];
@@ -21,9 +22,9 @@ const answerState = (response: () => Response) => {
 
 const fillAndSubmit = async () => {
     const user = userEvent.setup();
-    await user.type(screen.getByLabelText('idInstance'), '1101000001');
-    await user.type(screen.getByLabelText('apiTokenInstance'), 'some-token');
-    await user.click(screen.getByRole('button', { name: 'Войти' }));
+    await user.type(screen.getByLabelText(LOGIN_TEXTS.idInstanceLabel), LOGIN_TEXTS.idInstancePlaceholder);
+    await user.type(screen.getByLabelText(LOGIN_TEXTS.tokenLabel), 'some-token');
+    await user.click(screen.getByRole('button', { name: LOGIN_TEXTS.submit }));
     return user;
 };
 
@@ -31,14 +32,17 @@ describe('LoginForm', () => {
     it('подставляет apiUrl по idInstance, пока его не правили руками', async () => {
         const user = userEvent.setup();
         renderWithProviders(<LoginForm />);
-        const apiUrlField = screen.getByLabelText('apiUrl');
+        const apiUrlField = screen.getByLabelText(LOGIN_TEXTS.apiUrlLabel);
 
-        await user.type(screen.getByLabelText('idInstance'), '1101000001');
+        await user.type(
+            screen.getByLabelText(LOGIN_TEXTS.idInstanceLabel),
+            LOGIN_TEXTS.idInstancePlaceholder,
+        );
         expect(apiUrlField).toHaveValue(apiUrl);
 
         await user.clear(apiUrlField);
         await user.type(apiUrlField, 'https://custom.example.com');
-        await user.type(screen.getByLabelText('idInstance'), '2');
+        await user.type(screen.getByLabelText(LOGIN_TEXTS.idInstanceLabel), '2');
         expect(apiUrlField).toHaveValue('https://custom.example.com');
     });
 
@@ -46,10 +50,10 @@ describe('LoginForm', () => {
         const user = userEvent.setup();
         renderWithProviders(<LoginForm />);
 
-        await user.click(screen.getByLabelText('apiTokenInstance'));
+        await user.click(screen.getByLabelText(LOGIN_TEXTS.tokenLabel));
         await user.tab();
 
-        expect(await screen.findByText('Введите apiTokenInstance')).toBeInTheDocument();
+        expect(await screen.findByText(LOGIN_TEXTS.tokenRequired)).toBeInTheDocument();
     });
 
     it('неверный токен — текст про apiTokenInstance, сессия не начинается', async () => {
@@ -58,9 +62,7 @@ describe('LoginForm', () => {
 
         await fillAndSubmit();
 
-        expect(await screen.findByRole('alert')).toHaveTextContent(
-            'Неверный apiTokenInstance. Проверьте токен в личном кабинете GREEN-API',
-        );
+        expect(await screen.findByRole('alert')).toHaveTextContent(ERROR_TEXTS.unauthorized);
         expect(store.getState().session.current).toBeNull();
     });
 
@@ -71,7 +73,7 @@ describe('LoginForm', () => {
         await fillAndSubmit();
 
         expect(await screen.findByRole('alert')).toHaveTextContent(
-            'Инстанс не авторизован в Telegram (статус: notAuthorized). Откройте личный кабинет GREEN-API и подключите аккаунт по QR-коду',
+            ERROR_TEXTS.notAuthorized('notAuthorized'),
         );
         expect(methods).toEqual(['getStateInstance']);
     });
@@ -89,7 +91,9 @@ describe('LoginForm', () => {
 
         await fillAndSubmit();
 
-        await vi.waitFor(() => expect(store.getState().session.current?.idInstance).toBe('1101000001'));
+        await vi.waitFor(() =>
+            expect(store.getState().session.current?.idInstance).toBe(LOGIN_TEXTS.idInstancePlaceholder),
+        );
         expect(sessionStorage.getItem('green-api-chat:session')).toContain('some-token');
         expect(localStorage.length).toBe(0);
     });

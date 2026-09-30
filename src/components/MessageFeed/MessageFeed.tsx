@@ -4,6 +4,7 @@ import type { Message } from '../../types/message';
 import { ServicePill } from '../../shared/ui/ChatBackground/ChatBackground';
 import { toFeedItems } from '../../shared/utils/feedItems';
 import { FeedScroller, FeedColumn, EmptyChatCard } from './MessageFeed.styles';
+import { CHAT_TEXTS } from '../../shared/constants/texts';
 
 type Props = {
     messages: Message[];
@@ -19,12 +20,12 @@ export const MessageFeed = ({ messages, onRetry }: Props) => {
     }, [messages.length]);
 
     return (
-        <FeedScroller ref={feedRef} role="log" aria-live="polite" aria-label="Сообщения">
+        <FeedScroller ref={feedRef} role="log" aria-live="polite" aria-label={CHAT_TEXTS.feed}>
             <FeedColumn>
                 {messages.length === 0 && (
                     <EmptyChatCard>
-                        <strong>Сообщений пока нет</strong>
-                        <span>Напишите первое — оно придёт получателю в Telegram</span>
+                        <strong>{CHAT_TEXTS.emptyTitle}</strong>
+                        <span>{CHAT_TEXTS.emptyHint}</span>
                     </EmptyChatCard>
                 )}
                 {toFeedItems(messages).map(({ message, dayLabel, first, last }) => (

@@ -6,6 +6,7 @@ import { server } from '../../mocks/node';
 import { DEMO_CREDENTIALS } from '../../app/config';
 import { renderWithProviders } from '../../../test-utils/renderWithProviders';
 import { NewChatDialog } from './NewChatDialog';
+import { ERROR_TEXTS, NEW_CHAT_TEXTS } from '../../shared/constants/texts';
 
 const countCheckAccount = () => {
     const calls = { count: 0 };
@@ -17,10 +18,10 @@ const countCheckAccount = () => {
 
 const submitPhone = async (phone: string) => {
     const user = userEvent.setup();
-    const field = screen.getByLabelText('Номер телефона');
+    const field = screen.getByLabelText(NEW_CHAT_TEXTS.phoneLabel);
     await user.clear(field);
     await user.type(field, phone);
-    await user.click(screen.getByRole('button', { name: 'Открыть чат' }));
+    await user.click(screen.getByRole('button', { name: NEW_CHAT_TEXTS.submit }));
 };
 
 describe('NewChatDialog', () => {
@@ -35,9 +36,7 @@ describe('NewChatDialog', () => {
 
         await submitPhone('12345');
 
-        expect(
-            await screen.findByText('Введите номер в международном формате, например +7 900 123-45-67'),
-        ).toBeInTheDocument();
+        expect(await screen.findByText(NEW_CHAT_TEXTS.phoneFormat)).toBeInTheDocument();
         expect(calls.count).toBe(0);
     });
 
@@ -52,20 +51,14 @@ describe('NewChatDialog', () => {
         await vi.waitFor(() => expect(onCreated).toHaveBeenCalledTimes(2));
         expect(onCreated.mock.calls[0][0]).toBe(onCreated.mock.calls[1][0]);
         expect(Object.values(store.getState().chat.chats)).toEqual([
-            expect.objectContaining({ title: '+7 900 123-45-67', phone: '79001234567' }),
+            expect.objectContaining({ title: NEW_CHAT_TEXTS.phonePlaceholder, phone: '79001234567' }),
         ]);
         expect(calls.count).toBe(1);
     });
 
     it.each([
-        [
-            '+7 900 000-00-00',
-            'Номер не найден в Telegram или скрыт настройками приватности. Попросите получателя добавить ваш номер в контакты',
-        ],
-        [
-            '+7 900 000-04-66',
-            'Исчерпан лимит чатов тарифа (Developer — 3 чата в месяц). Лимит обновится 1-го числа',
-        ],
+        ['+7 900 000-00-00', NEW_CHAT_TEXTS.notFound],
+        ['+7 900 000-04-66', ERROR_TEXTS.quota],
     ])('%s → понятная ошибка, чат не создан', async (phone, text) => {
         const { store } = renderWithProviders(<NewChatDialog onClose={vi.fn()} onCreated={vi.fn()} />);
 
