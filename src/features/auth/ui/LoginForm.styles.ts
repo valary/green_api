@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Form = styled.form`
-  display: grid;
-  gap: ${({ theme }) => theme.space[3]};
-`
+    display: grid;
+    gap: ${({ theme }) => theme.space[3]};
+`;

@@ -1,2 +1,2 @@
-export { retryMessage, sendMessage } from './model/sendMessage'
-export { Composer } from './ui/Composer'
+export { retryMessage, sendMessage } from './model/sendMessage';
+export { Composer } from './ui/Composer';

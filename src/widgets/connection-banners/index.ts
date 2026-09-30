@@ -1,1 +1,1 @@
-export { ConnectionBanners } from './ui/ConnectionBanners'
+export { ConnectionBanners } from './ui/ConnectionBanners';

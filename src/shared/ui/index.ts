@@ -1,10 +1,10 @@
-export { Alert } from './Alert/Alert'
-export { Button } from './Button/Button'
-export { IconButton } from './Button/Button.styles'
-export { ChatBackground, ServicePill } from './ChatBackground'
-export { Checkbox } from './Checkbox/Checkbox'
-export { Icon, type IconName } from './Icon/Icon'
-export { Spinner } from './Spinner'
-export { TextField } from './TextField/TextField'
-export { VisuallyHidden } from './VisuallyHidden'
-export { Modal } from './Modal/Modal'
+export { Alert } from './Alert/Alert';
+export { Button } from './Button/Button';
+export { IconButton } from './Button/Button.styles';
+export { ChatBackground, ServicePill } from './ChatBackground';
+export { Checkbox } from './Checkbox/Checkbox';
+export { Icon, type IconName } from './Icon/Icon';
+export { Spinner } from './Spinner';
+export { TextField } from './TextField/TextField';
+export { VisuallyHidden } from './VisuallyHidden';
+export { Modal } from './Modal/Modal';

@@ -1,8 +1,8 @@
-import type { ChatState } from './types'
+import type { ChatState } from './types';
 
 export const initialChats: ChatState = {
-  chats: {},
-  messages: {},
-  activeChatId: null,
-  pendingStatuses: {},
-}
+    chats: {},
+    messages: {},
+    activeChatId: null,
+    pendingStatuses: {},
+};

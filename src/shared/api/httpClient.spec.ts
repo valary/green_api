@@ -1,72 +1,72 @@
-import { http, HttpResponse } from 'msw'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { server } from './mocks/node'
-import { greenApi } from './greenApi'
-import { setCredentials } from './httpClient'
+import { http, HttpResponse } from 'msw';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { server } from './mocks/node';
+import { greenApi } from './greenApi';
+import { setCredentials } from './httpClient';
 
-const apiUrl = 'https://1101.api.green-api.com'
-const token = 'test-token-0123456789'
+const apiUrl = 'https://1101.api.green-api.com';
+const token = 'test-token-0123456789';
 
-beforeEach(() => setCredentials({ apiUrl, idInstance: '1101000001', apiTokenInstance: token }))
+beforeEach(() => setCredentials({ apiUrl, idInstance: '1101000001', apiTokenInstance: token }));
 
 describe('httpClient', () => {
-  it('кладёт idInstance и токен в путь, как требует GREEN-API', async () => {
-    const urls: string[] = []
-    server.use(
-      http.all(`${apiUrl}/*`, ({ request }) => {
-        urls.push(request.url)
-        return HttpResponse.json({ result: true, stateInstance: 'authorized' })
-      }),
-    )
+    it('кладёт idInstance и токен в путь, как требует GREEN-API', async () => {
+        const urls: string[] = [];
+        server.use(
+            http.all(`${apiUrl}/*`, ({ request }) => {
+                urls.push(request.url);
+                return HttpResponse.json({ result: true, stateInstance: 'authorized' });
+            }),
+        );
 
-    await greenApi.getStateInstance()
-    await greenApi.deleteNotification(42)
+        await greenApi.getStateInstance();
+        await greenApi.deleteNotification(42);
 
-    expect(urls).toEqual([
-      `${apiUrl}/waInstance1101000001/getStateInstance/${token}`,
-      `${apiUrl}/waInstance1101000001/deleteNotification/${token}/42`,
-    ])
-  })
+        expect(urls).toEqual([
+            `${apiUrl}/waInstance1101000001/getStateInstance/${token}`,
+            `${apiUrl}/waInstance1101000001/deleteNotification/${token}/42`,
+        ]);
+    });
 
-  it.each([
-    [401, '', 'unauthorized', 'Неверный apiTokenInstance. Проверьте токен в личном кабинете GREEN-API'],
-    [403, '', 'forbidden', 'Неверный idInstance или apiUrl'],
-    [
-      466,
-      '',
-      'quota',
-      'Исчерпан лимит чатов тарифа (Developer — 3 чата в месяц). Лимит обновится 1-го числа',
-    ],
-    [469, '', 'rateLimit', 'Слишком много запросов. Подождите минуту и повторите'],
-    [400, 'Instance not authorized', 'notAuthorized', expect.stringContaining('статус: notAuthorized')],
-    [400, 'custom webhook url is set', 'webhookSet', expect.stringContaining('очистите webhookUrl')],
-    [502, '', 'server', expect.any(String)],
-  ])('HTTP %i → %s', async (status, body, kind, message) => {
-    server.use(http.get(`${apiUrl}/*`, () => new HttpResponse(body, { status })))
+    it.each([
+        [401, '', 'unauthorized', 'Неверный apiTokenInstance. Проверьте токен в личном кабинете GREEN-API'],
+        [403, '', 'forbidden', 'Неверный idInstance или apiUrl'],
+        [
+            466,
+            '',
+            'quota',
+            'Исчерпан лимит чатов тарифа (Developer — 3 чата в месяц). Лимит обновится 1-го числа',
+        ],
+        [469, '', 'rateLimit', 'Слишком много запросов. Подождите минуту и повторите'],
+        [400, 'Instance not authorized', 'notAuthorized', expect.stringContaining('статус: notAuthorized')],
+        [400, 'custom webhook url is set', 'webhookSet', expect.stringContaining('очистите webhookUrl')],
+        [502, '', 'server', expect.any(String)],
+    ])('HTTP %i → %s', async (status, body, kind, message) => {
+        server.use(http.get(`${apiUrl}/*`, () => new HttpResponse(body, { status })));
 
-    await expect(greenApi.getStateInstance()).rejects.toEqual({ kind, message, status })
-  })
+        await expect(greenApi.getStateInstance()).rejects.toEqual({ kind, message, status });
+    });
 
-  it('обрыв сети превращает в понятную ошибку', async () => {
-    server.use(http.get(`${apiUrl}/*`, () => HttpResponse.error()))
+    it('обрыв сети превращает в понятную ошибку', async () => {
+        server.use(http.get(`${apiUrl}/*`, () => HttpResponse.error()));
 
-    await expect(greenApi.getSettings()).rejects.toMatchObject({ kind: 'network' })
-  })
+        await expect(greenApi.getSettings()).rejects.toMatchObject({ kind: 'network' });
+    });
 
-  it('вычищает токен из текста ошибки', async () => {
-    server.use(
-      http.post(`${apiUrl}/*`, () =>
-        HttpResponse.json({ message: `bad path .../${token}` }, { status: 400 }),
-      ),
-    )
+    it('вычищает токен из текста ошибки', async () => {
+        server.use(
+            http.post(`${apiUrl}/*`, () =>
+                HttpResponse.json({ message: `bad path .../${token}` }, { status: 400 }),
+            ),
+        );
 
-    const error = await greenApi.sendMessage('10000000', 'hi').catch((e: unknown) => e)
-    expect(JSON.stringify(error)).not.toContain(token)
-  })
+        const error = await greenApi.sendMessage('10000000', 'hi').catch((e: unknown) => e);
+        expect(JSON.stringify(error)).not.toContain(token);
+    });
 
-  it('пустая очередь — null', async () => {
-    server.use(http.get(`${apiUrl}/*`, () => new HttpResponse('null')))
+    it('пустая очередь — null', async () => {
+        server.use(http.get(`${apiUrl}/*`, () => new HttpResponse('null')));
 
-    await expect(greenApi.receiveNotification()).resolves.toBeNull()
-  })
-})
+        await expect(greenApi.receiveNotification()).resolves.toBeNull();
+    });
+});

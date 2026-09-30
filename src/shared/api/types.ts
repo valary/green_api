@@ -1,24 +1,24 @@
 export interface Credentials {
-  apiUrl: string
-  idInstance: string
-  apiTokenInstance: string
+    apiUrl: string;
+    idInstance: string;
+    apiTokenInstance: string;
 }
 
 export type StateInstance =
-  'authorized' | 'notAuthorized' | 'blocked' | 'suspended' | 'starting' | 'pendingPassword'
+    'authorized' | 'notAuthorized' | 'blocked' | 'suspended' | 'starting' | 'pendingPassword';
 
 export interface InstanceSettings {
-  webhookUrl: string
-  incomingWebhook: string
-  outgoingWebhook: string
+    webhookUrl: string;
+    incomingWebhook: string;
+    outgoingWebhook: string;
 }
 
 export interface CheckAccountResponse {
-  exist: boolean
-  chatId: string
+    exist: boolean;
+    chatId: string;
 }
 
 export interface QueuedNotification {
-  receiptId: number
-  body: unknown
+    receiptId: number;
+    body: unknown;
 }
