@@ -8,9 +8,9 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { ChatSidebar } from '@/components/ChatSidebar/ChatSidebar';
 import { ChatWindow } from '@/components/ChatWindow/ChatWindow';
 import { ConnectionBanners } from '@/components/ConnectionBanners/ConnectionBanners';
-import * as S from './ChatPage.styles';
+import { ChatLayout } from './ChatPage.styles';
 
-export function ChatPage() {
+export const ChatPage = () => {
     const { chatId } = useParams();
     const dispatch = useAppDispatch();
     const chatExists = useAppSelector((state) => Boolean(selectChat(state, chatId)));
@@ -30,10 +30,10 @@ export function ChatPage() {
     if (chatId && !chatExists) return <Navigate to="/chat" replace />;
 
     return (
-        <S.Layout $chatOpen={Boolean(chatId)}>
+        <ChatLayout $chatOpen={Boolean(chatId)}>
             <ConnectionBanners />
             <ChatSidebar activeChatId={chatId} />
             <ChatWindow chatId={chatId} />
-        </S.Layout>
+        </ChatLayout>
     );
-}
+};

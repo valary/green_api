@@ -33,12 +33,12 @@ const tones: Record<Tone, (theme: DefaultTheme) => ReturnType<typeof css>> = {
     `,
 };
 
-export const Banners = styled.div`
+export const BannerStack = styled.div`
     grid-column: 1 / -1;
     display: grid;
 `;
 
-export const Banner = styled.div<{ $tone: Tone }>`
+export const ConnectionBanner = styled.div<{ $tone: Tone }>`
     display: flex;
     align-items: center;
     gap: ${({ theme }) => theme.space[3]};
@@ -57,7 +57,7 @@ export const Banner = styled.div<{ $tone: Tone }>`
     }
 `;
 
-export const Text = styled.span`
+export const BannerText = styled.span`
     flex: 1;
     min-width: 0;
 `;

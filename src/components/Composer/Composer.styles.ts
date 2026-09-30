@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { mobile } from '@/theme/theme';
 
-export const Form = styled.form`
+export const ComposerForm = styled.form`
     flex: none;
     padding: ${({ theme }) => `${theme.space[2]} ${theme.space[4]} max(${theme.space[4]}, env(safe-area-inset-bottom))`};
 
@@ -10,12 +10,12 @@ export const Form = styled.form`
     }
 `;
 
-export const Note = styled.div`
+export const TooLongNote = styled.div`
     max-width: ${({ theme }) => theme.layout.chatMax};
     margin: ${({ theme }) => `0 auto ${theme.space[2]}`};
 `;
 
-export const Inner = styled.div`
+export const ComposerRow = styled.div`
     display: flex;
     align-items: flex-end;
     gap: ${({ theme }) => theme.space[2]};
@@ -23,7 +23,7 @@ export const Inner = styled.div`
     margin: 0 auto;
 `;
 
-export const Box = styled.div`
+export const MessageFieldBox = styled.div`
     flex: 1;
     min-width: 0;
     display: flex;
@@ -58,7 +58,7 @@ export const Box = styled.div`
     }
 `;
 
-export const Counter = styled.span<{ $over: boolean }>`
+export const LengthCounter = styled.span<{ $over: boolean }>`
     flex: none;
     align-self: flex-start;
     padding: ${({ theme }) => `${theme.space[3]} 0 0 ${theme.space[2]}`};
@@ -68,7 +68,7 @@ export const Counter = styled.span<{ $over: boolean }>`
     color: ${({ theme, $over }) => ($over ? theme.colors.dangerText : theme.colors.textMuted)};
 `;
 
-export const Send = styled.button<{ $ready: boolean }>`
+export const SendButton = styled.button<{ $ready: boolean }>`
     flex: none;
     display: grid;
     place-items: center;

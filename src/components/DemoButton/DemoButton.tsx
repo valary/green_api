@@ -5,9 +5,9 @@ import { Alert } from '@/shared/ui/Alert/Alert';
 import { Button } from '@/shared/ui/Button/Button';
 import { demoScenarioHints, parseDemoScenario } from '@/shared/utils/demoScenario';
 import { openDemo } from '@/app/store/slices/session/thunks';
-import * as S from './DemoButton.styles';
+import { DemoSection, OrDivider, DemoHint } from './DemoButton.styles';
 
-export function DemoButton() {
+export const DemoButton = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -36,15 +36,15 @@ export function DemoButton() {
     });
 
     return (
-        <S.Demo>
-            <S.Divider>или</S.Divider>
+        <DemoSection>
+            <OrDivider>или</OrDivider>
             <Button variant="text" block loading={opening} disabled={opening} onClick={open}>
                 {opening ? 'Открываем демо…' : 'Открыть демо без данных'}
             </Button>
-            <S.Hint>{demoScenarioHints[scenario]}</S.Hint>
+            <DemoHint>{demoScenarioHints[scenario]}</DemoHint>
             {failed && (
                 <Alert>Не получилось запустить демо: браузер не дал зарегистрировать service worker</Alert>
             )}
-        </S.Demo>
+        </DemoSection>
     );
-}
+};

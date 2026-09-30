@@ -7,7 +7,7 @@ import { router } from './router';
 import { store } from '@/app/store/store';
 import { GlobalStyle } from '@/theme/GlobalStyle';
 
-export function App() {
+export const App = () => {
     const scheme = useColorScheme();
 
     return (
@@ -18,4 +18,4 @@ export function App() {
             </ThemeProvider>
         </Provider>
     );
-}
+};

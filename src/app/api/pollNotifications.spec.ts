@@ -13,7 +13,7 @@ const receiveUrl = `${DEMO_CREDENTIALS.apiUrl}/:instance/receiveNotification/:to
 
 let controller: AbortController;
 
-function startPolling(overrides: Partial<Parameters<typeof pollNotifications>[0]> = {}) {
+const startPolling = (overrides: Partial<Parameters<typeof pollNotifications>[0]> = {}) => {
     const events: ReceivedEvent[] = [];
     const options = {
         signal: controller.signal,
@@ -24,7 +24,7 @@ function startPolling(overrides: Partial<Parameters<typeof pollNotifications>[0]
         ...overrides,
     };
     return { events, options, done: pollNotifications(options) };
-}
+};
 
 describe('pollNotifications', () => {
     beforeEach(() => {

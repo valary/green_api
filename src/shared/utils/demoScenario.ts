@@ -9,6 +9,6 @@ export const demoScenarioHints: Record<DemoScenario, string> = {
     newChat: 'Сценарий: через 3 секунды напишет незнакомый человек',
 };
 
-export function parseDemoScenario(value: string | null): DemoScenario {
+export const parseDemoScenario = (value: string | null): DemoScenario => {
     return DEMO_SCENARIOS.find((scenario) => scenario === value) ?? 'default';
-}
+};

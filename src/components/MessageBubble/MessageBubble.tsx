@@ -2,28 +2,35 @@ import { formatTime } from '@/shared/utils/date';
 import { splitLinks } from '@/shared/utils/linkify';
 import type { Message } from '@/types/message';
 import { DeliveryMark } from '@/components/DeliveryMark/DeliveryMark';
-import * as S from './MessageBubble.styles';
+import {
+    MessageRow,
+    RetryDot,
+    BubbleBody,
+    MetaSpacer,
+    MessageMeta,
+    SendFailure,
+} from './MessageBubble.styles';
 
-interface MessageBubbleProps {
+type Props = {
     message: Message;
     first: boolean;
     last: boolean;
     onRetry?: () => void;
-}
+};
 
-export function MessageBubble({ message, first, last, onRetry }: MessageBubbleProps) {
+export const MessageBubble = ({ message, first, last, onRetry }: Props) => {
     const outgoing = message.direction === 'out';
     const failed = message.status === 'error';
 
     return (
         <>
-            <S.Row $outgoing={outgoing} $first={first}>
+            <MessageRow $outgoing={outgoing} $first={first}>
                 {failed && onRetry && (
-                    <S.RetryDot aria-label="Повторить отправку" title="Повторить отправку" onClick={onRetry}>
+                    <RetryDot aria-label="Повторить отправку" title="Повторить отправку" onClick={onRetry}>
                         !
-                    </S.RetryDot>
+                    </RetryDot>
                 )}
-                <S.Bubble $outgoing={outgoing} $first={first} $last={last}>
+                <BubbleBody $outgoing={outgoing} $first={first} $last={last}>
                     {splitLinks(message.text).map(({ text, href }, index) =>
                         href ? (
                             <a key={index} href={href} target="_blank" rel="noopener noreferrer">
@@ -33,21 +40,21 @@ export function MessageBubble({ message, first, last, onRetry }: MessageBubblePr
                             text
                         ),
                     )}
-                    <S.MetaSpacer $outgoing={outgoing} />
-                    <S.Meta $outgoing={outgoing}>
+                    <MetaSpacer $outgoing={outgoing} />
+                    <MessageMeta $outgoing={outgoing}>
                         <time dateTime={new Date(message.timestamp).toISOString()}>
                             {formatTime(message.timestamp)}
                         </time>
                         {outgoing && message.status && !failed && <DeliveryMark status={message.status} />}
-                    </S.Meta>
-                </S.Bubble>
-            </S.Row>
+                    </MessageMeta>
+                </BubbleBody>
+            </MessageRow>
             {failed && (
-                <S.Failure role="alert">
+                <SendFailure role="alert">
                     Не отправлено: {message.error}
                     {onRetry && <button onClick={onRetry}>Повторить</button>}
-                </S.Failure>
+                </SendFailure>
             )}
         </>
     );
-}
+};

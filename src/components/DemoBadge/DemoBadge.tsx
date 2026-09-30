@@ -1,14 +1,16 @@
 import { useAppSelector } from '@/hooks/redux';
 import { selectIsDemo } from '@/app/store/selectors';
-import * as S from './DemoBadge.styles';
+import { DemoBadgeLabel } from './DemoBadge.styles';
 
-export function DemoBadge({ className }: { className?: string }) {
+type Props = { className?: string };
+
+export const DemoBadge = ({ className }: Props) => {
     const isDemo = useAppSelector(selectIsDemo);
     if (!isDemo) return null;
 
     return (
-        <S.Badge className={className} title="Данные не уходят в GREEN-API — это имитация">
+        <DemoBadgeLabel className={className} title="Данные не уходят в GREEN-API — это имитация">
             Демо
-        </S.Badge>
+        </DemoBadgeLabel>
     );
-}
+};

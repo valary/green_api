@@ -31,7 +31,7 @@ const apiError = (
     status,
 });
 
-function fromResponse(status: number, data: unknown): ApiError {
+const fromResponse = (status: number, data: unknown): ApiError => {
     const body = typeof data === 'string' ? data : JSON.stringify(data ?? '');
     const lower = body.toLowerCase();
 
@@ -57,12 +57,12 @@ function fromResponse(status: number, data: unknown): ApiError {
         status,
         `Запрос отклонён GREEN-API${details ? `: ${details.slice(0, 200)}` : ` (код ${status})`}`,
     );
-}
+};
 
-export function toApiError(error: unknown): ApiError {
+export const toApiError = (error: unknown): ApiError => {
     if (isApiError(error)) return error;
     if (axios.isCancel(error)) return apiError('aborted', undefined, '');
     if (axios.isAxiosError(error) && error.response)
         return fromResponse(error.response.status, error.response.data);
     return apiError('network');
-}
+};

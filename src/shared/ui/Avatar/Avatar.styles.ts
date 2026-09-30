@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Avatar = styled.span<{ $gradient: number; $small?: boolean }>`
+export const AvatarCircle = styled.span<{ $gradient: number; $small?: boolean }>`
     flex: none;
     display: grid;
     place-items: center;

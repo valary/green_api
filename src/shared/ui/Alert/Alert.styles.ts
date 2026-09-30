@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Alert = styled.div`
+export const AlertBox = styled.div`
     display: flex;
     align-items: flex-start;
     gap: ${({ theme }) => theme.space[3]};

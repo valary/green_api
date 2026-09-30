@@ -9,7 +9,9 @@ const marks: Record<MessageStatus, { icon: IconName; label: string }> = {
     error: { icon: 'alert', label: 'Не отправлено' },
 };
 
-export function DeliveryMark({ status, className }: { status: MessageStatus; className?: string }) {
+type Props = { status: MessageStatus; className?: string };
+
+export const DeliveryMark = ({ status, className }: Props) => {
     const { icon, label } = marks[status];
     return <Icon name={icon} label={label} small className={className} />;
-}
+};

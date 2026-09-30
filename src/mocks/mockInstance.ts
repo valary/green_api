@@ -20,7 +20,7 @@ const OFFLINE_FOR_MS = 20_000;
 
 // Инстанс в памяти вкладки. Очередь ведёт себя как настоящая: receive отдаёт голову
 // и не двигается дальше, пока её не удалят через deleteNotification.
-function createMockInstance() {
+const createMockInstance = () => {
     let scenario: DemoScenario = 'default';
     let timings = { ...defaultTimings };
     let queue: QueuedNotification[] = [];
@@ -155,6 +155,6 @@ function createMockInstance() {
             return true;
         },
     };
-}
+};
 
 export const mockInstance = createMockInstance();

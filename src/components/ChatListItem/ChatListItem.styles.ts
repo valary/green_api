@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { DeliveryMark } from '@/components/DeliveryMark/DeliveryMark';
 
-export const Item = styled.button<{ $current: boolean }>`
+export const ChatListButton = styled.button<{ $current: boolean }>`
     display: flex;
     align-items: center;
     gap: ${({ theme }) => theme.space[3]};
@@ -31,7 +31,7 @@ export const Item = styled.button<{ $current: boolean }>`
         `}
 `;
 
-export const Body = styled.span`
+export const ChatListBody = styled.span`
     flex: 1;
     min-width: 0;
     display: grid;
@@ -39,7 +39,7 @@ export const Body = styled.span`
     gap: ${({ theme }) => theme.space[0]};
 `;
 
-export const Line = styled.span`
+export const ChatListLine = styled.span`
     display: flex;
     align-items: center;
     gap: ${({ theme }) => theme.space[2]};
@@ -53,12 +53,12 @@ const ellipsis = css`
     text-overflow: ellipsis;
 `;
 
-export const Name = styled.span`
+export const ChatName = styled.span`
     ${ellipsis}
     font-weight: ${({ theme }) => theme.fontWeight.medium};
 `;
 
-export const Time = styled.span`
+export const ChatTime = styled.span`
     flex: none;
     display: inline-flex;
     align-items: center;
@@ -67,11 +67,11 @@ export const Time = styled.span`
     color: ${({ theme }) => theme.colors.textMuted};
 `;
 
-export const Mark = styled(DeliveryMark)`
+export const LastMessageMark = styled(DeliveryMark)`
     color: ${({ theme, status }) => (status === 'error' ? theme.colors.danger : theme.colors.primaryText)};
 `;
 
-export const Preview = styled.span`
+export const ChatPreview = styled.span`
     ${ellipsis}
     color: ${({ theme }) => theme.colors.textMuted};
 
@@ -81,7 +81,7 @@ export const Preview = styled.span`
     }
 `;
 
-export const Unread = styled.span`
+export const UnreadBadge = styled.span`
     display: inline-grid;
     place-items: center;
     min-width: ${({ theme }) => theme.space[5]};

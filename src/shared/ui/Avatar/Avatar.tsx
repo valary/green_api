@@ -1,10 +1,12 @@
 import { avatarIndex, initials } from '@/shared/utils/avatar';
-import * as S from './Avatar.styles';
+import { AvatarCircle } from './Avatar.styles';
 
-export function Avatar({ chatId, title, small }: { chatId: string; title: string; small?: boolean }) {
+type Props = { chatId: string; title: string; small?: boolean };
+
+export const Avatar = ({ chatId, title, small }: Props) => {
     return (
-        <S.Avatar $gradient={avatarIndex(chatId)} $small={small} aria-hidden="true">
+        <AvatarCircle $gradient={avatarIndex(chatId)} $small={small} aria-hidden="true">
             {initials(title)}
-        </S.Avatar>
+        </AvatarCircle>
     );
-}
+};

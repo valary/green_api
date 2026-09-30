@@ -5,14 +5,23 @@ import { Icon } from '@/shared/ui/Icon/Icon';
 import { ServicePill } from '@/shared/ui/ChatBackground/ChatBackground';
 import { VisuallyHidden } from '@/shared/ui/VisuallyHidden/VisuallyHidden';
 import { sendMessage } from '@/app/store/slices/chat/thunks';
-import * as S from './Composer.styles';
+import {
+    ComposerForm,
+    TooLongNote,
+    ComposerRow,
+    MessageFieldBox,
+    LengthCounter,
+    SendButton,
+} from './Composer.styles';
 
 const COUNTER_FROM = MAX_MESSAGE_LENGTH - 100;
 const MAX_HEIGHT = 192;
 
 const formatCount = (value: number) => value.toLocaleString('ru-RU');
 
-export function Composer({ chatId }: { chatId: string }) {
+type Props = { chatId: string };
+
+export const Composer = ({ chatId }: Props) => {
     const dispatch = useAppDispatch();
     const [text, setText] = useState('');
     const fieldRef = useRef<HTMLTextAreaElement>(null);
@@ -49,14 +58,14 @@ export function Composer({ chatId }: { chatId: string }) {
     };
 
     return (
-        <S.Form onSubmit={onSubmit}>
+        <ComposerForm onSubmit={onSubmit}>
             {tooLong && (
-                <S.Note>
+                <TooLongNote>
                     <ServicePill role="status">Сообщение длиннее 4 096 символов — сократите его</ServicePill>
-                </S.Note>
+                </TooLongNote>
             )}
-            <S.Inner>
-                <S.Box>
+            <ComposerRow>
+                <MessageFieldBox>
                     <VisuallyHidden as="label" htmlFor="composer-field">
                         Сообщение
                     </VisuallyHidden>
@@ -71,15 +80,15 @@ export function Composer({ chatId }: { chatId: string }) {
                         aria-describedby={text.length >= COUNTER_FROM ? 'composer-counter' : undefined}
                     />
                     {text.length >= COUNTER_FROM && (
-                        <S.Counter id="composer-counter" $over={tooLong}>
+                        <LengthCounter id="composer-counter" $over={tooLong}>
                             {formatCount(text.length)} / {formatCount(MAX_MESSAGE_LENGTH)}
-                        </S.Counter>
+                        </LengthCounter>
                     )}
-                </S.Box>
-                <S.Send type="submit" aria-label="Отправить" aria-disabled={!canSend} $ready={canSend}>
+                </MessageFieldBox>
+                <SendButton type="submit" aria-label="Отправить" aria-disabled={!canSend} $ready={canSend}>
                     <Icon name="send" />
-                </S.Send>
-            </S.Inner>
-        </S.Form>
+                </SendButton>
+            </ComposerRow>
+        </ComposerForm>
     );
-}
+};

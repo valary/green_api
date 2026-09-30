@@ -3,14 +3,14 @@ import { MessageBubble } from '@/components/MessageBubble/MessageBubble';
 import { type Message } from '@/types/message';
 import { ServicePill } from '@/shared/ui/ChatBackground/ChatBackground';
 import { toFeedItems } from '@/shared/utils/feedItems';
-import * as S from './MessageFeed.styles';
+import { FeedScroller, FeedColumn, EmptyChatCard } from './MessageFeed.styles';
 
-interface MessageFeedProps {
+type Props = {
     messages: Message[];
     onRetry?: (localId: string) => void;
-}
+};
 
-export function MessageFeed({ messages, onRetry }: MessageFeedProps) {
+export const MessageFeed = ({ messages, onRetry }: Props) => {
     const feedRef = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
@@ -19,13 +19,13 @@ export function MessageFeed({ messages, onRetry }: MessageFeedProps) {
     }, [messages.length]);
 
     return (
-        <S.Feed ref={feedRef} role="log" aria-live="polite" aria-label="Сообщения">
-            <S.Inner>
+        <FeedScroller ref={feedRef} role="log" aria-live="polite" aria-label="Сообщения">
+            <FeedColumn>
                 {messages.length === 0 && (
-                    <S.EmptyCard>
+                    <EmptyChatCard>
                         <strong>Сообщений пока нет</strong>
                         <span>Напишите первое — оно придёт получателю в Telegram</span>
-                    </S.EmptyCard>
+                    </EmptyChatCard>
                 )}
                 {toFeedItems(messages).map(({ message, dayLabel, first, last }) => (
                     <Fragment key={message.localId}>
@@ -38,7 +38,7 @@ export function MessageFeed({ messages, onRetry }: MessageFeedProps) {
                         />
                     </Fragment>
                 ))}
-            </S.Inner>
-        </S.Feed>
+            </FeedColumn>
+        </FeedScroller>
     );
-}
+};

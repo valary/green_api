@@ -7,12 +7,12 @@ export const isSameDay = (a: number, b: number) => new Date(a).toDateString() ==
 
 const isYesterday = (ms: number, now: number) => isSameDay(ms, now - 24 * 60 * 60 * 1000);
 
-export function formatListTime(ms: number, now = Date.now()) {
+export const formatListTime = (ms: number, now = Date.now()) => {
     if (isSameDay(ms, now)) return formatTime(ms);
     return isYesterday(ms, now) ? 'вчера' : dayMonth.format(ms);
-}
+};
 
-export function formatDayLabel(ms: number, now = Date.now()) {
+export const formatDayLabel = (ms: number, now = Date.now()) => {
     if (isSameDay(ms, now)) return 'Сегодня';
     return isYesterday(ms, now) ? 'Вчера' : dayMonth.format(ms);
-}
+};

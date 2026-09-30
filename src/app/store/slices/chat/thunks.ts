@@ -52,7 +52,7 @@ const failureReason = (error: ApiError) => {
     return error.message;
 };
 
-async function deliver({ chatId, localId, text }: Outgoing, dispatch: AppDispatch) {
+const deliver = async ({ chatId, localId, text }: Outgoing, dispatch: AppDispatch) => {
     try {
         const { data } = await sendMessageApi(chatId, text);
         const { idMessage } = data;
@@ -65,7 +65,7 @@ async function deliver({ chatId, localId, text }: Outgoing, dispatch: AppDispatc
         if (isFatal(error)) dispatch(connectionActions.fatalErrorOccurred(error.message));
         return error;
     }
-}
+};
 
 // Отправляем только по chatId из checkAccount: номер@c.us у Telegram-инстанса съедает квоту дважды.
 export const sendMessage = createAppAsyncThunk(

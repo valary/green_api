@@ -23,15 +23,15 @@ export const checkSettings = createAppAsyncThunk('auth/checkSettings', async (_,
     }
 });
 
-export function restoreSession(
+export const restoreSession = (
     dispatch: AppDispatch,
     { credentials, mode, remember, scenario }: StoredSession,
-) {
+) => {
     setCredentials(credentials);
     dispatch(sessionActions.sessionStarted({ idInstance: credentials.idInstance, mode, remember, scenario }));
     const saved = loadChats(credentials.idInstance, remember);
     if (saved) dispatch(chatActions.chatsRestored(saved));
-}
+};
 
 export const signIn = createAppAsyncThunk(
     'auth/signIn',

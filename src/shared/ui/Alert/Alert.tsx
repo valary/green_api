@@ -1,12 +1,14 @@
 import type { ReactNode } from 'react';
 import { Icon } from '@/shared/ui/Icon/Icon';
-import * as S from './Alert.styles';
+import { AlertBox } from './Alert.styles';
 
-export function Alert({ id, children }: { id?: string; children: ReactNode }) {
+type Props = { id?: string; children: ReactNode };
+
+export const Alert = ({ id, children }: Props) => {
     return (
-        <S.Alert role="alert">
+        <AlertBox role="alert">
             <Icon name="alert" />
             <div id={id}>{children}</div>
-        </S.Alert>
+        </AlertBox>
     );
-}
+};

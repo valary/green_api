@@ -4,7 +4,7 @@ import { useAppDispatch } from './redux';
 import { logout } from '@/app/store/slices/session/thunks';
 
 // С «Запомнить» сессия общая для вкладок — выход в одной должен разлогинить все.
-export function useLogoutFromOtherTabs() {
+export const useLogoutFromOtherTabs = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -14,4 +14,4 @@ export function useLogoutFromOtherTabs() {
         window.addEventListener('storage', onStorage);
         return () => window.removeEventListener('storage', onStorage);
     }, [dispatch]);
-}
+};

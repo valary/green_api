@@ -8,7 +8,7 @@ const tailIn = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
 type Side = { $outgoing: boolean };
 type Position = Side & { $first: boolean; $last: boolean };
 
-export const Row = styled.div<Side & { $first: boolean }>`
+export const MessageRow = styled.div<Side & { $first: boolean }>`
     display: flex;
     align-items: flex-end;
     justify-content: ${({ $outgoing }) => ($outgoing ? 'flex-end' : 'flex-start')};
@@ -16,7 +16,7 @@ export const Row = styled.div<Side & { $first: boolean }>`
     margin-top: ${({ theme, $first }) => ($first ? theme.space[2] : 0)};
 `;
 
-export const Bubble = styled.div<Position>`
+export const BubbleBody = styled.div<Position>`
     position: relative;
     max-width: min(480px, 85%);
     padding: ${({ theme }) => `${theme.space[1]} ${theme.space[2]}`};
@@ -70,7 +70,7 @@ export const MetaSpacer = styled.span<Side>`
     height: 1px;
 `;
 
-export const Meta = styled.span<Side>`
+export const MessageMeta = styled.span<Side>`
     position: absolute;
     right: ${({ theme }) => theme.space[2]};
     bottom: ${({ theme }) => theme.space[1]};
@@ -105,7 +105,7 @@ export const RetryDot = styled.button.attrs({ type: 'button' })`
     }
 `;
 
-export const Failure = styled.div`
+export const SendFailure = styled.div`
     align-self: flex-end;
     display: inline-flex;
     align-items: center;

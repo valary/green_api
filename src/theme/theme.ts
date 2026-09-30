@@ -48,7 +48,7 @@ const scale = {
     disabledOpacity: 0.45,
 };
 
-function createTheme(name: 'light' | 'dark', colors: Colors) {
+const createTheme = (name: 'light' | 'dark', colors: Colors) => {
     const shadowColor = name === 'light' ? 'rgba(16, 35, 47,' : 'rgba(0, 0, 0,';
     return {
         ...scale,
@@ -63,7 +63,7 @@ function createTheme(name: 'light' | 'dark', colors: Colors) {
         focusRing: `0 0 0 2px ${colors.surface}, 0 0 0 4px ${colors.focus}`,
         patternOpacity: name === 'light' ? 0.09 : 0.07,
     };
-}
+};
 
 export const lightTheme = createTheme('light', lightColors);
 export const darkTheme = createTheme('dark', darkColors);

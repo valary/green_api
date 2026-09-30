@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Svg = styled.svg<{ $small?: boolean }>`
+export const IconSvg = styled.svg<{ $small?: boolean }>`
     flex: none;
     width: ${({ theme, $small }) => ($small ? theme.size.iconSmall : theme.size.icon)};
     height: ${({ theme, $small }) => ($small ? theme.size.iconSmall : theme.size.icon)};

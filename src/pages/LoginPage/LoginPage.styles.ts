@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { mobile } from '@/theme/theme';
 import { ChatBackground } from '@/shared/ui/ChatBackground/ChatBackground';
 
-export const Page = styled(ChatBackground)`
+export const LoginScreen = styled(ChatBackground)`
     display: grid;
     place-items: center;
     min-height: 100%;
@@ -14,7 +14,7 @@ export const Page = styled(ChatBackground)`
     }
 `;
 
-export const Card = styled.section`
+export const LoginCard = styled.section`
     display: grid;
     gap: ${({ theme }) => theme.space[3]};
     width: 100%;
@@ -29,7 +29,7 @@ export const Card = styled.section`
     }
 `;
 
-export const Mark = styled.div`
+export const LoginMark = styled.div`
     display: grid;
     place-items: center;
     justify-self: center;
@@ -40,7 +40,7 @@ export const Mark = styled.div`
     color: ${({ theme }) => theme.colors.onPrimary};
 `;
 
-export const Title = styled.h1`
+export const LoginTitle = styled.h1`
     margin: 0;
     text-align: center;
     font-size: ${({ theme }) => theme.fontSize.xl};
@@ -48,7 +48,7 @@ export const Title = styled.h1`
     line-height: ${({ theme }) => theme.lineHeight.tight};
 `;
 
-export const Lead = styled.p`
+export const LoginLead = styled.p`
     margin: ${({ theme }) => `calc(${theme.space[2]} * -1) 0 ${theme.space[1]}`};
     text-align: center;
     font-size: ${({ theme }) => theme.fontSize.sm};

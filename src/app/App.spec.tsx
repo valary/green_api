@@ -10,7 +10,7 @@ import { lightTheme } from '@/theme/theme';
 import { routes } from './router';
 import { createStore } from '@/app/store/store';
 
-function renderApp() {
+const renderApp = () => {
     const router = createMemoryRouter(routes);
     render(
         <Provider store={createStore()}>
@@ -20,7 +20,7 @@ function renderApp() {
         </Provider>,
     );
     return router;
-}
+};
 
 it('вход → новый чат → отправка → ответ приходит в тот же чат → выход', async () => {
     const user = userEvent.setup();

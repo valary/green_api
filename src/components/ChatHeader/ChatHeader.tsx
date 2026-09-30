@@ -4,30 +4,39 @@ import { type Chat } from '@/types/chat';
 import { DemoBadge } from '@/components/DemoBadge/DemoBadge';
 import { formatPhone } from '@/shared/utils/phone';
 import { Icon } from '@/shared/ui/Icon/Icon';
-import * as S from './ChatHeader.styles';
+import {
+    ChatHeaderBar,
+    BackButton,
+    ChatInfo,
+    ChatName,
+    ChatSubtitle,
+    MobileDemoBadge,
+} from './ChatHeader.styles';
 
-function subtitle(chat: Chat) {
+const subtitle = (chat: Chat) => {
     if (!chat.phone) return `chatId ${chat.chatId}`;
     const phone = formatPhone(chat.phone);
     return chat.title === phone ? 'в Telegram' : phone;
-}
+};
 
-export function ChatHeader({ chat }: { chat: Chat }) {
+type Props = { chat: Chat };
+
+export const ChatHeader = ({ chat }: Props) => {
     const navigate = useNavigate();
 
     return (
-        <S.Header>
-            <S.Back aria-label="Назад к чатам" onClick={() => navigate('/chat')}>
+        <ChatHeaderBar>
+            <BackButton aria-label="Назад к чатам" onClick={() => navigate('/chat')}>
                 <Icon name="back" />
-            </S.Back>
+            </BackButton>
             <Avatar chatId={chat.chatId} title={chat.title} small />
-            <S.Info>
-                <S.Name>{chat.title}</S.Name>
-                <S.Subtitle>{subtitle(chat)}</S.Subtitle>
-            </S.Info>
-            <S.MobileBadge>
+            <ChatInfo>
+                <ChatName>{chat.title}</ChatName>
+                <ChatSubtitle>{subtitle(chat)}</ChatSubtitle>
+            </ChatInfo>
+            <MobileDemoBadge>
                 <DemoBadge />
-            </S.MobileBadge>
-        </S.Header>
+            </MobileDemoBadge>
+        </ChatHeaderBar>
     );
-}
+};

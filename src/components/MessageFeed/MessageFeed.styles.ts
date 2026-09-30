@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { mobile } from '@/theme/theme';
 
-export const Feed = styled.div`
+export const FeedScroller = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@ export const Feed = styled.div`
     }
 `;
 
-export const Inner = styled.div`
+export const FeedColumn = styled.div`
     display: flex;
     flex-direction: column;
     gap: ${({ theme }) => theme.space[0]};
@@ -23,7 +23,7 @@ export const Inner = styled.div`
     margin: auto auto 0;
 `;
 
-export const EmptyCard = styled.div`
+export const EmptyChatCard = styled.div`
     align-self: center;
     display: grid;
     gap: ${({ theme }) => theme.space[1]};

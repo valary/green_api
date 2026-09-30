@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { mobile } from '@/theme/theme';
 
-export const Layout = styled.div<{ $chatOpen: boolean }>`
+export const ChatLayout = styled.div<{ $chatOpen: boolean }>`
     display: grid;
     grid-template-columns: min(${({ theme }) => theme.layout.sidebar}, 42%) 1fr;
     grid-template-rows: auto 1fr;

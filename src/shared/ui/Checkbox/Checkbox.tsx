@@ -1,20 +1,20 @@
 import type { InputHTMLAttributes, Ref } from 'react';
-import * as S from './Checkbox.styles';
+import { CheckboxLabel, CheckboxText, CheckboxHint } from './Checkbox.styles';
 
-interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & {
     label: string;
     hint?: string;
     ref?: Ref<HTMLInputElement>;
-}
+};
 
-export function Checkbox({ label, hint, ...input }: CheckboxProps) {
+export const Checkbox = ({ label, hint, ...input }: Props) => {
     return (
-        <S.Label>
+        <CheckboxLabel>
             <input type="checkbox" {...input} />
-            <S.Text>
+            <CheckboxText>
                 <span>{label}</span>
-                {hint && <S.Hint>{hint}</S.Hint>}
-            </S.Text>
-        </S.Label>
+                {hint && <CheckboxHint>{hint}</CheckboxHint>}
+            </CheckboxText>
+        </CheckboxLabel>
     );
-}
+};

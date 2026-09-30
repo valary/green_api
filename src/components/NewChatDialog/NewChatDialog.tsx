@@ -11,19 +11,19 @@ import { Modal } from '@/shared/ui/Modal/Modal';
 import { TextField } from '@/shared/ui/TextField/TextField';
 import { createChatByPhone } from '@/app/store/slices/chat/thunks';
 import { phoneSchema, type PhoneValues } from './phoneSchema';
-import * as S from './NewChatDialog.styles';
+import { PhoneForm, DialogActions } from './NewChatDialog.styles';
 
-interface NewChatDialogProps {
+type Props = {
     onClose: () => void;
     onCreated: (chatId: string) => void;
-}
+};
 
 const errorText = (error: ApiError) =>
     error.kind === 'network'
         ? 'Нет связи с GREEN-API. Проверьте интернет и попробуйте ещё раз'
         : error.message;
 
-export function NewChatDialog({ onClose, onCreated }: NewChatDialogProps) {
+export const NewChatDialog = ({ onClose, onCreated }: Props) => {
     const dispatch = useAppDispatch();
     const {
         register,
@@ -51,7 +51,7 @@ export function NewChatDialog({ onClose, onCreated }: NewChatDialogProps) {
 
     return (
         <Modal title="Новый чат" onClose={onClose}>
-            <S.Form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <PhoneForm onSubmit={handleSubmit(onSubmit)} noValidate>
                 <TextField
                     label="Номер телефона"
                     placeholder="+7 900 123-45-67"
@@ -64,15 +64,15 @@ export function NewChatDialog({ onClose, onCreated }: NewChatDialogProps) {
                     {...register('phone', { onChange: () => clearErrors('root') })}
                 />
                 {errors.root && <Alert>{errors.root.message}</Alert>}
-                <S.Actions>
+                <DialogActions>
                     <Button variant="text" onClick={onClose}>
                         Отмена
                     </Button>
                     <Button type="submit" variant="primary" loading={isSubmitting} disabled={isSubmitting}>
                         {isSubmitting ? 'Ищем в Telegram…' : 'Открыть чат'}
                     </Button>
-                </S.Actions>
-            </S.Form>
+                </DialogActions>
+            </PhoneForm>
         </Modal>
     );
-}
+};

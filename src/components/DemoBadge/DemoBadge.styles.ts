@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Badge = styled.span`
+export const DemoBadgeLabel = styled.span`
     display: inline-flex;
     align-items: center;
     gap: ${({ theme }) => theme.space[1]};

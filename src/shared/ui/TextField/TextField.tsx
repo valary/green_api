@@ -1,23 +1,23 @@
 import { useId, type InputHTMLAttributes, type ReactNode, type Ref } from 'react';
-import * as S from './TextField.styles';
+import { FieldGroup, FieldControl, FieldAction, FieldNote } from './TextField.styles';
 
-interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+type Props = InputHTMLAttributes<HTMLInputElement> & {
     label: string;
     hint?: string;
     error?: string;
     action?: ReactNode;
     ref?: Ref<HTMLInputElement>;
-}
+};
 
 // Метка «плавает» на рамке, как в Web K. Плейсхолдер виден только в фокусе.
-export function TextField({ label, hint, error, action, placeholder = ' ', ...input }: TextFieldProps) {
+export const TextField = ({ label, hint, error, action, placeholder = ' ', ...input }: Props) => {
     const id = useId();
     const noteId = `${id}-note`;
     const note = error ?? hint;
 
     return (
-        <S.Field>
-            <S.Control $invalid={Boolean(error)} $withAction={Boolean(action)}>
+        <FieldGroup>
+            <FieldControl $invalid={Boolean(error)} $withAction={Boolean(action)}>
                 <input
                     id={id}
                     placeholder={placeholder}
@@ -26,13 +26,13 @@ export function TextField({ label, hint, error, action, placeholder = ' ', ...in
                     {...input}
                 />
                 <label htmlFor={id}>{label}</label>
-                {action && <S.Action>{action}</S.Action>}
-            </S.Control>
+                {action && <FieldAction>{action}</FieldAction>}
+            </FieldControl>
             {note && (
-                <S.Note id={noteId} $error={Boolean(error)}>
+                <FieldNote id={noteId} $error={Boolean(error)}>
                     {note}
-                </S.Note>
+                </FieldNote>
             )}
-        </S.Field>
+        </FieldGroup>
     );
-}
+};

@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import { createStore, type AppStore } from '@/app/store/store';
 import { lightTheme } from '@/theme/theme';
 
-export function renderWithProviders(ui: ReactElement, { store = createStore(), route = '/' } = {}) {
+export const renderWithProviders = (ui: ReactElement, { store = createStore(), route = '/' } = {}) => {
     const view = render(
         <Provider store={store}>
             <ThemeProvider theme={lightTheme}>
@@ -15,4 +15,4 @@ export function renderWithProviders(ui: ReactElement, { store = createStore(), r
         </Provider>,
     );
     return { ...view, store: store as AppStore };
-}
+};

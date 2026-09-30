@@ -1,4 +1,4 @@
-import * as S from './Icon.styles';
+import { IconSvg } from './Icon.styles';
 
 // Свои иконки в духе прототипа дизайнера: линия 2px, скругления. Ассетов Telegram нет.
 const paths = {
@@ -29,16 +29,16 @@ const paths = {
 
 export type IconName = keyof typeof paths;
 
-interface IconProps {
+type Props = {
     name: IconName;
     small?: boolean;
     label?: string;
     className?: string;
-}
+};
 
-export function Icon({ name, small, label, className }: IconProps) {
+export const Icon = ({ name, small, label, className }: Props) => {
     return (
-        <S.Svg
+        <IconSvg
             viewBox="0 0 24 24"
             $small={small}
             className={className}
@@ -50,6 +50,6 @@ export function Icon({ name, small, label, className }: IconProps) {
             {paths[name].map((d) => (
                 <path key={d} d={d} />
             ))}
-        </S.Svg>
+        </IconSvg>
     );
-}
+};

@@ -3,7 +3,7 @@ import type { TextPart } from '@/types/message';
 const urlPattern = /https?:\/\/[^\s<>"]+/g;
 
 // Ссылки только http(s): текст режется на куски, HTML не собирается — рендерит React.
-export function splitLinks(text: string): TextPart[] {
+export const splitLinks = (text: string): TextPart[] => {
     const parts: TextPart[] = [];
     let cursor = 0;
     for (const match of text.matchAll(urlPattern)) {
@@ -14,4 +14,4 @@ export function splitLinks(text: string): TextPart[] {
     }
     if (cursor < text.length) parts.push({ text: text.slice(cursor) });
     return parts;
-}
+};

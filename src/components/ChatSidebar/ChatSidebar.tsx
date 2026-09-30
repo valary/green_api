@@ -8,9 +8,20 @@ import { useAppSelector } from '@/hooks/redux';
 import { Button } from '@/shared/ui/Button/Button';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { ChatListItem } from '@/components/ChatListItem/ChatListItem';
-import * as S from './ChatSidebar.styles';
+import {
+    SidebarPanel,
+    SidebarHeader,
+    SidebarTitle,
+    HeaderSpacer,
+    ChatList,
+    NewChatFab,
+    EmptyChats,
+    EmptyChatsArt,
+} from './ChatSidebar.styles';
 
-export function ChatSidebar({ activeChatId }: { activeChatId?: string }) {
+type Props = { activeChatId?: string };
+
+export const ChatSidebar = ({ activeChatId }: Props) => {
     const navigate = useNavigate();
     const previews = useAppSelector(selectChatPreviews);
     const [dialogOpen, setDialogOpen] = useState(false);
@@ -22,17 +33,17 @@ export function ChatSidebar({ activeChatId }: { activeChatId?: string }) {
     };
 
     return (
-        <S.Sidebar aria-label="Чаты">
-            <S.Header>
-                <S.Title>Чаты</S.Title>
+        <SidebarPanel aria-label="Чаты">
+            <SidebarHeader>
+                <SidebarTitle>Чаты</SidebarTitle>
                 <DemoBadge />
-                <S.Spacer />
+                <HeaderSpacer />
                 <LogoutButton />
-            </S.Header>
+            </SidebarHeader>
 
             {previews.length > 0 ? (
                 <>
-                    <S.List>
+                    <ChatList>
                         {previews.map(({ chat, lastMessage }) => (
                             <li key={chat.chatId}>
                                 <ChatListItem
@@ -43,26 +54,26 @@ export function ChatSidebar({ activeChatId }: { activeChatId?: string }) {
                                 />
                             </li>
                         ))}
-                    </S.List>
-                    <S.Fab aria-label="Новый чат" title="Новый чат" onClick={() => setDialogOpen(true)}>
+                    </ChatList>
+                    <NewChatFab aria-label="Новый чат" title="Новый чат" onClick={() => setDialogOpen(true)}>
                         <Icon name="edit" />
-                    </S.Fab>
+                    </NewChatFab>
                 </>
             ) : (
-                <S.Empty>
-                    <S.EmptyArt>
+                <EmptyChats>
+                    <EmptyChatsArt>
                         <Icon name="bubble" />
-                    </S.EmptyArt>
+                    </EmptyChatsArt>
                     <h2>Чатов пока нет</h2>
                     <p>Нажмите «Новый чат» и введите номер получателя</p>
                     <Button variant="primary" onClick={() => setDialogOpen(true)}>
                         <Icon name="edit" />
                         Новый чат
                     </Button>
-                </S.Empty>
+                </EmptyChats>
             )}
 
             {dialogOpen && <NewChatDialog onClose={() => setDialogOpen(false)} onCreated={onCreated} />}
-        </S.Sidebar>
+        </SidebarPanel>
     );
-}
+};

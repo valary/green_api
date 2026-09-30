@@ -4,13 +4,13 @@ import type { Credentials } from '@/types/greenApi';
 
 let credentials: Credentials | null = null;
 
-export function setCredentials(next: Credentials) {
+export const setCredentials = (next: Credentials) => {
     credentials = next;
-}
+};
 
-export function clearCredentials() {
+export const clearCredentials = () => {
     credentials = null;
-}
+};
 
 export const httpClient = axios.create({ timeout: 15_000 });
 

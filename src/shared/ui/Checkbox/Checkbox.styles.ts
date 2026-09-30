@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Label = styled.label`
+export const CheckboxLabel = styled.label`
     display: flex;
     align-items: flex-start;
     gap: ${({ theme }) => theme.space[3]};
@@ -16,12 +16,12 @@ export const Label = styled.label`
     }
 `;
 
-export const Text = styled.span`
+export const CheckboxText = styled.span`
     display: grid;
     gap: ${({ theme }) => theme.space[0]};
 `;
 
-export const Hint = styled.span`
+export const CheckboxHint = styled.span`
     font-size: ${({ theme }) => theme.fontSize.sm};
     line-height: ${({ theme }) => theme.lineHeight.tight};
     color: ${({ theme }) => theme.colors.textMuted};

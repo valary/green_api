@@ -2,17 +2,17 @@ import { useEffect, useRef, type KeyboardEvent, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { IconButton } from '@/shared/ui/Button/Button.styles';
-import * as S from './Modal.styles';
+import { ModalScrim, ModalCard, ModalHead, ModalTitle } from './Modal.styles';
 
-interface ModalProps {
+type Props = {
     title: string;
     onClose: () => void;
     children: ReactNode;
-}
+};
 
 const focusable = 'button:not(:disabled), input:not(:disabled), textarea:not(:disabled), [href]';
 
-export function Modal({ title, onClose, children }: ModalProps) {
+export const Modal = ({ title, onClose, children }: Props) => {
     const cardRef = useRef<HTMLElement>(null);
 
     // Когда модалка закроется, фокус вернётся туда, откуда её открыли.
@@ -38,20 +38,20 @@ export function Modal({ title, onClose, children }: ModalProps) {
     };
 
     return createPortal(
-        <S.Scrim
+        <ModalScrim
             onKeyDown={onKeyDown}
             onMouseDown={(event) => event.target === event.currentTarget && onClose()}
         >
-            <S.Card ref={cardRef} role="dialog" aria-modal="true" aria-labelledby="modal-title">
-                <S.Head>
-                    <S.Title id="modal-title">{title}</S.Title>
+            <ModalCard ref={cardRef} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+                <ModalHead>
+                    <ModalTitle id="modal-title">{title}</ModalTitle>
                     <IconButton aria-label="Закрыть" onClick={onClose}>
                         <Icon name="close" />
                     </IconButton>
-                </S.Head>
+                </ModalHead>
                 {children}
-            </S.Card>
-        </S.Scrim>,
+            </ModalCard>
+        </ModalScrim>,
         document.body,
     );
-}
+};

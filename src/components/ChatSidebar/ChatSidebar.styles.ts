@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { mobile } from '@/theme/theme';
 
-export const Sidebar = styled.aside`
+export const SidebarPanel = styled.aside`
     position: relative;
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@ export const Sidebar = styled.aside`
     }
 `;
 
-export const Header = styled.header`
+export const SidebarHeader = styled.header`
     flex: none;
     display: flex;
     align-items: center;
@@ -24,17 +24,17 @@ export const Header = styled.header`
     padding: ${({ theme }) => `0 ${theme.space[2]} 0 ${theme.space[4]}`};
 `;
 
-export const Title = styled.h1`
+export const SidebarTitle = styled.h1`
     margin: 0;
     font-size: ${({ theme }) => theme.fontSize.lg};
     font-weight: ${({ theme }) => theme.fontWeight.medium};
 `;
 
-export const Spacer = styled.span`
+export const HeaderSpacer = styled.span`
     flex: 1;
 `;
 
-export const List = styled.ul`
+export const ChatList = styled.ul`
     flex: 1;
     margin: 0;
     padding: ${({ theme }) => `0 ${theme.space[2]} calc(${theme.size.fab} + ${theme.space[6]})`};
@@ -42,7 +42,7 @@ export const List = styled.ul`
     list-style: none;
 `;
 
-export const Fab = styled.button.attrs({ type: 'button' })`
+export const NewChatFab = styled.button.attrs({ type: 'button' })`
     position: absolute;
     right: ${({ theme }) => theme.space[5]};
     bottom: ${({ theme }) => theme.space[5]};
@@ -71,7 +71,7 @@ export const Fab = styled.button.attrs({ type: 'button' })`
     }
 `;
 
-export const Empty = styled.div`
+export const EmptyChats = styled.div`
     flex: 1;
     display: grid;
     align-content: center;
@@ -94,7 +94,7 @@ export const Empty = styled.div`
     }
 `;
 
-export const EmptyArt = styled.div`
+export const EmptyChatsArt = styled.div`
     display: grid;
     place-items: center;
     width: 96px;

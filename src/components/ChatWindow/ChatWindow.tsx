@@ -5,31 +5,33 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { ServicePill } from '@/shared/ui/ChatBackground/ChatBackground';
 import { ChatHeader } from '@/components/ChatHeader/ChatHeader';
 import { MessageFeed } from '@/components/MessageFeed/MessageFeed';
-import * as S from './ChatWindow.styles';
+import { ChatWindowPanel, NoChatPlaceholder } from './ChatWindow.styles';
 
-export function ChatWindow({ chatId }: { chatId?: string }) {
+type Props = { chatId?: string };
+
+export const ChatWindow = ({ chatId }: Props) => {
     const dispatch = useAppDispatch();
     const chat = useAppSelector((state) => selectChat(state, chatId));
     const messages = useAppSelector((state) => selectMessages(state, chatId ?? ''));
 
     if (!chat) {
         return (
-            <S.Window aria-label="Переписка">
-                <S.Placeholder>
+            <ChatWindowPanel aria-label="Переписка">
+                <NoChatPlaceholder>
                     <ServicePill>Выберите чат слева или создайте новый</ServicePill>
-                </S.Placeholder>
-            </S.Window>
+                </NoChatPlaceholder>
+            </ChatWindowPanel>
         );
     }
 
     return (
-        <S.Window aria-label="Переписка">
+        <ChatWindowPanel aria-label="Переписка">
             <ChatHeader chat={chat} />
             <MessageFeed
                 messages={messages}
                 onRetry={(localId) => dispatch(retryMessage({ chatId: chat.chatId, localId }))}
             />
             <Composer key={chat.chatId} chatId={chat.chatId} />
-        </S.Window>
+        </ChatWindowPanel>
     );
-}
+};

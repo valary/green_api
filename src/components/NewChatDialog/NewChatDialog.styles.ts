@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { mobile } from '@/theme/theme';
 
-export const Form = styled.form`
+export const PhoneForm = styled.form`
     display: grid;
     gap: ${({ theme }) => theme.space[4]};
 `;
 
-export const Actions = styled.div`
+export const DialogActions = styled.div`
     display: flex;
     justify-content: flex-end;
     gap: ${({ theme }) => theme.space[2]};

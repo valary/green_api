@@ -21,7 +21,7 @@ const textOf = ({ typeMessage, textMessageData, extendedTextMessageData }: Messa
     if (typeMessage === 'extendedTextMessage') return extendedTextMessageData?.text;
 };
 
-export function parseNotification(body: unknown): ReceivedEvent {
+export const parseNotification = (body: unknown): ReceivedEvent => {
     if (!isObject(body)) return { kind: 'ignored' };
 
     if (isStatusWebhook(body)) {
@@ -41,4 +41,4 @@ export function parseNotification(body: unknown): ReceivedEvent {
         kind: 'incoming',
         message: { ...message, senderName: senderContactName || senderName || chatName || chatId },
     };
-}
+};

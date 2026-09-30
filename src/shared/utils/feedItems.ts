@@ -2,7 +2,7 @@ import type { Message } from '@/types/message';
 import { formatDayLabel, isSameDay } from './date';
 
 // Пузыри группируются подряд по направлению в пределах дня; хвост — у последнего в группе.
-export function toFeedItems(messages: Message[]) {
+export const toFeedItems = (messages: Message[]) => {
     return messages.map((message, index) => {
         const prev = messages[index - 1];
         const next = messages[index + 1];
@@ -18,4 +18,4 @@ export function toFeedItems(messages: Message[]) {
                 !isSameDay(next.timestamp, message.timestamp),
         };
     });
-}
+};

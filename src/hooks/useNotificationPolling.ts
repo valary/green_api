@@ -7,7 +7,7 @@ import { runInSingleTab } from '@/shared/utils/tabLock';
 
 import { pollNotifications } from '@/app/api/pollNotifications';
 
-function toAction(event: ReceivedEvent) {
+const toAction = (event: ReceivedEvent) => {
     switch (event.kind) {
         case 'incoming':
             return chatActions.incomingMessageReceived(event.message);
@@ -18,9 +18,9 @@ function toAction(event: ReceivedEvent) {
         case 'ignored':
             return null;
     }
-}
+};
 
-export function useNotificationPolling(idInstance: string | undefined) {
+export const useNotificationPolling = (idInstance: string | undefined) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -47,4 +47,4 @@ export function useNotificationPolling(idInstance: string | undefined) {
 
         return () => controller.abort();
     }, [idInstance, dispatch]);
-}
+};

@@ -2,46 +2,57 @@ import { Avatar } from '@/shared/ui/Avatar/Avatar';
 import { type Chat } from '@/types/chat';
 import type { Message } from '@/types/message';
 import { formatListTime } from '@/shared/utils/date';
-import * as S from './ChatListItem.styles';
+import {
+    ChatListButton,
+    ChatListBody,
+    ChatListLine,
+    ChatName,
+    ChatTime,
+    LastMessageMark,
+    ChatPreview,
+    UnreadBadge,
+} from './ChatListItem.styles';
 
-interface ChatListItemProps {
+type Props = {
     chat: Chat;
     lastMessage?: Message;
     current: boolean;
     onOpen: (chatId: string) => void;
-}
+};
 
-export function ChatListItem({ chat, lastMessage, current, onOpen }: ChatListItemProps) {
+export const ChatListItem = ({ chat, lastMessage, current, onOpen }: Props) => {
     const outgoing = lastMessage?.direction === 'out';
 
     return (
-        <S.Item
+        <ChatListButton
             type="button"
             aria-current={current || undefined}
             $current={current}
             onClick={() => onOpen(chat.chatId)}
         >
             <Avatar chatId={chat.chatId} title={chat.title} />
-            <S.Body>
-                <S.Line>
-                    <S.Name>{chat.title}</S.Name>
+            <ChatListBody>
+                <ChatListLine>
+                    <ChatName>{chat.title}</ChatName>
                     {lastMessage && (
-                        <S.Time>
-                            {outgoing && lastMessage.status && <S.Mark status={lastMessage.status} />}
+                        <ChatTime>
+                            {outgoing && lastMessage.status && (
+                                <LastMessageMark status={lastMessage.status} />
+                            )}
                             {formatListTime(lastMessage.timestamp)}
-                        </S.Time>
+                        </ChatTime>
                     )}
-                </S.Line>
-                <S.Line>
-                    <S.Preview>
+                </ChatListLine>
+                <ChatListLine>
+                    <ChatPreview>
                         {outgoing && <em>Вы: </em>}
                         {lastMessage?.text ?? 'Сообщений пока нет'}
-                    </S.Preview>
+                    </ChatPreview>
                     {chat.unread > 0 && (
-                        <S.Unread aria-label={`Непрочитанных: ${chat.unread}`}>{chat.unread}</S.Unread>
+                        <UnreadBadge aria-label={`Непрочитанных: ${chat.unread}`}>{chat.unread}</UnreadBadge>
                     )}
-                </S.Line>
-            </S.Body>
-        </S.Item>
+                </ChatListLine>
+            </ChatListBody>
+        </ChatListButton>
     );
-}
+};

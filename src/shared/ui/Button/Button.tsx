@@ -1,18 +1,24 @@
 import type { ButtonHTMLAttributes } from 'react';
 import { Spinner } from '@/shared/ui/Spinner/Spinner';
-import * as S from './Button.styles';
+import { ButtonControl, type ButtonVariant } from './Button.styles';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: S.ButtonVariant;
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+    variant?: ButtonVariant;
     block?: boolean;
     loading?: boolean;
-}
+};
 
-export function Button({ variant = 'plain', block, loading, children, ...props }: ButtonProps) {
+export const Button = ({ variant = 'plain', block, loading, children, ...props }: Props) => {
     return (
-        <S.Button type="button" $variant={variant} $block={block} aria-busy={loading || undefined} {...props}>
+        <ButtonControl
+            type="button"
+            $variant={variant}
+            $block={block}
+            aria-busy={loading || undefined}
+            {...props}
+        >
             {loading && <Spinner />}
             {children}
-        </S.Button>
+        </ButtonControl>
     );
-}
+};

@@ -7,21 +7,21 @@ import { DEMO_CREDENTIALS } from '@/app/config';
 import { renderWithProviders } from 'test-utils/renderWithProviders';
 import { NewChatDialog } from './NewChatDialog';
 
-function countCheckAccount() {
+const countCheckAccount = () => {
     const calls = { count: 0 };
     server.events.on('request:start', ({ request }) => {
         if (request.url.includes('/checkAccount/')) calls.count++;
     });
     return calls;
-}
+};
 
-async function submitPhone(phone: string) {
+const submitPhone = async (phone: string) => {
     const user = userEvent.setup();
     const field = screen.getByLabelText('Номер телефона');
     await user.clear(field);
     await user.type(field, phone);
     await user.click(screen.getByRole('button', { name: 'Открыть чат' }));
-}
+};
 
 describe('NewChatDialog', () => {
     beforeEach(() => {

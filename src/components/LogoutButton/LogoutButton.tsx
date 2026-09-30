@@ -3,7 +3,7 @@ import { Button } from '@/shared/ui/Button/Button';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { logout } from '@/app/store/slices/session/thunks';
 
-export function LogoutButton() {
+export const LogoutButton = () => {
     const dispatch = useAppDispatch();
 
     return (
@@ -12,4 +12,4 @@ export function LogoutButton() {
             Выйти
         </Button>
     );
-}
+};

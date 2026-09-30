@@ -6,54 +6,54 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { Button } from '@/shared/ui/Button/Button';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { Spinner } from '@/shared/ui/Spinner/Spinner';
-import * as S from './ConnectionBanners.styles';
+import { BannerStack, ConnectionBanner, BannerText } from './ConnectionBanners.styles';
 
-export function ConnectionBanners() {
+export const ConnectionBanners = () => {
     const dispatch = useAppDispatch();
     const { fatalError, online, problem, receivingElsewhere, settingsWarning } =
         useAppSelector(selectConnection);
 
     return (
-        <S.Banners>
+        <BannerStack>
             {fatalError && (
-                <S.Banner $tone="danger" role="alert">
+                <ConnectionBanner $tone="danger" role="alert">
                     <Icon name="alert" />
-                    <S.Text>{fatalError}</S.Text>
+                    <BannerText>{fatalError}</BannerText>
                     <Button variant="primary" onClick={() => dispatch(logout())}>
                         Выйти и ввести заново
                     </Button>
-                </S.Banner>
+                </ConnectionBanner>
             )}
             {!online && !fatalError && (
-                <S.Banner $tone="neutral" role="status">
+                <ConnectionBanner $tone="neutral" role="status">
                     <Spinner />
-                    <S.Text>{ERROR_TEXT.network}</S.Text>
-                </S.Banner>
+                    <BannerText>{ERROR_TEXT.network}</BannerText>
+                </ConnectionBanner>
             )}
             {problem && !fatalError && (
-                <S.Banner $tone="warning" role="alert">
+                <ConnectionBanner $tone="warning" role="alert">
                     <Icon name="warn" />
-                    <S.Text>Приём сообщений не работает: {problem}</S.Text>
-                </S.Banner>
+                    <BannerText>Приём сообщений не работает: {problem}</BannerText>
+                </ConnectionBanner>
             )}
             {receivingElsewhere && (
-                <S.Banner $tone="neutral" role="status">
+                <ConnectionBanner $tone="neutral" role="status">
                     <Icon name="bubble" />
-                    <S.Text>
+                    <BannerText>
                         Сообщения принимает другая вкладка с этим инстансом. Закройте её — приём продолжится
                         здесь
-                    </S.Text>
-                </S.Banner>
+                    </BannerText>
+                </ConnectionBanner>
             )}
             {settingsWarning && (
-                <S.Banner $tone="warning" role="status">
+                <ConnectionBanner $tone="warning" role="status">
                     <Icon name="warn" />
-                    <S.Text>{settingsWarning}</S.Text>
+                    <BannerText>{settingsWarning}</BannerText>
                     <Button onClick={() => dispatch(connectionActions.settingsWarningDismissed())}>
                         Скрыть
                     </Button>
-                </S.Banner>
+                </ConnectionBanner>
             )}
-        </S.Banners>
+        </BannerStack>
     );
-}
+};

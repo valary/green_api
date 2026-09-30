@@ -8,7 +8,7 @@ import { LoginForm } from './LoginForm';
 
 const apiUrl = 'https://1101.api.green-api.com';
 
-function answerState(response: () => Response) {
+const answerState = (response: () => Response) => {
     const methods: string[] = [];
     server.use(
         http.all(`${apiUrl}/*`, ({ request }) => {
@@ -17,15 +17,15 @@ function answerState(response: () => Response) {
         }),
     );
     return methods;
-}
+};
 
-async function fillAndSubmit() {
+const fillAndSubmit = async () => {
     const user = userEvent.setup();
     await user.type(screen.getByLabelText('idInstance'), '1101000001');
     await user.type(screen.getByLabelText('apiTokenInstance'), 'some-token');
     await user.click(screen.getByRole('button', { name: 'Войти' }));
     return user;
-}
+};
 
 describe('LoginForm', () => {
     it('подставляет apiUrl по idInstance, пока его не правили руками', async () => {

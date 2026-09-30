@@ -10,14 +10,14 @@ const isStoredSession = (value: unknown): value is StoredSession =>
     'credentials' in value &&
     typeof (value as StoredSession).credentials?.apiTokenInstance === 'string';
 
-export function loadStoredSession(): StoredSession | null {
+export const loadStoredSession = (): StoredSession | null => {
     const saved = readJson<unknown>(KEY, false) ?? readJson<unknown>(KEY, true);
     return isStoredSession(saved) ? saved : null;
-}
+};
 
-export function storeSession(session: StoredSession) {
+export const storeSession = (session: StoredSession) => {
     removeItem(KEY, !session.remember);
     writeJson(KEY, session, session.remember);
-}
+};
 
 export const forgetSession = clearAppStorage;

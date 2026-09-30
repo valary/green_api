@@ -10,7 +10,7 @@ interface MessageArgs {
 
 const now = () => Math.floor(Date.now() / 1000);
 
-function messageData(text: string) {
+const messageData = (text: string) => {
     if (!text.includes('https://')) {
         return { typeMessage: 'textMessage', textMessageData: { textMessage: text, isForwarded: false } };
     }
@@ -24,9 +24,9 @@ function messageData(text: string) {
             isForwarded: false,
         },
     };
-}
+};
 
-export function incomingMessage({ idMessage, chatId, text, senderName = '' }: MessageArgs) {
+export const incomingMessage = ({ idMessage, chatId, text, senderName = '' }: MessageArgs) => {
     return {
         typeWebhook: 'incomingMessageReceived',
         instanceData,
@@ -42,13 +42,13 @@ export function incomingMessage({ idMessage, chatId, text, senderName = '' }: Me
         },
         messageData: messageData(text),
     };
-}
+};
 
-export function outgoingApiMessage(args: MessageArgs) {
+export const outgoingApiMessage = (args: MessageArgs) => {
     return { ...incomingMessage(args), typeWebhook: 'outgoingAPIMessageReceived' };
-}
+};
 
-export function outgoingStatus(chatId: string, idMessage: string, status: string, description?: string) {
+export const outgoingStatus = (chatId: string, idMessage: string, status: string, description?: string) => {
     return {
         typeWebhook: 'outgoingMessageStatus',
         instanceData,
@@ -59,7 +59,7 @@ export function outgoingStatus(chatId: string, idMessage: string, status: string
         sendByApi: true,
         ...(description && { description }),
     };
-}
+};
 
 export const stateInstanceChanged = () => ({
     typeWebhook: 'stateInstanceChanged',

@@ -7,7 +7,7 @@ export const loadChats = (idInstance: string, remember: boolean) =>
     readJson<PersistedChats>(key(idInstance), remember);
 
 // После перезагрузки «отправляется» уже никогда не отправится — честно помечаем ошибкой.
-export function saveChats(idInstance: string, remember: boolean, { chats, messages }: ChatState) {
+export const saveChats = (idInstance: string, remember: boolean, { chats, messages }: ChatState) => {
     const settled = Object.fromEntries(
         Object.entries(messages).map(([chatId, list]) => [
             chatId,
@@ -17,4 +17,4 @@ export function saveChats(idInstance: string, remember: boolean, { chats, messag
         ]),
     );
     writeJson(key(idInstance), { chats, messages: settled }, remember);
-}
+};

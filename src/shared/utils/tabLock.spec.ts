@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { runInSingleTab } from './tabLock';
 
 // Минимальный LockManager: один держатель, остальные в очереди.
-function stubLocks() {
+const stubLocks = () => {
     let held = false;
     const queue: Array<() => void> = [];
     const request = async (
@@ -21,7 +21,7 @@ function stubLocks() {
         }
     };
     vi.stubGlobal('navigator', { ...navigator, locks: { request } });
-}
+};
 
 describe('runInSingleTab', () => {
     afterEach(() => vi.unstubAllGlobals());

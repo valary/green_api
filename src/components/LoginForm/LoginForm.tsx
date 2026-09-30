@@ -14,7 +14,7 @@ import { TextField } from '@/shared/ui/TextField/TextField';
 import { deriveApiUrl } from '@/shared/utils/deriveApiUrl';
 import { loginSchema, type LoginValues } from './loginSchema';
 import { signIn } from '@/app/store/slices/session/thunks';
-import * as S from './LoginForm.styles';
+import { LoginFormBody } from './LoginForm.styles';
 
 const defaultValues: LoginValues = { idInstance: '', apiTokenInstance: '', apiUrl: '', remember: false };
 
@@ -23,7 +23,7 @@ const errorText = (error: ApiError) =>
         ? 'Нет связи с GREEN-API. Проверьте интернет и нажмите «Войти» ещё раз'
         : error.message;
 
-export function LoginForm() {
+export const LoginForm = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [tokenVisible, setTokenVisible] = useState(false);
@@ -52,7 +52,7 @@ export function LoginForm() {
     const tokenRejected = errors.root?.type === 'unauthorized';
 
     return (
-        <S.Form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <LoginFormBody onSubmit={handleSubmit(onSubmit)} noValidate>
             <TextField
                 label="idInstance"
                 placeholder="1101000001"
@@ -112,6 +112,6 @@ export function LoginForm() {
             <Button type="submit" variant="primary" block loading={isSubmitting} disabled={isSubmitting}>
                 {isSubmitting ? 'Проверяем инстанс…' : 'Войти'}
             </Button>
-        </S.Form>
+        </LoginFormBody>
     );
-}
+};

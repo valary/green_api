@@ -27,7 +27,7 @@ const variants = {
     `,
 };
 
-export const Button = styled.button<{ $variant: ButtonVariant; $block?: boolean }>`
+export const ButtonControl = styled.button<{ $variant: ButtonVariant; $block?: boolean }>`
     display: inline-flex;
     align-items: center;
     justify-content: center;

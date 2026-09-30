@@ -1,22 +1,22 @@
 import { DemoButton } from '@/components/DemoButton/DemoButton';
 import { LoginForm } from '@/components/LoginForm/LoginForm';
 import { Icon } from '@/shared/ui/Icon/Icon';
-import * as S from './LoginPage.styles';
+import { LoginScreen, LoginCard, LoginMark, LoginTitle, LoginLead } from './LoginPage.styles';
 
-export function LoginPage() {
+export const LoginPage = () => {
     return (
-        <S.Page as="main">
-            <S.Card aria-labelledby="login-title">
-                <S.Mark>
+        <LoginScreen as="main">
+            <LoginCard aria-labelledby="login-title">
+                <LoginMark>
                     <Icon name="bubble" />
-                </S.Mark>
-                <S.Title id="login-title">Вход по данным GREEN-API</S.Title>
-                <S.Lead>
+                </LoginMark>
+                <LoginTitle id="login-title">Вход по данным GREEN-API</LoginTitle>
+                <LoginLead>
                     idInstance и apiTokenInstance — на странице инстанса в личном кабинете GREEN-API
-                </S.Lead>
+                </LoginLead>
                 <LoginForm />
                 <DemoButton />
-            </S.Card>
-        </S.Page>
+            </LoginCard>
+        </LoginScreen>
     );
-}
+};

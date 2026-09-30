@@ -9,7 +9,7 @@ const pop = keyframes`
   from { opacity: 0; transform: translateY(8px) scale(0.98); }
 `;
 
-export const Scrim = styled.div`
+export const ModalScrim = styled.div`
     position: fixed;
     inset: 0;
     z-index: ${({ theme }) => theme.zIndex.modal};
@@ -25,7 +25,7 @@ export const Scrim = styled.div`
     }
 `;
 
-export const Card = styled.section`
+export const ModalCard = styled.section`
     display: grid;
     gap: ${({ theme }) => theme.space[4]};
     width: 100%;
@@ -43,14 +43,14 @@ export const Card = styled.section`
     }
 `;
 
-export const Head = styled.div`
+export const ModalHead = styled.div`
     display: flex;
     align-items: center;
     gap: ${({ theme }) => theme.space[2]};
     margin: ${({ theme }) => `calc(${theme.space[2]} * -1) calc(${theme.space[2]} * -1) 0 0`};
 `;
 
-export const Title = styled.h2`
+export const ModalTitle = styled.h2`
     flex: 1;
     margin: 0;
     font-size: ${({ theme }) => theme.fontSize.lg};

@@ -1,6 +1,6 @@
 import type { InstanceSettings } from '@/types/greenApi';
 
-export function settingsWarning({ webhookUrl, incomingWebhook, outgoingWebhook }: InstanceSettings) {
+export const settingsWarning = ({ webhookUrl, incomingWebhook, outgoingWebhook }: InstanceSettings) => {
     const fixes = [
         webhookUrl?.trim() && 'очистите webhookUrl',
         incomingWebhook !== 'yes' && 'включите incomingWebhook',
@@ -14,4 +14,4 @@ export function settingsWarning({ webhookUrl, incomingWebhook, outgoingWebhook }
     }
     const text = `Входящие сообщения не будут приходить: в настройках инстанса ${fixes.join(' и ')}. Изменения применяются до 5 минут.`;
     return noStatuses ? `${text} Статусы ✓✓ тоже не появятся: включите outgoingWebhook` : text;
-}
+};

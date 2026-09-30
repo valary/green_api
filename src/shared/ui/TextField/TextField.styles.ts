@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components';
 
-export const Field = styled.div`
+export const FieldGroup = styled.div`
     display: grid;
     gap: ${({ theme }) => theme.space[1]};
 `;
 
-export const Control = styled.div<{ $invalid: boolean; $withAction: boolean }>`
+export const FieldControl = styled.div<{ $invalid: boolean; $withAction: boolean }>`
     position: relative;
 
     input {
@@ -77,14 +77,14 @@ export const Control = styled.div<{ $invalid: boolean; $withAction: boolean }>`
         `}
 `;
 
-export const Action = styled.div`
+export const FieldAction = styled.div`
     position: absolute;
     top: 50%;
     right: ${({ theme }) => theme.space[1]};
     transform: translateY(-50%);
 `;
 
-export const Note = styled.div<{ $error: boolean }>`
+export const FieldNote = styled.div<{ $error: boolean }>`
     padding: 0 ${({ theme }) => theme.space[4]};
     font-size: ${({ theme }) => theme.fontSize.sm};
     line-height: ${({ theme }) => theme.lineHeight.tight};

@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { mobile } from '@/theme/theme';
 import { IconButton } from '@/shared/ui/Button/Button.styles';
 
-export const Header = styled.header`
+export const ChatHeaderBar = styled.header`
     position: relative;
     z-index: ${({ theme }) => theme.zIndex.sticky};
     flex: none;
@@ -15,7 +15,7 @@ export const Header = styled.header`
     background: ${({ theme }) => theme.colors.surface};
 `;
 
-export const Back = styled(IconButton)`
+export const BackButton = styled(IconButton)`
     display: none;
     margin-left: ${({ theme }) => `calc(${theme.space[2]} * -1)`};
 
@@ -24,7 +24,7 @@ export const Back = styled(IconButton)`
     }
 `;
 
-export const Info = styled.div`
+export const ChatInfo = styled.div`
     flex: 1;
     min-width: 0;
     display: grid;
@@ -36,20 +36,20 @@ const ellipsis = css`
     text-overflow: ellipsis;
 `;
 
-export const Name = styled.h2`
+export const ChatName = styled.h2`
     ${ellipsis}
     margin: 0;
     font-size: ${({ theme }) => theme.fontSize.md};
     font-weight: ${({ theme }) => theme.fontWeight.medium};
 `;
 
-export const Subtitle = styled.span`
+export const ChatSubtitle = styled.span`
     ${ellipsis}
     font-size: ${({ theme }) => theme.fontSize.sm};
     color: ${({ theme }) => theme.colors.textMuted};
 `;
 
-export const MobileBadge = styled.span`
+export const MobileDemoBadge = styled.span`
     display: none;
 
     ${mobile} {
