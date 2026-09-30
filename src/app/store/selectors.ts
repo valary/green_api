@@ -5,6 +5,7 @@ import type { Message } from '../../types/message';
 const noMessages: Message[] = [];
 
 export const selectSession = (state: RootState) => state.session.current;
+export const selectDemoStatus = (state: RootState) => state.session.demoStatus;
 export const selectIsDemo = (state: RootState) => state.session.current?.mode === 'demo';
 export const selectConnection = (state: RootState) => state.connection;
 

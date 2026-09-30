@@ -1,9 +1,7 @@
-import type { ApiError } from '../../types/greenApi';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { normalizePhone } from '../../shared/utils/phone';
 import { useAppDispatch } from '../../hooks/redux';
 import { Alert } from '../../shared/ui/Alert/Alert';
 import { Button } from '../../shared/ui/Button/Button';
@@ -19,9 +17,6 @@ type Props = {
     onClose: () => void;
     onCreated: (chatId: string) => void;
 };
-
-const errorText = (error: ApiError) =>
-    error.kind === 'network' ? NEW_CHAT_TEXTS.networkError : error.message;
 
 export const NewChatDialog = ({ onClose, onCreated }: Props) => {
     const dispatch = useAppDispatch();
@@ -41,12 +36,10 @@ export const NewChatDialog = ({ onClose, onCreated }: Props) => {
     useEffect(() => setFocus('phone'), [setFocus]);
 
     const onSubmit = async ({ phone }: PhoneValues) => {
-        try {
-            onCreated(await dispatch(createChatByPhone(normalizePhone(phone)!)).unwrap());
-        } catch (e) {
-            setError('root', { message: errorText(e as ApiError) });
-            setFocus('phone');
-        }
+        const result = await dispatch(createChatByPhone(phone));
+        if (createChatByPhone.fulfilled.match(result)) return onCreated(result.payload);
+        setError('root', { message: result.payload });
+        setFocus('phone');
     };
 
     return (

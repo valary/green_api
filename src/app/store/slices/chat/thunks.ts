@@ -4,7 +4,7 @@ import { selectChatByPhone, selectMessage } from '../../selectors';
 import { connectionActions } from '../connection/connectionSlice';
 import { checkAccountApi, sendMessageApi } from '../../../api/requests';
 import { isFatal, toApiError } from '../../../api/apiError';
-import { formatPhone } from '../../../../shared/utils/phone';
+import { formatPhone, normalizePhone } from '../../../../shared/utils/phone';
 import { createAppAsyncThunk } from '../../createAppAsyncThunk';
 import type { AppDispatch } from '../../store';
 import { ERROR_TEXTS, NEW_CHAT_TEXTS } from '../../../../shared/constants/texts';
@@ -12,15 +12,17 @@ import { ERROR_TEXTS, NEW_CHAT_TEXTS } from '../../../../shared/constants/texts'
 // Telegram отвечает с числовым chatId, а не с номер@c.us — поэтому чат открываем только через checkAccount.
 export const createChatByPhone = createAppAsyncThunk(
     'createChat/byPhone',
-    async (phone: string, { dispatch, getState, rejectWithValue }) => {
+    async (phoneInput: string, { dispatch, getState, rejectWithValue }) => {
+        const phone = normalizePhone(phoneInput);
+        if (!phone) return rejectWithValue(NEW_CHAT_TEXTS.phoneFormat);
+
         const known = selectChatByPhone(getState(), phone);
         if (known) return known.chatId;
 
         try {
             const { data } = await checkAccountApi(Number(phone));
             const { exist, chatId } = data;
-            if (!exist || !chatId)
-                return rejectWithValue({ kind: 'validation', message: NEW_CHAT_TEXTS.notFound });
+            if (!exist || !chatId) return rejectWithValue(NEW_CHAT_TEXTS.notFound);
 
             dispatch(
                 chatActions.chatCreated({
@@ -34,7 +36,7 @@ export const createChatByPhone = createAppAsyncThunk(
         } catch (e) {
             const error = toApiError(e);
             if (isFatal(error)) dispatch(connectionActions.fatalErrorOccurred(error.message));
-            return rejectWithValue(error);
+            return rejectWithValue(error.kind === 'network' ? NEW_CHAT_TEXTS.networkError : error.message);
         }
     },
 );
@@ -60,9 +62,10 @@ const deliver = async ({ chatId, localId, text }: Outgoing, dispatch: AppDispatc
     } catch (e) {
         const error = toApiError(e);
         if (error.kind === 'aborted') return null;
-        dispatch(chatActions.messageFailed({ chatId, localId, reason: failureReason(error) }));
+        const reason = failureReason(error);
+        dispatch(chatActions.messageFailed({ chatId, localId, reason }));
         if (isFatal(error)) dispatch(connectionActions.fatalErrorOccurred(error.message));
-        return error;
+        return reason;
     }
 };
 
@@ -72,8 +75,8 @@ export const sendMessage = createAppAsyncThunk(
     async ({ chatId, text }: { chatId: string; text: string }, { dispatch, rejectWithValue }) => {
         const localId = `local-${crypto.randomUUID()}`;
         dispatch(chatActions.messageQueued({ chatId, localId, text, timestamp: Date.now() }));
-        const error = await deliver({ chatId, localId, text }, dispatch);
-        if (error) return rejectWithValue(error);
+        const failure = await deliver({ chatId, localId, text }, dispatch);
+        if (failure) return rejectWithValue(failure);
     },
 );
 
@@ -86,7 +89,7 @@ export const retryMessage = createAppAsyncThunk(
         const message = selectMessage(getState(), chatId, localId);
         if (message?.status !== 'error') return;
         dispatch(chatActions.messageRetried({ chatId, localId }));
-        const error = await deliver({ chatId, localId, text: message.text }, dispatch);
-        if (error) return rejectWithValue(error);
+        const failure = await deliver({ chatId, localId, text: message.text }, dispatch);
+        if (failure) return rejectWithValue(failure);
     },
 );

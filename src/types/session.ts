@@ -11,8 +11,11 @@ export interface SessionInfo {
     scenario: DemoScenario | null;
 }
 
+export type DemoStatus = 'idle' | 'loading' | 'failed';
+
 export interface SessionState {
     current: SessionInfo | null;
+    demoStatus: DemoStatus;
 }
 
 export interface ConnectionState {

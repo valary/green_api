@@ -2,7 +2,7 @@ import type { DemoScenario, StoredSession } from '../../../../types/session';
 import { connectionActions } from '../connection/connectionSlice';
 import { getSettingsApi, getStateInstanceApi } from '../../../api/requests';
 import { isFatal, toApiError } from '../../../api/apiError';
-import { ERROR_TEXTS } from '../../../../shared/constants/texts';
+import { DEMO_TEXTS, ERROR_TEXTS, LOGIN_TEXTS } from '../../../../shared/constants/texts';
 import { createAppAsyncThunk } from '../../createAppAsyncThunk';
 import { settingsWarning } from '../../../../shared/utils/settingsWarning';
 import { chatActions } from '../chat/chatSlice';
@@ -14,7 +14,7 @@ import type { AppDispatch } from '../../store';
 import { DEMO_CREDENTIALS } from '../../../config';
 
 // Только подсказываем: SetSettings перезапускает инстанс на несколько минут, трогать его сами не будем.
-export const checkSettings = createAppAsyncThunk('auth/checkSettings', async (_, { dispatch }) => {
+export const checkSettings = createAppAsyncThunk('session/checkSettings', async (_, { dispatch }) => {
     try {
         const { data } = await getSettingsApi();
         dispatch(connectionActions.settingsChecked(settingsWarning(data)));
@@ -35,7 +35,7 @@ export const restoreSession = (
 };
 
 export const signIn = createAppAsyncThunk(
-    'auth/signIn',
+    'session/signIn',
     async (session: StoredSession, { dispatch, rejectWithValue }) => {
         setCredentials(session.credentials);
         try {
@@ -43,11 +43,12 @@ export const signIn = createAppAsyncThunk(
             const state = data.stateInstance;
             if (state !== 'authorized') {
                 clearCredentials();
-                return rejectWithValue({ kind: 'notAuthorized', message: ERROR_TEXTS.notAuthorized(state) });
+                return rejectWithValue(ERROR_TEXTS.notAuthorized(state));
             }
         } catch (e) {
             clearCredentials();
-            return rejectWithValue(toApiError(e));
+            const error = toApiError(e);
+            return rejectWithValue(error.kind === 'network' ? LOGIN_TEXTS.networkError : error.message);
         }
 
         storeSession(session);
@@ -57,17 +58,25 @@ export const signIn = createAppAsyncThunk(
 );
 
 // MSW нужен только в демо, поэтому воркер и хендлеры приезжают отдельным чанком.
-export async function startDemo(scenario: DemoScenario) {
+export const startDemo = async (scenario: DemoScenario) => {
     const mocks = await import('../../../../mocks/browser');
     await mocks.startDemo(scenario);
-}
+};
 
-export const openDemo = createAppAsyncThunk('auth/openDemo', async (scenario: DemoScenario, { dispatch }) => {
-    await startDemo(scenario);
-    await dispatch(
-        signIn({ credentials: DEMO_CREDENTIALS, remember: false, mode: 'demo', scenario }),
-    ).unwrap();
-});
+export const openDemo = createAppAsyncThunk(
+    'session/openDemo',
+    async (scenario: DemoScenario, { dispatch, rejectWithValue }) => {
+        try {
+            await startDemo(scenario);
+        } catch {
+            return rejectWithValue(DEMO_TEXTS.failed);
+        }
+        const result = await dispatch(
+            signIn({ credentials: DEMO_CREDENTIALS, remember: false, mode: 'demo', scenario }),
+        );
+        if (signIn.rejected.match(result)) return rejectWithValue(result.payload ?? DEMO_TEXTS.failed);
+    },
+);
 
 export const logout = () => (dispatch: AppDispatch) => {
     clearCredentials();

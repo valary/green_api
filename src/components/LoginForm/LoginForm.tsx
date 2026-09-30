@@ -1,4 +1,3 @@
-import type { ApiError } from '../../types/greenApi';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -16,11 +15,9 @@ import { loginSchema } from './loginSchema';
 import type { LoginValues } from './loginSchema';
 import { signIn } from '../../app/store/slices/session/thunks';
 import { LoginFormBody } from './LoginForm.styles';
-import { LOGIN_TEXTS } from '../../shared/constants/texts';
+import { ERROR_TEXTS, LOGIN_TEXTS } from '../../shared/constants/texts';
 
 const defaultValues: LoginValues = { idInstance: '', apiTokenInstance: '', apiUrl: '', remember: false };
-
-const errorText = (error: ApiError) => (error.kind === 'network' ? LOGIN_TEXTS.networkError : error.message);
 
 export const LoginForm = () => {
     const dispatch = useAppDispatch();
@@ -39,16 +36,12 @@ export const LoginForm = () => {
     useEffect(() => setFocus('idInstance'), [setFocus]);
 
     const onSubmit = async ({ remember, ...credentials }: LoginValues) => {
-        try {
-            await dispatch(signIn({ credentials, remember, mode: 'live', scenario: null })).unwrap();
-            navigate('/chat');
-        } catch (e) {
-            const error = e as ApiError;
-            setError('root', { type: error.kind, message: errorText(error) });
-        }
+        const result = await dispatch(signIn({ credentials, remember, mode: 'live', scenario: null }));
+        if (signIn.fulfilled.match(result)) navigate('/chat');
+        else setError('root', { message: result.payload });
     };
 
-    const tokenRejected = errors.root?.type === 'unauthorized';
+    const tokenRejected = errors.root?.message === ERROR_TEXTS.unauthorized;
 
     return (
         <LoginFormBody onSubmit={handleSubmit(onSubmit)} noValidate>
