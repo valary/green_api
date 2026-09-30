@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from '@/shared/ui/Avatar/Avatar';
-import { type Chat } from '@/types/chat';
+import type { Chat } from '@/types/chat';
 import { DemoBadge } from '@/components/DemoBadge/DemoBadge';
 import { formatPhone } from '@/shared/utils/phone';
 import { Icon } from '@/shared/ui/Icon/Icon';

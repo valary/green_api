@@ -1,4 +1,5 @@
-import { useId, type InputHTMLAttributes, type ReactNode, type Ref } from 'react';
+import { useId } from 'react';
+import type { InputHTMLAttributes, ReactNode, Ref } from 'react';
 import { FieldGroup, FieldControl, FieldAction, FieldNote } from './TextField.styles';
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {

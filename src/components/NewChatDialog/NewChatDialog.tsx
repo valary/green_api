@@ -10,7 +10,8 @@ import { Button } from '@/shared/ui/Button/Button';
 import { Modal } from '@/shared/ui/Modal/Modal';
 import { TextField } from '@/shared/ui/TextField/TextField';
 import { createChatByPhone } from '@/app/store/slices/chat/thunks';
-import { phoneSchema, type PhoneValues } from './phoneSchema';
+import { phoneSchema } from './phoneSchema';
+import type { PhoneValues } from './phoneSchema';
 import { PhoneForm, DialogActions } from './NewChatDialog.styles';
 
 type Props = {

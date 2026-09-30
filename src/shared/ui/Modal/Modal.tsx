@@ -1,4 +1,5 @@
-import { useEffect, useRef, type KeyboardEvent, type ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
+import type { KeyboardEvent, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { IconButton } from '@/shared/ui/Button/Button.styles';

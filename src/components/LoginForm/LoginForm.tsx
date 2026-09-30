@@ -12,7 +12,8 @@ import { Icon } from '@/shared/ui/Icon/Icon';
 import { IconButton } from '@/shared/ui/Button/Button.styles';
 import { TextField } from '@/shared/ui/TextField/TextField';
 import { deriveApiUrl } from '@/shared/utils/deriveApiUrl';
-import { loginSchema, type LoginValues } from './loginSchema';
+import { loginSchema } from './loginSchema';
+import type { LoginValues } from './loginSchema';
 import { signIn } from '@/app/store/slices/session/thunks';
 import { LoginFormBody } from './LoginForm.styles';
 

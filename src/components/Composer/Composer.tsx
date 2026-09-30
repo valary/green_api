@@ -1,4 +1,5 @@
-import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import type { FormEvent, KeyboardEvent } from 'react';
 import { MAX_MESSAGE_LENGTH } from '@/app/config';
 import { useAppDispatch } from '@/hooks/redux';
 import { Icon } from '@/shared/ui/Icon/Icon';

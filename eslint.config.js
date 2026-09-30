@@ -17,6 +17,12 @@ export default defineConfig([
             reactRefresh.configs.vite,
             prettier,
         ],
+        rules: {
+            '@typescript-eslint/consistent-type-imports': [
+                'error',
+                { prefer: 'type-imports', fixStyle: 'separate-type-imports' },
+            ],
+        },
         languageOptions: {
             ecmaVersion: 2023,
             globals: globals.browser,

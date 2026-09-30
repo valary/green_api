@@ -1,4 +1,5 @@
-import { delay, http, HttpResponse, type HttpResponseResolver } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
+import type { HttpResponseResolver } from 'msw';
 import { DEMO_CREDENTIALS } from '@/app/config';
 import { quotaExceededBody, settingsOk, settingsWithWebhook } from './fixtures';
 import { mockInstance } from './mockInstance';

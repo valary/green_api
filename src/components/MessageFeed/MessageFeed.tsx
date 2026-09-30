@@ -1,6 +1,6 @@
 import { Fragment, useLayoutEffect, useRef } from 'react';
 import { MessageBubble } from '@/components/MessageBubble/MessageBubble';
-import { type Message } from '@/types/message';
+import type { Message } from '@/types/message';
 import { ServicePill } from '@/shared/ui/ChatBackground/ChatBackground';
 import { toFeedItems } from '@/shared/utils/feedItems';
 import { FeedScroller, FeedColumn, EmptyChatCard } from './MessageFeed.styles';

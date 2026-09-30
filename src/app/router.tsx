@@ -1,4 +1,5 @@
-import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
 import { LoginPage } from '@/pages/LoginPage/LoginPage';
 import { GuestOnly, RequireSession } from '@/components/RouteGuards/RouteGuards';
 import { LazyChatPage } from '@/pages/ChatPage/LazyChatPage';

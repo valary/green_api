@@ -1,4 +1,5 @@
-import { darkColors, lightColors, type Colors } from './colors';
+import { darkColors, lightColors } from './colors';
+import type { Colors } from './colors';
 
 const scale = {
     font: {
