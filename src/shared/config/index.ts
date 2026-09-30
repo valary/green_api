@@ -8,3 +8,6 @@ export const DEMO_CREDENTIALS = {
   idInstance: '1100000000',
   apiTokenInstance: 'demo',
 }
+
+export const DEMO_SCENARIOS = ['default', 'settings', 'offline', 'sendError', 'newChat'] as const
+export type DemoScenario = (typeof DEMO_SCENARIOS)[number]
