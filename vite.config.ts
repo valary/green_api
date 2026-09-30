@@ -41,11 +41,14 @@ export default defineConfig({
     base: process.env.VITE_BASE ?? '/',
     plugins: [react(), githubPages()],
     resolve: {
-        alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+        alias: {
+            '@': fileURLToPath(new URL('./src', import.meta.url)),
+            'test-utils': fileURLToPath(new URL('./test-utils', import.meta.url)),
+        },
     },
     test: {
         environment: 'jsdom',
-        setupFiles: ['./src/test/setup.ts'],
+        setupFiles: ['./test-utils/setupTests.ts'],
         include: ['src/**/*.spec.{ts,tsx}'],
         restoreMocks: true,
     },

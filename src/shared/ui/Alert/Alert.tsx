@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Icon } from '../Icon/Icon';
+import { Icon } from '@/shared/ui/Icon/Icon';
 import * as S from './Alert.styles';
 
 export function Alert({ id, children }: { id?: string; children: ReactNode }) {

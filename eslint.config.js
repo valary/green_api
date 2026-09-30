@@ -25,7 +25,7 @@ export default defineConfig([
     {
         // URL запроса к GREEN-API содержит токен — console в коде приложения запрещён совсем.
         files: ['src/**/*.{ts,tsx}'],
-        ignores: ['src/**/*.spec.{ts,tsx}', 'src/test/**'],
+        ignores: ['src/**/*.spec.{ts,tsx}'],
         rules: { 'no-console': 'error' },
     },
     {

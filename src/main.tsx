@@ -1,9 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from '@/app/App';
-import { persistChats, store } from '@/app/store';
-import { loadStoredSession } from '@/entities/session';
-import { restoreSession, startDemo } from '@/features/auth';
+import { persistChats } from '@/app/store/persistChats';
+import { store } from '@/app/store/store';
+import { loadStoredSession } from '@/shared/utils/sessionStorage';
+import { restoreSession, startDemo } from '@/app/store/slices/session/thunks';
 
 const saved = loadStoredSession();
 if (saved) {
