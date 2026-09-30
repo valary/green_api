@@ -32,7 +32,8 @@ it('вход → новый чат → отправка → ответ прих�
   await user.type(screen.getByLabelText('apiUrl'), DEMO_CREDENTIALS.apiUrl)
   await user.click(screen.getByRole('button', { name: 'Войти' }))
 
-  expect(await screen.findByText('Чатов пока нет')).toBeInTheDocument()
+  // страница чата приезжает отдельным чанком
+  expect(await screen.findByText('Чатов пока нет', {}, { timeout: 5000 })).toBeInTheDocument()
 
   await user.click(screen.getByRole('button', { name: 'Новый чат' }))
   await user.type(screen.getByLabelText('Номер телефона'), '+7 (900) 123-45-67{Enter}')
