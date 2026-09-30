@@ -47,7 +47,8 @@ npm run check                     # всё сразу, как в CI
 
 Стек привычный: React + TypeScript, Redux Toolkit, axios, react-hook-form + yup, styled-components, MSW.
 Структура как в моих рабочих проектах: `app/` (api, store со слайсами session/connection/chat, роутер), `components/`,
-`pages/`, `shared/ui` и `shared/utils`, `hooks/`, типы по доменам в `types/`, моки в `mocks/`.
+`pages/`, `shared/ui`, `shared/utils`, тексты интерфейса в `shared/constants/texts.ts`, типы по доменам в `types/`, моки в `mocks/`.
+Компоненты тонкие — только разметка; формы, отправка, демо и выход живут в хуках `hooks/` и тестируются через `renderHook`.
 
 Чат открываю только через `checkAccount`: Telegram отвечает числовым chatId, и дальше отправка и сопоставление ответов
 идут по нему. Вариант с `номер@c.us` из примеров для WhatsApp здесь не работает — ответ просто не находит свой чат.
