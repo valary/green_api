@@ -1,13 +1,11 @@
 name: Deploy to GitHub Pages
 
-# Запуск только вручную: Actions → "Deploy to GitHub Pages" → Run workflow.
-# Перед первым запуском автор репозитория включает Pages:
-# Settings → Pages → Build and deployment → Source: GitHub Actions.
+# Деплой при каждом push в main и вручную (Actions → Run workflow).
+# Pages: Settings → Pages → Build and deployment → Source: GitHub Actions.
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
-  # Автодеплой при каждом push в main — раскомментировать, когда Pages включены:
-  # push:
-  #   branches: [main]
 
 permissions:
   contents: read
